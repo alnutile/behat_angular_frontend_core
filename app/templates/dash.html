@@ -1,0 +1,131 @@
+<div class="container" ng-controller="DashController">
+    <div class="row clearfix">
+        <div class="col-md-8 column">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="#">Testing</a> <span class="divider">/</span>
+                </li>
+                <li class="active">
+                    Dashboard
+                </li>
+            </ul>
+            <h3>
+                Behat Testing
+            </h3>
+            <div class="row clearfix">
+                <div class="col-md-6 column">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                Report Summary
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            Chart Here
+                        </div>
+                        <div class="panel-footer">
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-md-4 column text-center">
+                            <strong>Tests Created</strong>
+                            <p>5145</p>
+                        </div>
+                        <div class="col-md-4 column column text-center">
+                            <strong>Tests Created</strong>
+                            <p>5145</p>
+                        </div>
+                        <div class="col-md-4 column column text-center">
+                            <strong>Tests Created</strong>
+                            <p>5145</p>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-md-4 column column text-center">
+                            <strong>Tests Created</strong>
+                            <p>5145</p>
+                        </div>
+                        <div class="col-md-4 column column text-center">
+                            <strong>Tests Created</strong>
+                            <p>5145</p>
+                        </div>
+                        <div class="col-md-4 column column text-center">
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-md-12 column column">
+                            <strong>USD Saved to date</strong>
+                            <p>$111111</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 column">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                Find tests by tag
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            Search Filter Here of Tags
+                            <div>
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Site</th>
+                                        <th>View</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="site in sites">
+                                        <td>{{ site.title }}</td>
+                                        <td><a href="#/sites/{{ site.nid }}">view</a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                Help &amp; Example Tests
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            Links to help below
+                        </div>
+                        <div class="panel-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 column">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Actions
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <button type="button" class="btn btn-small btn-default">Create new Test</button>
+                    </div>
+                <br>
+                    <div>
+                        <button type="button" class="btn btn-small btn-info">Batch Tests</button>
+                    </div>
+                    <br>
+                    <div>
+                        <button type="button" class="btn btn-small btn-success">Reporting</button>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

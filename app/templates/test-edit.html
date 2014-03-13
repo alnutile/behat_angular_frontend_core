@@ -1,0 +1,84 @@
+<div class="container test-ui">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="#">Dashboard</a> <span class="divider">/</span>
+                </li>
+                <li>
+                    <a href="#">Sites</a> <span class="divider">/</span>
+                </li>
+                <li>
+                    <a href="#">{{ site.title }} #{{ site.nid }}</a> <span class="divider">/</span>
+                </li>
+                <li class="active">
+                    {{ test.name }}
+                </li>
+            </ul>
+            <h3>
+                {{ test.name }}
+            </h3>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-6 column">
+            <tabset vertical="true" type="navType" clas="test-nav">
+                <tab heading="Test Details">
+                    Details to the right...
+                    <button type="button" class="btn btn-danger" ng-click="saveTest(test_content)">save test</button>
+                </tab>
+                <tab heading="Scenarios and steps">
+                    <form role="form" name="cfpForm" ng-submit="addStep(steps.cfp)">
+                        <div class="form-group">
+                            <div ng-hide="true" ng-model="steps.cfp.intro" ng-init="steps.cfp.intro='And I'"></div>
+                            <label>And I</label>
+                            <select class="form-control" name="cfpAction" ng-model="steps.cfp.action" ng-required="true" ng-init="steps.cfp.action='follow'">
+                                <option value="follow">follow</option>
+                                <option value="press">press</option>
+                                <option value="click">click</option>
+                            </select>
+                            <select class="form-control" name="cfpType" ng-model="steps.cfp.type" ng-required="true" ng-init="steps.cfp.type='the element'">
+                                <option value="the element" selected>the element (css path)</option>
+                                <option value="">name|label|id</option>
+                                <option value="the xpath">xpath</option>
+                            </select>
+                            <input class="form-control" name="cfpTarget" ng-model="steps.cfp.target" type="textarea" value="" ng-required="true" placeholder="enter the target either a css path or name|label|id">
+                            <input class="form-control btn btn-success" type="submit" value="Add">
+                            <div class="help-block" ng-model="steps.cfp.final"> And I {{ steps.cfp.action }} {{ steps.cfp.type }} {{ steps.cfp.target }} </div>
+                        </div>
+                    </form>
+                </tab>
+                <tab heading="Tokens">
+                    Coming soon..
+                </tab>
+                <tab heading="Run this test">
+                    Coming soon..
+                    <button type="button" class="btn btn-danger" data-ng-click="runTest()">run</button>
+                </tab>
+                <tab heading="Results">
+                    Coming soon..
+                </tab>
+            </tabset>
+        </div>
+        <div class="col-md-6 column">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Test Preview/Edit
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div ng-model="test_content" ui-ace="{ theme: 'twilight', onLoad : testLoaded }">{{ test_content }}</div>
+                </div>
+                <div class="panel-body">
+                    <div class="test-results" ng-bind-html="test_results" ></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

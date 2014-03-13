@@ -1,0 +1,140 @@
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="#">Dashboard</a> <span class="divider">/</span>
+                </li>
+                <li>
+                    <a href="#">Sites</a> <span class="divider">/</span>
+                </li>
+                <li>
+                    <a href="#">{{ site.title }} #{{ site.nid }}</a> <span class="divider">/</span>
+                </li>
+                <li class="active">
+                    {{ test.name }}
+                </li>
+            </ul>
+            <h3>
+                {{ test.name }}
+            </h3>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-3 column">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Test Details
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+                <div class="panel-footer">
+                    Panel footer
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Scenarios &amp; Steps
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+                <div class="panel-footer">
+                    Panel footer
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Tokens
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+                <div class="panel-footer">
+                    Panel footer
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Run this test
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <button type="button" class="btn btn-danger" data-ng-click="runTest()">run</button>
+                </div>
+                <div class="panel-footer">
+                    Panel footer
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Results
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+                <div class="panel-footer">
+                    Panel footer
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 column">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Panel related to Active item on left
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    More coming soon..
+                </div>
+                <div class="panel-footer">
+                    <a class="btn btn-success" href="#/sites/{{ site.nid }}/tests/{{ test.name_dashed }}/edit">edit</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 column">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Test Preview/Edit
+                    </h3>
+                </div>
+                <div class="panel-body" ng-bind-html="test_html">
+
+                </div>
+                <div class="panel-footer">
+                    Panel footer
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Results
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="test-results" ng-bind-html="test_results" ></div>
+                </div>
+                <div class="panel-footer">
+                    Panel footer
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

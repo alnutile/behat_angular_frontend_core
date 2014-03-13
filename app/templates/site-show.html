@@ -1,0 +1,53 @@
+<div class="container"  ng-controller="SiteController">
+            <div class="row clearfix">
+                <div class="col-md-8 column">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                               Tests
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <th>Test</th>
+                                    <th>Tags</th>
+                                    <th>View</th>
+                                    <th>Edit</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="test in site.testFiles">
+                                    <td>?</td>
+                                    <td>{{ test.name }}</td>
+                                    <td>?</td>
+                                    <td><a href="#/sites/{{ site.nid }}/tests/{{ test.name_dashed }}">view</a></td>
+                                    <td><a href="#/sites/{{ site.nid }}/tests/{{ test.name_dashed }}/edit">edit</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 column">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <a href="#/sites/{{ site.nid }}/tests/new" class="btn btn-success">Create New Test</a>
+                        </div>
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                Filters
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            tag drop down here...
+                        </div>
+                        <div class="panel-body">
+                            pass fail drop down here...
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>

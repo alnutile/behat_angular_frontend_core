@@ -1,0 +1,29 @@
+.ace_editor { height: 600px; }
+
+
+body {
+    font-size: 13px !important; /* the first one :( */
+}
+
+.test-ui ul.nav {
+    float: left;
+    width: 158px;
+    padding: 0px;
+    margin: 0px;
+    background-color: #f5f5f5;
+}
+
+.test-ui li.active {
+    background-color: white;
+}
+
+.test-ui .region-content ul {
+    margin: 0px;
+}
+
+.test-ui div.tab-content {
+    float: right;
+    width: 64%;
+    margin: 0px;
+    padding: 0px;
+}

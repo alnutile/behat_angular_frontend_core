@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" ng-app="behatEditor">
+<head>
+  <meta charset="utf-8">
+  <title>My AngularJS App</title>
+  <link rel="stylesheet" href="css/app.css"/>
+    <link rel="stylesheet" type="text/css" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+</head>
+<body>
+  <ul class="menu">
+    <li><a href="#/view1">view1</a></li>
+    <li><a href="#/view2">view2</a></li>
+  </ul>
+
+  <div ng-view></div>
+
+  <div>Angular seed app: v<span app-version></span></div>
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+  <script src="js/jquery.js"></script>
+  <script src="lib/angular/angular.js"></script>
+  <script src="lib/angular/angular-route.js"></script>
+  <script src="lib/angular/angular-sanitize.js"></script>
+  <script src="lib/angular/angular-resource.js"></script>
+  <script src="lib/angular/angular-mocks.js"></script>
+
+  <script src="js/app_dev.js"></script>
+  <script src="js/angular-ui/ui-bootstrap-tpls-0.10.0.min.js"></script>
+  <script src="js/angular-ace/ace.js"></script>
+  <script src="js/angular-ace/ui-ace.min.js"></script>
+  <script src="js/services/sitesServices.js"></script>
+  <script src="js/services/runServices.js"></script>
+  <script src="js/services/testsServices.js"></script>
+  <script src="js/services/behatServices.js"></script>
+  <script src="js/services/alertServices.js"></script>
+  <script src="js/controllers/sitesController.js"></script>
+  <script src="js/controllers/dashController.js"></script>
+  <script src="js/controllers/testsController.js"></script>
+
+</body>
+</html>

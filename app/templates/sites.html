@@ -1,0 +1,16 @@
+<div ng-controller="SitesController">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Site</th>
+            <th>View</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="site in sites">
+            <td>{{ site.title }}</td>
+            <td><a href="#/sites/{{ site.nid }}">view</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
