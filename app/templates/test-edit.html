@@ -33,6 +33,7 @@
                     <button type="button" class="btn btn-danger" ng-click="saveTest(test_content)">save test</button>
                 </tab>
                 <tab heading="Scenarios and steps">
+
                     <form role="form" name="cfpForm" ng-submit="addStep(steps.cfp)">
                         <div class="form-group">
                             <div ng-hide="true" ng-model="steps.cfp.intro" ng-init="steps.cfp.intro='And I'"></div>
@@ -47,11 +48,28 @@
                                 <option value="">name|label|id</option>
                                 <option value="the xpath">xpath</option>
                             </select>
-                            <input class="form-control" name="cfpTarget" ng-model="steps.cfp.target" type="textarea" value="" ng-required="true" placeholder="enter the target either a css path or name|label|id">
+                            <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
+                            <input class="form-control" name="cfpTarget" ng-model="steps.cfp.arg_1" type="textarea" value="" ng-required="true" placeholder="enter the target either a css path or name|label|id">
                             <input class="form-control btn btn-success" type="submit" value="Add">
-                            <div class="help-block" ng-model="steps.cfp.final"> And I {{ steps.cfp.action }} {{ steps.cfp.type }} {{ steps.cfp.target }} </div>
+                            <div class="help-block" ng-model="steps.cfp.final"> {{ steps.cfp.intro }} {{ steps.cfp.action }} {{ steps.cfp.type }} "{{ steps.cfp.target }}" </div>
                         </div>
                     </form>
+                    <hr>
+                    <form role="form" name="seeForm" ng-submit="addStep(steps.seeForm)">
+                        <div class="form-group">
+                            <div ng-hide="true" ng-model="steps.seeForm.intro" ng-init="steps.seeForm.intro='Then I should'"></div>
+                            <label>Then I should</label>
+                            <select class="form-control" name="seeFormAction" ng-model="steps.seeForm.action" ng-required="true" ng-init="steps.seeForm.action='see'">
+                                <option value="see">see</option>
+                                <option value="not see">not see</option>
+                            </select>
+                            <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
+                            <input class="form-control" name="seeFormTarget" ng-model="steps.seeForm.arg_1" type="textarea" value="" ng-required="true" ng-init="steps.seeForm.arg_1='some text'" placeholder="some text on the page">
+                            <input class="form-control btn btn-success" type="submit" value="Add">
+                            <div class="help-block" ng-model="steps.seeForm.final"> {{ steps.seeForm.intro }} {{ steps.seeForm.action }} {{ steps.seeForm.type }} "{{ steps.seeForm.arg_1 }}" </div>
+                        </div>
+                    </form>
+                    <hr>
                 </tab>
                 <tab heading="Tokens">
                     Coming soon..

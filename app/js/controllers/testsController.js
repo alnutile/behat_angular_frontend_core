@@ -68,14 +68,30 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
 
         $scope.addStep = function(step) {
             var build = [];
+            var count = 1;
             angular.forEach(step, function(v, k){
+                var output = '';
                 if(typeof(v) === 'string') {
-                    var output = v;
+                    if(k.indexOf('arg_') != -1) {
+                        output = '"' + v + '"'
+                    } else {
+                        output = v;
+                    }
+                }
+                if(count === 1) {
+                    if(v.indexOf('Feature:') === -1) {
+                        if(v.indexOf('Scenario:') === -1 || v.indexOf('Background:') === -1) {
+                            output = '    ' + output;
+                        } else {
+                            output = '  ' + output;
+                        }
+                    }
                 }
                 build.push(output);
+                count++;
             });
             $scope.test_content = $scope.test_content + "\n" + build.join(' ');
-        }
+        };
 
         //@TODO move ace into a shared service, or
         $scope.testLoaded = function(_editor) {
