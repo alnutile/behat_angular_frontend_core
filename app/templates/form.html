@@ -64,6 +64,22 @@
             </div>
         </form>
         <hr>
+        <h5>Select list</h5>
+        <hr>
+        <form role="form" name="selectForm" ng-submit="addStep(steps.selectForm)" ng-model="form_tags.select" ng-init="form_tags.select='Select'" ng-show="showForm(form_tags.select)" class="ng-hide animate-hide">
+            <div class="form-group">
+                <div ng-hide="true" ng-model="steps.selectForm.intro" ng-init="steps.selectForm.intro='And I select'"></div>
+                <h6>And I select</h6>
+                <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
+                <input class="form-control" name="selectFormSelected" ng-model="steps.selectForm.arg_1" type="textarea" value="" ng-required="true" ng-init="steps.selectForm.arg_1='select?'">
+                <div ng-hide="true" ng-model="steps.selectForm.from" ng-init="steps.selectForm.from='from'"></div>
+                <h6>from</h6>
+                <input class="form-control" name="selectFormTarget" ng-model="steps.selectForm.arg_2" type="textarea" value="" ng-required="true" ng-init="steps.selectForm.arg_2='from name | label or id of select list'">
+                <br>
+                <input class="form-control btn btn-success" name="selectFormAdd" type="submit" value="Add">
+                <div class="help-block" ng-model="steps.selectForm.final"> {{ steps.selectForm.intro }} "{{ steps.selectForm.arg_1 }}" {{ steps.selectForm.from }} "{{ steps.selectForm.arg_2 }}" </div>
+            </div>
+        </form>
     </div>
 
     <div ng-model="blocks.testTokensBlock" ng-init="blocks.testTokensBlock=false" ng-show="blocks.testTokensBlock" class="ng-animate-block-transitions ng-hide">

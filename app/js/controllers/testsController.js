@@ -101,7 +101,8 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                 }
 
                 if(count === 1) {
-                    if(k === 'feature') {
+                    console.log(k);
+                    if(k !== 'feature') {
                         if(k === 'background' || k === 'scenario') {
                             output = '  ' + output;
                         } else {
