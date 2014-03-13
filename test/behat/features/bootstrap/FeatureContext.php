@@ -73,6 +73,50 @@ class FeatureContext extends MinkContext
      */
     public function iWait()
     {
-        sleep(5);
+        sleep(3);
+    }
+
+
+    /**
+     * @When /^I press the xpath "([^"]*)"$/
+     */
+    public function iPressTheXpath($arg)
+    {
+        $node = $this->getSession()->getPage()->find('xpath', $arg);
+        if($node) {
+            $this->getSession()->getPage()->find('xpath', $arg)->press();
+        } else {
+            throw new Exception('Element not found');
+        }
+    }
+
+
+    /**
+     * @When /^I click the xpath "([^"]*)"$/
+     */
+    public function iClickTheXpath($arg)
+    {
+        $node = $this->getSession()->getPage()->find('xpath', $arg);
+        if($node) {
+            $this->getSession()->getPage()->find('xpath', $arg)->click();
+        } else {
+            throw new Exception('Element not found');
+        }
+    }
+
+
+    /**
+     * @hidden
+     *
+     * @When /^I press the element "([^"]*)"$/
+     */
+    public function iPressTheElement($arg)
+    {
+        $node = $this->getSession()->getPage()->find('css', $arg);
+        if($node) {
+            $this->getSession()->getPage()->find('css', $arg)->press();
+        } else {
+            throw new Exception('Element not found');
+        }
     }
 }
