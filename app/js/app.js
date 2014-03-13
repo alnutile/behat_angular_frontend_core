@@ -4,6 +4,7 @@ var app = angular.module('behatEditor', [
     'ngRoute',
     'ui.ace',
     'ngSanitize',
+    'ngAnimate',
     'ui.bootstrap',
     'sitesServices',
     'testsServices',

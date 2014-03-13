@@ -79,7 +79,7 @@
                                     <tbody>
                                     <tr ng-repeat="site in sites">
                                         <td>{{ site.title }}</td>
-                                        <td><a href="#/sites/{{ site.nid }}">view</a></td>
+                                        <td><a id="site-{{ site.nid }}" href="#/sites/{{ site.nid }}">view</a></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -111,9 +111,6 @@
                     </h3>
                 </div>
                 <div class="panel-body">
-                    <div>
-                        <button type="button" class="btn btn-small btn-default">Create new Test</button>
-                    </div>
                 <br>
                     <div>
                         <button type="button" class="btn btn-small btn-info">Batch Tests</button>

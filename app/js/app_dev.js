@@ -3,6 +3,7 @@
 var app = angular.module('behatEditor', [
     'ngRoute',
     'ngMockE2E',
+    'ngAnimate',
     'ui.ace',
     'ngSanitize',
     'ui.bootstrap',
@@ -38,6 +39,7 @@ app.run(function($httpBackend) {
     $httpBackend.whenGET('/services/session/token').respond('12345');
     $httpBackend.whenGET('/behat_editor_services_v2/sites/2').respond(site);
     $httpBackend.whenGET('/behat_editor_services_v2/sites/2/tests/test2_feature/run').respond(test_results);
+    $httpBackend.whenGET('/behat_editor_services_v2/sites/2/tests/test2_feature').respond(test2_feature);
     $httpBackend.whenGET('/behat_editor_services_v2/sites/2/tests/test2_feature').respond(test2_feature);
 
     $httpBackend.whenGET(/^templates\//).passThrough();

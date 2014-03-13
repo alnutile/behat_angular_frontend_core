@@ -23,8 +23,8 @@
                                     <td>?</td>
                                     <td>{{ test.name }}</td>
                                     <td>?</td>
-                                    <td><a href="#/sites/{{ site.nid }}/tests/{{ test.name_dashed }}">view</a></td>
-                                    <td><a href="#/sites/{{ site.nid }}/tests/{{ test.name_dashed }}/edit">edit</a></td>
+                                    <td><a id="site-view-{{ site.nid }}" href="#/sites/{{ site.nid }}/tests/{{ test.name_dashed }}">view</a></td>
+                                    <td><a id="site-edit-{{ site.nid }}" href="#/sites/{{ site.nid }}/tests/{{ test.name_dashed }}/edit">edit</a></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -34,7 +34,7 @@
                 <div class="col-md-4 column">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <a href="#/sites/{{ site.nid }}/tests/new" class="btn btn-success">Create New Test</a>
+                            <a id="create-test" href="#/sites/{{ site.nid }}/tests/new" class="btn btn-success">Create New Test</a>
                         </div>
                         <div class="panel-heading">
                             <h3 class="panel-title">

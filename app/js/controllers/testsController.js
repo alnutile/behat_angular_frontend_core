@@ -26,6 +26,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
     function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert){
 
         $scope.steps = {}
+        $scope.form_tags = {}
         $scope.steps.default = "Your Step Here..."
 
         $scope.alerts = [];
@@ -66,6 +67,18 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             addAlert('info', 'Test Saved..', $scope);
         }
 
+        $scope.addTag = function(tags) {
+            var text = $scope.test_content.split("\n");
+            if(text[0].indexOf('@') != -1) {
+                console.log('found a tag');
+                var tags = text[0] + " " + tags;
+                text[0] = tags;
+                $scope.test_content = text.join("\n");
+            } else {
+                $scope.test_content = tags + "\n" + $scope.test_content;
+            }
+        }
+
         $scope.addStep = function(step) {
             var build = [];
             var count = 1;
@@ -78,12 +91,13 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                         output = v;
                     }
                 }
+
                 if(count === 1) {
-                    if(v.indexOf('Feature:') === -1) {
-                        if(v.indexOf('Scenario:') === -1 || v.indexOf('Background:') === -1) {
-                            output = '    ' + output;
-                        } else {
+                    if(k === 'feature') {
+                        if(k === 'background' || k === 'scenario') {
                             output = '  ' + output;
+                        } else {
+                            output = '    ' + output;
                         }
                     }
                 }
@@ -104,6 +118,27 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             _editor.setDisplayIndentGuides(true);
             _session.setUndoManager(new ace.UndoManager());
             _renderer.setShowGutter(true);
+        }
+
+        $scope.search = '';
+
+        $scope.searchForms = function(search) {
+            $scope.search = search;
+        }
+
+        $scope.showForm = function(form_tags_form) {
+            if($scope.search !== '') {
+
+
+                if(form_tags_form.indexOf($scope.search.search) !== -1) {
+                   return true;
+                } else {
+                   return false;
+                }
+
+            } else {
+                return true;
+            }
         }
     }]);
 

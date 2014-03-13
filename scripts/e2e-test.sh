@@ -9,7 +9,6 @@ echo "-------------------------------------------------------------------"
 
 /usr/local/bin/webdriver-manager update
 
-
 echo ""
 echo "Starting Protractor tests"
 echo $BASE_DIR
