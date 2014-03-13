@@ -1,4 +1,5 @@
 <div class="container"  ng-controller="SiteController">
+    <span ng-include="nav.url" class="slide-animate"></span>
             <div class="row clearfix">
                 <div class="col-md-8 column">
                     <div class="panel panel-default">
@@ -23,8 +24,8 @@
                                     <td>?</td>
                                     <td>{{ test.name }}</td>
                                     <td>?</td>
-                                    <td><a id="site-view-{{ site.nid }}" href="#/sites/{{ site.nid }}/tests/{{ test.name_dashed }}">view</a></td>
-                                    <td><a id="site-edit-{{ site.nid }}" href="#/sites/{{ site.nid }}/tests/{{ test.name_dashed }}/edit">edit</a></td>
+                                    <td><a id="site-view-{{ test.name_dashed }}" href="#/sites/{{ site.nid }}/tests/{{ test.name_dashed }}">view</a></td>
+                                    <td><a id="site-edit-{{ test.name_dashed }}" href="#/sites/{{ site.nid }}/tests/{{ test.name_dashed }}/edit">edit</a></td>
                                 </tr>
                                 </tbody>
                             </table>

@@ -2,6 +2,8 @@ var testsController = angular.module('testsController', ['ngSanitize']);
 
 testsController.controller('TestController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert',
     function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert){
+        $scope.nav = { name: 'nav', url: 'templates/nav.html'}
+        $scope.nav_message = "Mocked data. You can click on <b>run</b> or <b>edit</b>"
         $scope.alerts = [];
         $scope.test_results = '<strong>Click run to see results...</strong>';
 
@@ -25,6 +27,14 @@ testsController.controller('TestController', ['$scope', '$http', '$location', '$
 testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert',
     function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert){
 
+        $scope.blocks = {}
+        $scope.blocks.testDetailsBlock = true;
+        $scope.groups = {}
+
+        $scope.ace = { name: 'ace', url: 'templates/ace.html'}
+        $scope.form = { name: 'form', url: 'templates/form.html'}
+        $scope.nav = { name: 'nav', url: 'templates/nav.html'}
+        $scope.nav_message = "Mocked data. You can click on <b>any form item</b> as well as <b>run</b> and <b>any left side nav</b> <b>save</b> as well as use <b>Ace Editor</b> </b>"
         $scope.steps = {}
         $scope.form_tags = {}
         $scope.steps.default = "Your Step Here..."
@@ -56,27 +66,26 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
 
         $scope.saveTest = function(model) {
             addAlert('info', 'Saving test..', $scope);
-            //1. take the latest model and pass it to the endpoint
             $scope.test.content = model;
             var params = {
                 'test': $scope.test,
                 'site': $scope.site
             }
             $results = TestsServices.update({sid: $routeParams.sid, tname: $routeParams.tname}, params);
-            console.log($results);
             addAlert('info', 'Test Saved..', $scope);
         }
 
         $scope.addTag = function(tags) {
             var text = $scope.test_content.split("\n");
             if(text[0].indexOf('@') != -1) {
-                console.log('found a tag');
                 var tags = text[0] + " " + tags;
                 text[0] = tags;
                 $scope.test_content = text.join("\n");
             } else {
                 $scope.test_content = tags + "\n" + $scope.test_content;
             }
+            addAlert('info', 'Tag Added ' + tags + '..', $scope);
+            $scope.steps.testDetails.tag = '';
         }
 
         $scope.addStep = function(step) {
@@ -93,7 +102,8 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                 }
 
                 if(count === 1) {
-                    if(k === 'feature') {
+                    console.log(k);
+                    if(k !== 'feature') {
                         if(k === 'background' || k === 'scenario') {
                             output = '  ' + output;
                         } else {
@@ -104,7 +114,9 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                 build.push(output);
                 count++;
             });
-            $scope.test_content = $scope.test_content + "\n" + build.join(' ');
+            var new_step = build.join(' ');
+            $scope.test_content = $scope.test_content + "\n" + new_step;
+            addAlert('info', 'Step Added ' + new_step + '..', $scope);
         };
 
         //@TODO move ace into a shared service, or
@@ -123,14 +135,13 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.search = '';
 
         $scope.searchForms = function(search) {
+            console.log(search);
             $scope.search = search;
         }
 
         $scope.showForm = function(form_tags_form) {
             if($scope.search !== '') {
-
-
-                if(form_tags_form.indexOf($scope.search.search) !== -1) {
+                if(form_tags_form.indexOf($scope.search) !== -1) {
                    return true;
                 } else {
                    return false;
@@ -139,6 +150,27 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             } else {
                 return true;
             }
+        }
+
+        $scope.showHideBlocks = function(block) {
+            angular.forEach($scope.blocks, function(v, k){
+                if ( k == block ) {
+                    $scope.blocks[k] = true;
+                } else {
+                    $scope.blocks[k] = false;
+                }
+            });
+        }
+
+        $scope.showHideGroup = function(group) {
+
+            angular.forEach($scope.groups, function(v, k){
+                if ( k == group || group == 'all') {
+                    $scope.groups[k] = false;
+                } else {
+                    $scope.groups[k] = true;
+                }
+            });
         }
     }]);
 
@@ -149,6 +181,11 @@ testsController.controller('TestNewController', ['$scope', '$http', '$location',
                 $http.defaults.headers.post['X-CSRF-Token'] = data;
             }
         );
+
+        $scope.ace = { name: 'ace', url: 'templates/ace.html'}
+        $scope.form = { name: 'form', url: 'templates/form.html'}
+        $scope.nav = { name: 'nav', url: 'templates/nav.html'}
+        $scope.nav_message = "Mocked data. <b>Not much here go and edit <a href='#/sites/2/tests/test2_feature/edit'>test2</a></b>"
 
         $scope.test = {};
         $scope.site = {};

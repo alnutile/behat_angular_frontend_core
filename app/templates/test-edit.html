@@ -1,4 +1,5 @@
 <div class="container test-ui">
+    <span ng-include="nav.url" class="slide-animate"></span>
     <div class="row clearfix">
         <div class="col-md-12 column">
             <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
@@ -26,102 +27,63 @@
         </div>
     </div>
     <div class="row clearfix">
-        <div class="col-md-6 column">
-            <tabset vertical="true" type="navType" clas="test-nav">
-                <tab heading="Test Details">
-                    <form role="form" name="testDetails" ng-submit="addTag(steps.testDetails.tag)">
-                        <div class="form-group">
-                            <input id="tag-input" class="form-control" name="testDetailsTag" ng-model="steps.testDetails.tag" type="text" placeholder="choose a tag">
-                            <br>
-                            <input id="add-details" class="form-control btn btn-success" type="submit" value="Add">
-                            <br>
-                        </div>
-                    </form>
-
-                    <form role="form" name="backgrounds" ng-submit="addStep(steps.back)">
-                        <div class="form-group">
-                            <input class="form-control" name="backGround" ng-model="steps.back.background" type="text" value="" ng-required="true" placeholder="add a bacgkround. see help for more details">
-                            <br>
-                            <input class="form-control btn btn-success" type="submit" value="Add">
-                            <div class="help-block" ng-model="steps.back.final"> {{ steps.back.background }}</div>
-                            <br>
-                            <br>
-                            <button type="button" class="btn btn-danger" ng-click="saveTest(test_content)">save test</button>
-                        </div>
-                    </form>
-                    
-                </tab>
-                <tab heading="Scenarios and steps">
-                    <input ng-model="search" ng-change="searchForms(this)" type="text" placeholder="search for steps">
-
-
-                    <h5>Radio buttons and checkboxes</h5>
-                    <hr>
-                    <form role="form" name="cfpForm" ng-submit="addStep(steps.cfp)" ng-model="form_tags.cfp" ng-init="form_tags.cfp='Click Press Follow Link'" ng-show="showForm(form_tags.cfp)" class="ng-hide animate-hide">
-                        <div class="form-group">
-                            <div ng-hide="true" ng-model="steps.cfp.intro" ng-init="steps.cfp.intro='And I'"></div>
-                            <h6>And I</h6>
-                            <select class="form-control" name="cfpAction" ng-model="steps.cfp.action" ng-required="true" ng-init="steps.cfp.action='follow'">
-                                <option value="follow">follow</option>
-                                <option value="press">press</option>
-                                <option value="click">click</option>
-                            </select>
-                            <select class="form-control" name="cfpType" ng-model="steps.cfp.type" ng-required="true" ng-init="steps.cfp.type='the element'">
-                                <option value="the element" selected>the element (css path)</option>
-                                <option value="">name|label|id</option>
-                                <option value="the xpath">xpath</option>
-                            </select>
-                            <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                            <input class="form-control" name="cfpTarget" ng-model="steps.cfp.arg_1" type="textarea" value="" ng-required="true" ng-init="steps.cfp.arg_1='some text'" placeholder="enter the target either a css path or name|label|id">
-                            <br>
-                            <input class="form-control btn btn-success" type="submit" value="Add">
-                            <div class="help-block" ng-model="steps.cfp.final"> {{ steps.cfp.intro }} {{ steps.cfp.action }} {{ steps.cfp.type }} "{{ steps.cfp.arg_1 }}" </div>
-                        </div>
-                    </form>
-                    <hr>
-                    <form role="form" name="seeForm" ng-submit="addStep(steps.seeForm)" ng-model="form_tags.see" ng-init="form_tags.see='See on page'" ng-show="showForm(form_tags.see)" class="ng-hide animate-hide">
-                        <div class="form-group">
-                            <div ng-hide="true" ng-model="steps.seeForm.intro" ng-init="steps.seeForm.intro='Then I should'"></div>
-                            <h6>Then I should</h6>
-                            <select class="form-control" name="seeFormAction" ng-model="steps.seeForm.action" ng-required="true" ng-init="steps.seeForm.action='see'">
-                                <option value="see">see</option>
-                                <option value="not see">not see</option>
-                            </select>
-                            <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                            <input class="form-control" name="seeFormTarget" ng-model="steps.seeForm.arg_1" type="textarea" value="" ng-required="true" ng-init="steps.seeForm.arg_1='some text'" placeholder="some text on the page">
-                            <br>
-                            <input class="form-control btn btn-success" type="submit" value="Add">
-                            <div class="help-block" ng-model="steps.seeForm.final"> {{ steps.seeForm.intro }} {{ steps.seeForm.action }} {{ steps.seeForm.type }} "{{ steps.seeForm.arg_1 }}" </div>
-                        </div>
-                    </form>
-                    <hr>
-                </tab>
-                <tab heading="Tokens">
-                    Coming soon..
-                </tab>
-                <tab heading="Run this test">
-                    Coming soon..
-                    <button type="button" class="btn btn-danger" data-ng-click="runTest()">run</button>
-                </tab>
-                <tab heading="Results">
-                    Coming soon..
-                </tab>
-            </tabset>
+        <div class="col-md-2 column">
+            <accordion close-others="true">
+                <accordion-group heading="Test Details" is-open="true" ng-click="showHideBlocks('testDetailsBlock')">
+                    <p>Add tags, Backgrounds etc. [help]</p>
+                </accordion-group>
+                <accordion-group class="scenarios" heading="Scenarios and steps" ng-click="showHideBlocks('testStepsBlock')">
+                    <p>Add steps to your test. Search as needed [help]</p>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a ng-href="" type="button" ng-click="showHideGroup('starting')">Starting Points</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a ng-href="" type="button" ng-click="showHideGroup('general')">General interactions</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a ng-href="" ng-click="showHideGroup('elements')">Form fields & elements</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a ng-href="" ng-click="showHideGroup('dom')">CSS and DOM</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a ng-href="" ng-click="showHideGroup('modals')">Navigation Windows iFrames Modals</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a ng-href="" ng-click="showHideGroup('custom')">Custom</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a ng-href="" ng-click="showHideGroup('features')">Low level features</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a ng-href="" ng-click="showHideGroup('all')">Show all</a>
+                        </li>
+                    </ul>
+                </accordion-group>
+                <accordion-group heading="Tokens" ng-click="showHideBlocks('testTokensBlock')">
+                    <p>Add tokens so one test can work for many.</p>
+                </accordion-group>
+                <accordion-group ng-click="showHideBlocks('testResultsBlock')">
+                    <accordion-heading>
+                        Results
+                    </accordion-heading>
+                    <p>See your past results [help]</p>
+                </accordion-group>
+                <accordion-group ng-click="showHideBlocks('testRunBlock')">
+                    <accordion-heading>
+                        Run a test
+                    </accordion-heading>
+                    <p>Run your test [help]</p>
+                </accordion-group>
+            </accordion>
         </div>
+        <div class="col-md-4 column">
+            <div ng-include="form.url"></div>
+        </div>
+
         <div class="col-md-6 column">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        Test Preview/Edit
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <div ng-model="test_content" ui-ace="{ theme: 'twilight', onLoad : testLoaded }">{{ test_content }}</div>
-                </div>
-                <div class="panel-body">
-                    <div class="test-results" ng-bind-html="test_results" ></div>
-                </div>
-            </div>
+            <div ng-include="ace.url"></div>
         </div>
     </div>
 </div>

@@ -1,4 +1,5 @@
 <div class="container">
+    <span ng-include="nav.url" class="slide-animate"></span>
     <div class="row clearfix">
         <div class="col-md-12 column">
             <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
