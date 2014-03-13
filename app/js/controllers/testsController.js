@@ -2,6 +2,8 @@ var testsController = angular.module('testsController', ['ngSanitize']);
 
 testsController.controller('TestController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert',
     function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert){
+        $scope.nav = { name: 'nav', url: 'templates/nav.html'}
+        $scope.nav_message = "Mocked data. You can click on <b>run</b> or <b>edit</b>"
         $scope.alerts = [];
         $scope.test_results = '<strong>Click run to see results...</strong>';
 
@@ -24,7 +26,8 @@ testsController.controller('TestController', ['$scope', '$http', '$location', '$
 
 testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert',
     function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert){
-
+        $scope.nav = { name: 'nav', url: 'templates/nav.html'}
+        $scope.nav_message = "Mocked data. You can click on <b>any form item</b> as well as <b>run</b> and <b>any left side nav</b> <b>save</b> as well as use <b>Ace Editor</b> </b>"
         $scope.steps = {}
         $scope.form_tags = {}
         $scope.steps.default = "Your Step Here..."
@@ -56,7 +59,6 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
 
         $scope.saveTest = function(model) {
             addAlert('info', 'Saving test..', $scope);
-            //1. take the latest model and pass it to the endpoint
             $scope.test.content = model;
             var params = {
                 'test': $scope.test,
@@ -149,6 +151,9 @@ testsController.controller('TestNewController', ['$scope', '$http', '$location',
                 $http.defaults.headers.post['X-CSRF-Token'] = data;
             }
         );
+
+        $scope.nav = { name: 'nav', url: 'templates/nav.html'}
+        $scope.nav_message = "Mocked data. <b>Not much here go and edit <a href='#/sites/2/tests/test2_feature/edit'>test2</a></b>"
 
         $scope.test = {};
         $scope.site = {};
