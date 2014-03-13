@@ -29,6 +29,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
 
         $scope.blocks = {}
         $scope.blocks.testDetailsBlock = true;
+        $scope.groups = {}
 
         $scope.ace = { name: 'ace', url: 'templates/ace.html'}
         $scope.form = { name: 'form', url: 'templates/form.html'}
@@ -157,6 +158,17 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                     $scope.blocks[k] = true;
                 } else {
                     $scope.blocks[k] = false;
+                }
+            });
+        }
+
+        $scope.showHideGroup = function(group) {
+
+            angular.forEach($scope.groups, function(v, k){
+                if ( k == group || group == 'all') {
+                    $scope.groups[k] = false;
+                } else {
+                    $scope.groups[k] = true;
                 }
             });
         }

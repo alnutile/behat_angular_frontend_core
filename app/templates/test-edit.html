@@ -34,6 +34,32 @@
                 </accordion-group>
                 <accordion-group class="scenarios" heading="Scenarios and steps" ng-click="showHideBlocks('testStepsBlock')">
                     <p>Add steps to your test. Search as needed [help]</p>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a ng-href="" type="button" ng-click="showHideGroup('starting')">Starting Points</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a ng-href="" type="button" ng-click="showHideGroup('general')">General interactions</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a ng-href="" ng-click="showHideGroup('elements')">Form fields & elements</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a ng-href="" ng-click="showHideGroup('dom')">CSS and DOM</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a ng-href="" ng-click="showHideGroup('modals')">Navigation Windows iFrames Modals</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a ng-href="" ng-click="showHideGroup('custom')">Custom</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a ng-href="" ng-click="showHideGroup('features')">Low level features</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a ng-href="" ng-click="showHideGroup('all')">Show all</a>
+                        </li>
+                    </ul>
                 </accordion-group>
                 <accordion-group heading="Tokens" ng-click="showHideBlocks('testTokensBlock')">
                     <p>Add tokens so one test can work for many.</p>
