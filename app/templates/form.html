@@ -220,11 +220,99 @@
         <!-- ##### CSS and DOM ##### -->
         <div ng-model="groups.dom" ng-hide="groups.dom"  ng-init="groups.dom=false" class="animate-hide animate-show ng-hide">
             <h5>CSS and DOM</h5>
+
+            <form role="form" name="elemExistsForm" ng-submit="addStep(steps.elemExistsForm)" ng-model="form_tags.elemExistsForm" ng-init="form_tags.elemExistsForm='exists'" ng-show="showForm(form_tags.elemExistsForm)" class="ng-hide animate-hide">
+                <div class="form-group">
+                    <div ng-hide="true" ng-model="steps.elemExistsForm.intro" ng-init="steps.elemExistsForm.intro='Then I see this element'"></div>
+                    <h6>Then I see this element</h6>
+                    <select class="form-control" name="shouldContainAction" ng-model="steps.elemExistsForm.action" ng-required="true" ng-init="steps.elemExistsForm.action='exists'">
+                        <option value="exists">exists</option>
+                        <option value="not exists">not exists</option>
+                    </select>
+                    <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
+                    <input class="form-control" name="elemExistsFormTarget" ng-model="steps.elemExistsForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.elemExistsForm.arg_1='css name eg a.menu would be menu'">
+                    <br>
+                    <input class="form-control btn btn-success" name="elemExistsFormAdd" type="submit" value="Add">
+                    <div class="help-block" ng-model="steps.elemExistsForm.final"> {{ steps.elemExistsForm.intro }} {{ steps.elemExistsForm.action }} "{{ steps.elemExistsForm.arg_1 }}" </div>
+                    <div class="help-block" ng-model="steps.elemExistsForm.final">Check to see if class exists eg a.menu would be "menu"</div>
+                </div>
+            </form>
+            <hr>
+
+            <form role="form" name="onClickForm" ng-submit="addStep(steps.onClickForm)" ng-model="form_tags.onClickForm" ng-init="form_tags.onClickForm='click Popup'" ng-show="showForm(form_tags.onClickForm)" class="ng-hide animate-hide">
+                <div class="form-group">
+                    <div ng-hide="true" ng-model="steps.onClickForm.intro" ng-init="steps.onClickForm.intro='Given I click on element which has onclick handler located at'"></div>
+                    <h6>Given I click on element which has onclick handler located at</h6>
+                    <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
+                    <input class="form-control" name="onClickFormTarget" ng-model="steps.onClickForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.onClickForm.arg_1='css path eg div.formRow:nth-child(32)'">
+                    <br>
+                    <input class="form-control btn btn-success" name="onClickFormAdd" type="submit" value="Add">
+                    <div class="help-block" ng-model="steps.onClickForm.final"> {{ steps.onClickForm.intro }} "{{ steps.onClickForm.arg_1 }}" </div>
+                </div>
+            </form>
+            <hr>
+
+            <hr>
         </div>
 
         <!-- ##### Navigation Windows Iframes and Modals ##### -->
         <div ng-model="groups.modals" ng-hide="groups.modals"  ng-init="groups.modals=false" class="animate-hide animate-show ng-hide">
             <h5>Navigation Windows iFrames Modals</h5>
+
+            <form role="form" name="switchPopupForm" ng-submit="addStep(steps.switchPopupForm)" ng-model="form_tags.switchPopupForm" ng-init="form_tags.switchPopupForm='Popup switch'" ng-show="showForm(form_tags.switchPopupForm)" class="ng-hide animate-hide">
+                <div class="form-group">
+                    <div ng-hide="true" ng-model="steps.switchPopupForm.intro" ng-init="steps.switchPopupForm.intro='I switch to popup by'"></div>
+                    <h6>I switch to popup by</h6>
+                    <select class="form-control" name="shouldContainAction" ng-model="steps.switchPopupForm.action" ng-required="true" ng-init="steps.switchPopupForm.action='clicking'">
+                        <option value="clicking">clicking</option>
+                        <option value="pressing">pressing</option>
+                    </select>
+                    <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
+                    <input class="form-control" name="switchPopupFormTarget" ng-model="steps.switchPopupForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.switchPopupForm.arg_1='link or button to act on'">
+                    <br>
+                    <input class="form-control btn btn-success" name="switchPopupFormAdd" type="submit" value="Add">
+                    <div class="help-block" ng-model="steps.switchPopupForm.final"> {{ steps.switchPopupForm.intro }} {{ steps.switchPopupForm.action }} "{{ steps.switchPopupForm.arg_1 }}" </div>
+                </div>
+            </form>
+
+            <hr>
+            <form role="form" name="switchBackForm" ng-submit="addStep(steps.switchBackForm)" ng-model="form_tags.switchBackForm" ng-init="form_tags.switchBackForm='Switch Back'" ng-show="showForm(form_tags.switchBackForm)" class="ng-hide animate-hide">
+                <div class="form-group">
+                    <div ng-hide="true" ng-model="steps.switchBackForm.intro" ng-init="steps.switchBackForm.intro='Then I switch back to the original window'"></div>
+                    <h6>Then I switch back to the original window</h6>
+                    <input class="form-control btn btn-success" name="switchBackFormAdd" type="submit" value="Add">
+                </div>
+            </form>
+            <hr>
+
+
+            <form role="form" name="iframeSetIdForm" ng-submit="addStep(steps.iframeSetIdForm)" ng-model="form_tags.iframeSetIdForm" ng-init="form_tags.iframeSetIdForm='Iframe name'" ng-show="showForm(form_tags.iframeSetIdForm)" class="ng-hide animate-hide">
+                <div class="form-group">
+                    <div ng-hide="true" ng-model="steps.iframeSetIdForm.intro" ng-init="steps.iframeSetIdForm.intro='Given I set the iframe located in element with an id of'"></div>
+                    <h6>Given I set the iframe located in element with an id of</h6>
+                    <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
+                    <input class="form-control" name="iframeSetIdFormTarget" ng-model="steps.iframeSetIdForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.iframeSetIdForm.arg_1='id of iframe'">
+                    <br>
+                    <input class="form-control btn btn-success" name="iframeSetIdFormAdd" type="submit" value="Add">
+                    <div class="help-block" ng-model="steps.iframeSetIdForm.final"> {{ steps.iframeSetIdForm.intro }} "{{ steps.iframeSetIdForm.arg_1 }}" </div>
+                    <div class="help-block" ng-model="steps.iframeSetIdForm.final"> Sets an iFrame ID to no_name_iframe if there is no ID so you can then add a Switch to iFrame step after it using the na_name_iframe ID. You must use an ID but do not pass the # </div>
+                </div>
+            </form>
+            <hr>
+
+            <form role="form" name="iframeSwitchForm" ng-submit="addStep(steps.iframeSwitchForm)" ng-model="form_tags.iframeSwitchForm" ng-init="form_tags.iframeSwitchForm='Iframe switch name'" ng-show="showForm(form_tags.iframeSwitchForm)" class="ng-hide animate-hide">
+                <div class="form-group">
+                    <div ng-hide="true" ng-model="steps.iframeSwitchForm.intro" ng-init="steps.iframeSwitchForm.intro='Given I set the iframe located in element with an id of'"></div>
+                    <h6>Given I set the iframe located in element with an id of</h6>
+                    <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
+                    <input class="form-control" name="iframeSwitchFormTarget" ng-model="steps.iframeSwitchForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.iframeSwitchForm.arg_1='id of iframe'">
+                    <br>
+                    <input class="form-control btn btn-success" name="iframeSwitchFormAdd" type="submit" value="Add">
+                    <div class="help-block" ng-model="steps.iframeSwitchForm.final"> {{ steps.iframeSwitchForm.intro }} "{{ steps.iframeSwitchForm.arg_1 }}" </div>
+                    <div class="help-block" ng-model="steps.iframeSwitchForm.final"> Sets an iFrame ID to no_name_iframe if there is no ID so you can then add a Switch to iFrame step after it using the na_name_iframe ID. You must use an ID but do not pass the # </div>
+                </div>
+            </form>
+            <hr>
         </div>
 
         <!-- ##### Custom ##### -->
