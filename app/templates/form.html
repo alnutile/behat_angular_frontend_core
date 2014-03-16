@@ -21,7 +21,7 @@
         </form>
     </div>
 
-    <div ng-model="blocks.testStepsBlock" ng-init="blocks.testStepsBlock=false" ng-show="blocks.testStepsBlock" class="ng-animate-block-transitions ng-hide">
+    <div ng-model="blocks.testStepsBlock" ng-init="blocks.testStepsBlock=false" ng-show="blocks.testStepsBlock" class="ng-animate-block-transitions">
 
         <div class="form-actions well">
             <input class="form-control" name="search-steps" ng-model="search" ng-change="searchForms(search)" type="text" placeholder="search for steps">
@@ -31,7 +31,7 @@
         <div ng-model="groups.starting" ng-hide="groups.starting"  ng-init="groups.starting=false" class="animate-hide animate-show ng-hide">
             <h5>Starting Points</h5>
 
-            <form role="form" name="scenarioForm" ng-submit="addStep(steps.scenarioForm)" ng-model="form_tags.scenarioForm" ng-init="form_tags.scenarioForm='Scenario'" ng-show="showForm(form_tags.scenarioForm)" class="ng-hide animate-hide">
+            <form role="form" name="scenarioForm" ng-submit="addStep(steps.scenarioForm)" ng-model="form_tags.scenarioForm" ng-init="form_tags.scenarioForm='Scenario'" ng-show="showForm(form_tags.scenarioForm)" class="">
                 <div class="form-group">
                     <div ng-hide="true" ng-model="steps.scenarioForm.scenario" ng-init="steps.scenarioForm.scenario='Scenario:'"></div>
                     <h6>Scenario:</h6>
@@ -43,7 +43,7 @@
                 </div>
             </form>
             
-            <form role="form" name="givenForm" ng-submit="addStep(steps.givenForm)" ng-model="form_tags.given" ng-init="form_tags.given='URL on Visit'" ng-show="showForm(form_tags.given)" class="ng-hide animate-hide">
+            <form role="form" name="givenForm" ng-submit="addStep(steps.givenForm)" ng-model="form_tags.given" ng-init="form_tags.given='URL on Visit'" ng-show="showForm(form_tags.given)" class="">
                 <div class="form-group">
                     <div ng-hide="true" ng-model="steps.givenForm.intro" ng-init="steps.givenForm.intro='Given I am on'"></div>
                     <h6>Given I am on</h6>
@@ -58,7 +58,7 @@
         </div>
 
         <!-- ##### General Interactions ##### -->
-        <div ng-model="groups.general"  ng-hide="groups.general"  ng-init="groups.general=false" class="animate-hide animate-show ng-hide">
+        <div ng-model="groups.general"  ng-hide="groups.general"  ng-init="groups.general=false">
             <h5>General Interactions</h5>
             <form role="form" name="hoverForm" ng-submit="addStep(steps.hoverForm)" ng-model="form_tags.hoverForm" ng-init="form_tags.hoverForm='Menu Hover'" ng-show="showForm(form_tags.hoverForm)" class="ng-hide animate-hide">
                 <div class="form-group">
@@ -136,7 +136,7 @@
         </div>
 
         <!-- ##### Form fields and Elements ##### -->
-        <div ng-model="groups.elements" ng-hide="groups.elements"  ng-init="groups.elements=false" class="animate-hide animate-show ng-hide">
+        <div ng-model="groups.elements" ng-hide="groups.elements"  ng-init="groups.elements=false" class="">
             <h5>Form fields & elements</h5>
             
             <form role="form" name="checkUncheckForm" ng-submit="addStep(steps.checkUncheckForm)" ng-model="form_tags.checkUncheckForm" ng-init="form_tags.checkUncheckForm='Check Un UnCheck'" ng-show="showForm(form_tags.checkUncheckForm)" class="ng-hide animate-hide">
@@ -231,7 +231,7 @@
         </div>
 
         <!-- ##### CSS and DOM ##### -->
-        <div ng-model="groups.dom" ng-hide="groups.dom"  ng-init="groups.dom=false" class="animate-hide animate-show ng-hide">
+        <div ng-model="groups.dom" ng-hide="groups.dom"  ng-init="groups.dom=false" class="">
             <h5>CSS and DOM</h5>
 
             <form role="form" name="elemExistsForm" ng-submit="addStep(steps.elemExistsForm)" ng-model="form_tags.elemExistsForm" ng-init="form_tags.elemExistsForm='exists'" ng-show="showForm(form_tags.elemExistsForm)" class="ng-hide animate-hide">
@@ -269,7 +269,7 @@
         </div>
 
         <!-- ##### Navigation Windows Iframes and Modals ##### -->
-        <div ng-model="groups.modals" ng-hide="groups.modals"  ng-init="groups.modals=false" class="animate-hide animate-show ng-hide">
+        <div ng-model="groups.modals" ng-hide="groups.modals"  ng-init="groups.modals=false">
             <h5>Navigation Windows iFrames Modals</h5>
 
             <form role="form" name="switchPopupForm" ng-submit="addStep(steps.switchPopupForm)" ng-model="form_tags.switchPopupForm" ng-init="form_tags.switchPopupForm='Popup switch'" ng-show="showForm(form_tags.switchPopupForm)" class="ng-hide animate-hide">
@@ -329,7 +329,7 @@
         </div>
 
         <!-- ##### Custom ##### -->
-        <div ng-model="groups.custom" ng-hide="groups.custom"  ng-init="groups.custom=false" class="animate-hide animate-show ng-hide">
+        <div ng-model="groups.custom" ng-hide="groups.custom"  ng-init="groups.custom=false">
             <h5>Custom</h5>
             
             <form role="form" name="checkSizeForm" ng-submit="addStep(steps.checkSizeForm)" ng-model="form_tags.checkSizeForm" ng-init="form_tags.checkSizeForm='size'" ng-show="showForm(form_tags.checkSizeForm)" class="ng-hide animate-hide animate-show">
@@ -350,10 +350,12 @@
                     <div class="help-block" ng-model="steps.checkSizeForm.final"> {{ steps.checkSizeForm.intro }} "{{ steps.checkSizeForm.arg_1 }}" {{ steps.checkSizeForm.second }} "{{ steps.checkSizeForm.arg_2 }}" See if the element (name|label|id) is greater than the % of the window</div>
                 </div>
             </form>
+            <hr>
+
         </div>
 
         <!-- ##### Low Level Features ##### -->
-        <div ng-model="groups.features" ng-hide="groups.features"  ng-init="groups.features=false" class="animate-hide animate-show ng-hide">
+        <div ng-model="groups.features" ng-hide="groups.features"  ng-init="groups.features=false">
             <h5>Low level features</h5>
             <form role="form" name="cookiesDestForm" ng-submit="addStep(steps.cookiesDestForm)" ng-model="form_tags.cookiesDestForm" ng-init="form_tags.cookiesDestForm='Cookies'" ng-show="showForm(form_tags.cookiesDestForm)" class="ng-hide animate-hide">
                 <div class="form-group">

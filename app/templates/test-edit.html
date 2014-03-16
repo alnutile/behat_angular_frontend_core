@@ -1,26 +1,13 @@
-<div class="container test-ui">
+<div class="container test-ui ng-cloak">
     <span ng-include="nav.url" class="slide-animate"></span>
     <div class="row clearfix">
         <div class="col-md-12 column">
-            <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+            <div ng-include="alerts_partial.url"></div>
         </div>
     </div>
     <div class="row clearfix">
         <div class="col-md-12 column">
-            <ul class="breadcrumb">
-                <li>
-                    <a href="#">Dashboard</a> <span class="divider">/</span>
-                </li>
-                <li>
-                    <a href="#">Sites</a> <span class="divider">/</span>
-                </li>
-                <li>
-                    <a href="#">{{ site.title }} #{{ site.nid }}</a> <span class="divider">/</span>
-                </li>
-                <li class="active">
-                    {{ test.name }}
-                </li>
-            </ul>
+            <div ng-include="bc.url"></div>
             <h3>
                 {{ test.name }}
             </h3>

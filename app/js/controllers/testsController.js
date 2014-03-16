@@ -31,9 +31,15 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.blocks.testDetailsBlock = true;
         $scope.groups = {}
 
+
+
         $scope.ace = { name: 'ace', url: 'templates/ace.html'}
         $scope.form = { name: 'form', url: 'templates/form.html'}
         $scope.nav = { name: 'nav', url: 'templates/nav.html'}
+        $scope.alerts_partial = { name: 'alerts', url: 'templates/alerts.html'}
+
+        $scope.bc = { name: 'bc', url: 'templates/bc.html'}
+
         $scope.nav_message = "Mocked data. You can click on <b>any form item</b> as well as <b>run</b> and <b>any left side nav</b> <b>save</b> as well as use <b>Ace Editor</b> </b>"
         $scope.steps = {}
         $scope.form_tags = {}
@@ -54,6 +60,17 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         });
         $scope.sites = SitesServices.get({sid: $routeParams.sid}, function(data) {
             $scope.site = data;
+
+            $scope.breadcrumbs = [
+                {
+                    path: '/site' + $scope.site.nid,
+                    title: $scope.site.title
+                },
+                {
+                    path: '/site' + $scope.site.nid + '/' + $scope.test.name_dashed,
+                    title: $scope.test.name
+                }
+            ];
         });
 
         $scope.closeAlert = function(index) {
@@ -102,7 +119,6 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                 }
 
                 if(count === 1) {
-                    console.log(k);
                     if(k !== 'feature') {
                         if(k === 'background' || k === 'scenario') {
                             output = '  ' + output;

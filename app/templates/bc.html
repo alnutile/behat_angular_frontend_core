@@ -1,1 +1,8 @@
-breadCrumbsHere
+<ul class="breadcrumb">
+    <li>
+        <a href="#">Dashboard</a> <span class="divider">/</span>
+    </li>
+    <li  ng-repeat="breadcrumb in breadcrumbs">
+        <a href="{{ breadcrumb.path }}">{{ breadcrumb.title }} </a> <span class="divider">/</span>
+    </li>
+</ul>
