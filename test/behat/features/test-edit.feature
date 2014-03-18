@@ -5,6 +5,7 @@ Feature: Test Edit
   Scenario: I should see the the form and click to other form items
     Given I am on "/" 
     Given I am on "/sites/2/tests/test2_feature/edit"
+    And I wait
     Then I fill in "tag-input" with "@tag"
     And I press "add-details"
     And I wait

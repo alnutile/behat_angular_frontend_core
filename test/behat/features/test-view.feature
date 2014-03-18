@@ -10,8 +10,8 @@ Feature: Test View
     Given I am on "/sites/2"
     Then I should see "test2.feature"
     And I follow "site-view-test2_feature"
-    Then I should see "Test Preview/Edit"
-    Then I should see "Test WikiPedia"
+    Then I should see "test2.feature"
+    Then I should see "Not sure what goes here.."
 
   Scenario: Should be able to edit a test
     Given I am on "/sites/2"
