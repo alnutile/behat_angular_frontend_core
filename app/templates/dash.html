@@ -1,4 +1,5 @@
 <div class="container">
+
     <span ng-include="nav.url" class="slide-animate"></span>
     <div class="row clearfix">
         <div class="col-md-8 column">
@@ -15,79 +16,36 @@
             </h3>
             <div class="row clearfix">
                 <div class="col-md-6 column">
+
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">
-                                Report Summary
-                            </h3>
-                        </div>
-                        <div class="panel-body">
-                            Chart Here
-                        </div>
-                        <div class="panel-footer">
-                        </div>
+                        <div ng-include="report_chart.url"></div>
                     </div>
-                    <div class="row clearfix">
-                        <div class="col-md-4 column text-center">
-                            <strong>Tests Created</strong>
-                            <p>5145</p>
-                        </div>
-                        <div class="col-md-4 column column text-center">
-                            <strong>Tests Created</strong>
-                            <p>5145</p>
-                        </div>
-                        <div class="col-md-4 column column text-center">
-                            <strong>Tests Created</strong>
-                            <p>5145</p>
-                        </div>
+
+                    <div class="panel panel-default">
+                        <div ng-include="report_numbers.url"></div>
                     </div>
-                    <div class="row clearfix">
-                        <div class="col-md-4 column column text-center">
-                            <strong>Tests Created</strong>
-                            <p>5145</p>
-                        </div>
-                        <div class="col-md-4 column column text-center">
-                            <strong>Tests Created</strong>
-                            <p>5145</p>
-                        </div>
-                        <div class="col-md-4 column column text-center">
-                        </div>
-                    </div>
-                    <div class="row clearfix">
-                        <div class="col-md-12 column column">
-                            <strong>USD Saved to date</strong>
-                            <p>$111111</p>
-                        </div>
-                    </div>
+
                 </div>
                 <div class="col-md-6 column">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">
-                                Find tests by tag
+                                Find Site
                             </h3>
+                            <div class="help-block">by Tag, Name</div>
                         </div>
-                        <div class="panel-body">
-                            Search Filter Here of Tags
-                            <div>
-                                <table class="table table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>Site</th>
-                                        <th>View</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr ng-repeat="site in sites">
-                                        <td>{{ site.title }}</td>
-                                        <td><a id="site-{{ site.nid }}" href="#/sites/{{ site.nid }}">view</a></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                            <br>
+                            <div class="form-group col-md-12">
+                                <input class="form-control" placeholder="Search" ng-model="query">
                             </div>
-                        </div>
-                        <div class="panel-footer">
-                        </div>
+                            <hr>
+                                <table ng-table="tableParams" class="table table-bordered table-hover">
+                                    <tr ng-repeat="site in $data | filter:query" >
+                                        <td data-title="'Name'" sortable="'title'">{{ site.title }}</td>
+                                        <td data-title="'Default Tag'" sortable="'default_tag'">{{ site.default_tag }}</td>
+                                        <td data-title="'Site ID'" sortable="'nid'"><a id="site-{{ site.nid }}" href="#/sites/{{ site.nid }}">view</a></td>
+                                    </tr>
+                                </table>
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-heading">

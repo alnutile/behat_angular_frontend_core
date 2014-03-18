@@ -1,6 +1,6 @@
-var passFail = angular.module('passFail', []);
+var passFail = angular.module('passFailFilter', []);
 
-passFail.filter('passFail', [,
+passFail.filter('passFailFilter', [
     function(){
         return function(text) {
             if(text == 1) {

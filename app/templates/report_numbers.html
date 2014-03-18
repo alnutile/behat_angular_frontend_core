@@ -1,0 +1,30 @@
+<div class="panel-body">
+    <div class="col-md-4 column text-center">
+        <h5>Tests Created</h5>
+        <strong>{{ reports_all.test_create_total }}</strong>
+    </div>
+    <div class="col-md-4 column column text-center">
+        <h5>Tests Passing</h5>
+        <strong>{{ reports_all.tests_passing }}</strong>
+    </div>
+    <div class="col-md-4 column column text-center">
+        <h5>Tests Failing</h5>
+        <strong>{{ reports_all.tests_failing }}</strong>
+    </div>
+</div>
+<div class="row clearfix">
+    <div class="col-md-6 column column text-center">
+        <h5>Sites with Coverage</h5>
+        <strong>{{ reports_all.sites_with_coverage }}</strong>
+    </div>
+    <div class="col-md-6 column column text-center">
+        <h5>Sites without Coverage</h5>
+        <strong>{{ reports_all.sites_without_coverage }}</strong>
+    </div>
+</div>
+<div class="row clearfix">
+    <div class="col-md-12 column column text-center">
+        <h5>USD Saved to date</h5>
+        <strong>{{ reports_all.usd_save | currency }}</strong>
+    </div>
+</div>
