@@ -24,8 +24,8 @@ testsController.controller('TestController', ['$scope', '$http', '$location', '$
         }
     }]);
 
-testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService){
+testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal',
+    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal){
 
         $scope.blocks = {}
         $scope.blocks.testDetailsBlock = true;
@@ -42,7 +42,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
 
         $scope.bc = { name: 'bc', url: 'templates/bc.html'}
 
-        $scope.nav_message = "Mocked data. You can click on <b>any form item</b> as well as <b>run</b> and <b>any left side nav</b> <b>save</b> as well as use <b>Ace Editor</b> </b>"
+        $scope.nav_message = "Mocked data. You can click on <b>any form item</b> as well as <b>run</b> and <b>any left side nav</b> <b>save</b> as well as use <b>Ace Editor</b> you can <b>Clone</b> to site 3"
         $scope.steps = {}
         $scope.form_tags = {}
         $scope.steps.default = "Your Step Here..."
@@ -61,9 +61,8 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             $scope.test_html = data.content_html;
         });
 
-        $scope.sites = SitesServices.get({sid: $routeParams.sid}, function(data) {
+        SitesServices.get({sid: $routeParams.sid}, function(data) {
             $scope.site = data;
-
             $scope.breadcrumbs = [
                 {
                     path: '#/site/' + $scope.site.nid,
@@ -74,6 +73,12 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                     title: $scope.test.name
                 }
             ];
+        });
+
+        //Need more data to do the pull down list as well
+        //@TODO maybe the server should offer this list
+        $scope.sites = SitesServices.getSites(function(data){
+            $scope.sites = data;
         });
 
         $scope.closeAlert = function(index) {
@@ -190,7 +195,45 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                     $scope.groups[k] = true;
                 }
             });
-        }
+        };
+
+        $scope.cloneTest = function (site) {
+            $scope.site_to_clone_to = site;
+            var cloneModalInstanceCtrl = $modal.open({
+                templateUrl: 'templates/modal_clone.html',
+                controller: 'CloneTestCtrl',
+                resolve: {
+                    site_chosen: function () {
+                        return $scope.site_to_clone_to;
+                    }
+                }
+            });
+
+            cloneModalInstanceCtrl.result.then(function (selectedItem) {
+                //$scope.selected = selectedItem;
+                console.log($scope.test_content)
+                //1 get the latest content
+                $scope.test.content = $scope.test_content;
+                //1 get the content
+                //2 get the site id to set the new path
+                //3 pass the get as needed to the Service
+                var params = {
+                    'test': $scope.test,
+                    'site': $scope.site_to_clone_to
+                }
+
+                TestsServices.create({sid: $scope.site_to_clone_to.nid}, params, function(data){
+                    if(data.error === 0){
+                        $location.path("/sites/" + $scope.site_to_clone_to.nid + "/tests/" + data.data.name_dashed + "/edit");
+                    } else {
+                        addAlert('warning', 'Could not save test.', $scope);
+                    }
+                });
+
+            }, function () {
+                addAlert('info', 'Clone was canceled no new file made.', $scope);
+            });
+        };
     }]);
 
 testsController.controller('TestNewController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices',

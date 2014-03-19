@@ -15,6 +15,7 @@ var app = angular.module('behatEditor', [
     'sitesController',
     'dashController',
     'testsController',
+    'cloneTestCtrl',
     'tableMaker',
     'behatServices',
     'passFail',

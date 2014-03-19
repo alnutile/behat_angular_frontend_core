@@ -16,7 +16,17 @@
                 <div class="help-block" ng-model="steps.back.final"> {{ steps.back.background }}</div>
                 <br>
                 <br>
-                <button type="button" class="btn btn-danger" ng-click="saveTest(test_content)">save test</button>
+                <div class="well">
+                    <button type="button" class="btn btn-danger" ng-click="saveTest(test_content)">save test</button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            clone <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="site in sites"><a ng-click="cloneTest(site)" href>{{site.title}}</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -486,7 +496,9 @@
     </div>
 
     <div ng-model="blocks.testRunBlock" ng-init="blocks.testRunBlock=false" ng-show="blocks.testRunBlock" class="ng-animate-block-transitions ng-hide">
-        <button type="button" class="btn btn-danger" data-ng-click="runTest()">run</button>
+        <div class="well">
+            <button type="button" class="btn btn-danger" data-ng-click="runTest()">run</button>
+        </div>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">
