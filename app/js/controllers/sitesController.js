@@ -12,9 +12,8 @@ sitesController.controller('SiteController', ['$scope', '$http', '$location', '$
         $scope.reports_template  = { name: 'reports', url: 'templates/reports.html'}
         $scope.report_numbers   = { name: 'numbers',    url: 'templates/report_numbers.html'};
         $scope.report_chart      = { name: 'chart',      url: 'templates/report_chart.html'};
-        $scope.reports_all = ReportSiteNumbers.get({sid: $routeParams.sid}, function(data){
-            console.log(data);
-        });
+        $scope.reports_all = ReportSiteNumbers.get({sid: $routeParams.sid});
+        
         $scope.nav_message = "Mocked data. You can click on <b>test2.feature view</b> or <b>edit</b> and <b>Create New Test</b></b>"
         $scope.sites = SitesServices.get({sid: $routeParams.sid}, function(data) {
             $scope.site = data;
@@ -33,6 +32,13 @@ sitesController.controller('SiteController', ['$scope', '$http', '$location', '$
             }]
         });
 
+        $scope.setTag = function(tag) {
+            $scope.tagged = tag;
+        }
+
+        $scope.clearTag = function(){
+            $scope.tagged = '';
+        }
 
         $scope.tagOptions = '';
 

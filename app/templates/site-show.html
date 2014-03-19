@@ -24,7 +24,8 @@
                     <div>
                     <div class="panel-body">
                         <ul>
-                            <li ng-repeat="tag in tags_filter"><a ng-click="setTag(tag)" ng-href="{{ tag }}">{{ tag }}</a></li>
+                            <li ng-repeat="tag in tags_filter"><a ng-click="setTag(tag)" href>{{ tag }}</a></li>
+                            <li><a ng-click="clearTag()" href>clear filter</a></li>
                         </ul>
                     </div>
                         </div>
@@ -40,6 +41,9 @@
                             </h3>
                         </div>
                         <div class="panel-body">
+                            <div class="form-group">
+                                <input class="form-control" type="text" ng-model="search" placeholder="search tests">
+                            </div>
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
@@ -51,7 +55,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="test in site.testFiles | filter:tagged">
+                                <tr ng-repeat="test in site.testFiles | filter:tagged | filter:search">
                                     <td>
                                         p/f
                                     </td>
