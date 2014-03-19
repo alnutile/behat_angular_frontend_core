@@ -1,20 +1,11 @@
-Feature: Test View
-  Scenario: I should see the test content
-    Given I am on "/sites/2"
+Feature: Test View Test
+  Scenario: I should see on the Create New Test
+    Given I am on "/sites/2/tests/test2_feature"
+    And I wait
     Then I should see "test2.feature"
-    Then I should see "test1.feature"
-    And I follow "Create New Test"
-    Then I should see "Test Preview/Edit"
-
-  Scenario: Should be able to view a test
-    Given I am on "/sites/2"
-    Then I should see "test2.feature"
-    And I follow "site-view-test2_feature"
-    Then I should see "test2.feature"
-    Then I should see "Not sure what goes here.."
-
-  Scenario: Should be able to edit a test
-    Given I am on "/sites/2"
-    Then I should see "test2.feature"
-    And I follow "site-edit-test2_feature"
-    Then I should see "Test Details"
+    #And I press "run-test"
+    #Then I should see "Running test..."
+    #Then I should see "Test Completed..."
+    #Then I should see "2 steps (2 passed)"
+    #And I follow "edit"
+    #Then I should see "save test"
