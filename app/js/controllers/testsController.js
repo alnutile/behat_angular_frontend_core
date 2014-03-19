@@ -24,13 +24,15 @@ testsController.controller('TestController', ['$scope', '$http', '$location', '$
         }
     }]);
 
-testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert){
+testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService',
+    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService){
 
         $scope.blocks = {}
         $scope.blocks.testDetailsBlock = true;
         $scope.groups = {}
+        $scope.reports_test_page  = { name: 'reports', url: 'templates/reports_test_page.html'}
 
+        $scope.reports = ReportsTestsService.get({sid: $routeParams.sid, tname: $routeParams.tname});
 
 
         $scope.ace = { name: 'ace', url: 'templates/ace.html'}
@@ -58,16 +60,17 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             $scope.test_content = data.content;
             $scope.test_html = data.content_html;
         });
+
         $scope.sites = SitesServices.get({sid: $routeParams.sid}, function(data) {
             $scope.site = data;
 
             $scope.breadcrumbs = [
                 {
-                    path: '/site' + $scope.site.nid,
+                    path: '#/site/' + $scope.site.nid,
                     title: $scope.site.title
                 },
                 {
-                    path: '/site' + $scope.site.nid + '/' + $scope.test.name_dashed,
+                    path: '#/site' + $scope.site.nid + '/' + $scope.test.name_dashed,
                     title: $scope.test.name
                 }
             ];

@@ -1,54 +1,105 @@
-<div class="container"  ng-controller="SiteController">
+<div class="container" ng-controller="SiteController">
     <span ng-include="nav.url" class="slide-animate"></span>
+    <div ng-include="bc.url"></div>
+    <div class="row clearfix">
+        <div class="col-md-9 column">
             <div class="row clearfix">
-                <div class="col-md-8 column">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">
-                               Tests
-                            </h3>
-                        </div>
-                        <div class="panel-body">
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                <tr>
-                                    <th>State</th>
-                                    <th>Test</th>
-                                    <th>Tags</th>
-                                    <th>View</th>
-                                    <th>Edit</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr ng-repeat="test in site.testFiles">
-                                    <td>?</td>
-                                    <td>{{ test.name }}</td>
-                                    <td>?</td>
-                                    <td><a id="site-view-{{ test.name_dashed }}" href="#/sites/{{ site.nid }}/tests/{{ test.name_dashed }}">view</a></td>
-                                    <td><a id="site-edit-{{ test.name_dashed }}" href="#/sites/{{ site.nid }}/tests/{{ test.name_dashed }}/edit">edit</a></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                <div class="col-md-6">
+                    <div ng-include="report_chart.url"></div>
                 </div>
-                <div class="col-md-4 column">
+                <div class="col-md-6">
                     <div class="panel panel-default">
-                        <div class="panel-body">
-                            <a id="create-test" href="#/sites/{{ site.nid }}/tests/new" class="btn btn-success">Create New Test</a>
-                        </div>
                         <div class="panel-heading">
                             <h3 class="panel-title">
-                                Filters
+                                Filter tests by Tag
                             </h3>
                         </div>
                         <div class="panel-body">
-                            tag drop down here...
-                        </div>
-                        <div class="panel-body">
-                            pass fail drop down here...
+                            <select ng-model="tagged" ng-options="tag as tag for tag in tags_filter">
+                                <option value="">-tag filter-</option>
+                            </select>
+                            <div>
+                                <div class="panel-body">
+                                    <ul>
+                                        <li ng-repeat="tag in tags_filter"><a ng-click="setTag(tag)" href>{{ tag }}</a></li>
+                                        <li><a ng-click="clearTag()" href>clear filter</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <div ng-include="report_numbers_site.url"></div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                Tests
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-xs-2">
+                                <select ng-model="passFailShow">
+                                    <option value="">all</option>
+                                    <option value="1">passing</option>
+                                    <option value="0">failing</option>
+                                    <option value="3">never run</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-8">
+                                <input class="form-control" type="text" ng-model="search" placeholder="search tests">
+                            </div>
+                            <div class="clearfix">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>State</th>
+                                        <th>Test</th>
+                                        <th>Tags</th>
+                                        <th>View</th>
+                                        <th>Edit</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="test in site.testFiles | filter:{status:passFailShow} | filter:tagged | filter:search " ng-class="{danger: test.status == 0}">
+                                        <td ng-bind-html="test.status | passFailFilter">
+                                        </td>
+                                        <td>{{ test.name }}
+                                        </td>
+                                        <td><span ng-repeat="tag in test.tags"> {{tag}} </span></td>
+                                        <td><a id="site-view-{{ test.name_dashed }}"
+                                               href="#/sites/{{ site.nid }}/tests/{{ test.name_dashed }}">view</a></td>
+                                        <td><a id="site-edit-{{ test.name_dashed }}"
+                                               href="#/sites/{{ site.nid }}/tests/{{ test.name_dashed }}/edit">edit</a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="help-block">Showing latest test results: <i class="glyphicon glyphicon-exclamation-sign"></i>Never Run | <i class="glyphicon glyphicon-thumbs-down"></i>Fail | <i class="glyphicon glyphicon-thumbs-up"></i>Pass</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 column">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a id="create-test" href="#/sites/{{ site.nid }}/tests/new" class="btn btn-success">Create New
+                        Test</a>
+                </div>
+                <div class="panel-body">
+                    <a id="batches" href="#/sites/{{ site.nid }}/batches" class="btn btn-success">Batch Tests</a>
+                </div>
+                <div class="panel-body">
+                    <a id="reporting" href="#/sites/{{ site.nid }}/reporting" class="btn btn-success">Reporting</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

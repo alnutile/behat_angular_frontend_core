@@ -119,4 +119,13 @@ class FeatureContext extends MinkContext
             throw new Exception('Element not found');
         }
     }
+
+    /**
+     * Destroy cookies
+     *
+     * @Then /^I destroy my cookies$/
+     */
+    public function iDestroyMyCookies() {
+        $this->getMainContext()->getSession()->reset();
+    }
 }
