@@ -10,21 +10,17 @@
             <thead>
             <tr>
                 <th>Result</th>
-                <th>Test Name</th>
                 <th>Date</th>
                 <th>Browser OS</th>
-                <th>View</th>
-                <th></th>
+                <th>View Results</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="report in reports" ng-class="{danger: report.status == 0}">
-                <td ng-bind-html="report.status | passFailFilter"></td>
-                <td>{{ report.test_name }}</td>
+                <td ng-bind-html="report.status | passFailFilter | orderBy:created"></td>
                 <td>{{ report.created }}</td>
                 <td>{{ report.browser }} {{ report.os }}</td>
                 <td><a id="report-view-{{ report.rid }}" href="#/sites/{{ site.nid }}/reports/{{ report.rid }}">view</a></td>
-                <td><input type="checkbox"></td>
             </tr>
             </tbody>
         </table>

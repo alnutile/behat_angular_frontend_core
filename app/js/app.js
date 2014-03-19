@@ -18,6 +18,7 @@ var app = angular.module('behatEditor', [
     'tableMaker',
     'behatServices',
     'passFail',
+    'googlechart'
 ]);
 
 app.config(['$routeProvider',

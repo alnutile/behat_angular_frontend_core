@@ -30,7 +30,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.blocks = {}
         $scope.blocks.testDetailsBlock = true;
         $scope.groups = {}
-        $scope.reports_template  = { name: 'reports', url: 'templates/reports.html'}
+        $scope.reports_test_page  = { name: 'reports', url: 'templates/reports_test_page.html'}
 
         $scope.reports = ReportsTestsService.get({sid: $routeParams.sid, tname: $routeParams.tname});
 
