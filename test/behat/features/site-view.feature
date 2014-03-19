@@ -1,4 +1,8 @@
 Feature: Site View
+  Background: Refresh page
+    Given I am on "/"
+    #Helps when comes with other tests
+
   Scenario: I should see the test content
     Given I am on "/sites/2"
     Then I should see "test2.feature"
@@ -30,7 +34,6 @@ Feature: Site View
     Then I should not see "test5.feature"
 
   Scenario: On site page and I filter by tag
-    Given I am on "/"
     Given I am on "/sites/2"
     And I wait
     Then I should see "Filter tests by Tag"

@@ -1,0 +1,104 @@
+<div class="container">
+    <span ng-include="nav.url" class="slide-animate"></span>
+    <div ng-include="bc.url"></div>
+    <div class="row clearfix">
+        <div class="col-md-8 column">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Report Charts
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+                <div class="panel-footer">
+
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Reports
+                    </h3>
+                </div>
+                <div class="panel-body">
+
+                    <div class="col-xs-8">
+                        <input class="form-control" type="text" ng-model="search" placeholder="search tests">
+                    </div>
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>Pass/Fail</th>
+                            <th>Test Name</th>
+                            <th>Tags</th>
+                            <th>Vendor</th>
+                            <th>Results</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="report in reports | filter:{status:passFailShow} | filter:tagged | filter:search " ng-class="{danger: report.status == 0}">
+                                <td ng-bind-html="report.status | passFailFilter "></td>
+                                <td>{{ report.test_name }}</td>
+                                <td><span ng-repeat="tag in report.tags"> {{tag}} </span></td>
+                                <td>{{ report.user_id }}</td>
+                                <td><a href="#/reports/{{ report.rid }}">drill down</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="panel-footer">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 column">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Panel title
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+                <div class="panel-footer">
+                    Panel footer
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Pass / Fail
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="col-xs-2">
+                        <select ng-model="passFailShow" id="pass_fail_filter">
+                            <option value="">all</option>
+                            <option value="1">passing</option>
+                            <option value="0">failing</option>
+                            <option value="3">never run</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    Panel footer
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Results by Date
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+                <div class="panel-footer">
+                    Panel footer
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
