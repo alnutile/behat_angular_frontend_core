@@ -10,7 +10,7 @@
                     </h3>
                 </div>
                 <div class="panel-body">
-                    Panel content
+                    {{charts}}
                 </div>
                 <div class="panel-footer">
 
@@ -50,7 +50,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="report in reports | filter:{status:passFailShow} | filter:{site_id:siteFilter} | filter:tagged | filter:dateRangeCheck | filter:search" ng-class="{danger: report.status == 0}">
+                                <tr ng-repeat="report in (reportsFiltered = ( reports | filter:{status:passFailShow} | filter:{site_id:siteFilter} | filter:tagged | filter:dateRangeCheck | filter:search))" ng-class="{danger: report.status == 0}">
                                     <td ng-bind-html="report.status | passFailFilter "></td>
                                     <td>{{ report.created }}</td>
                                     <td>{{ report.test_name }}</td>
@@ -60,6 +60,9 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <ol>
+                            <li ng-repeat="f in reportsFiltered">{{ f.test_name }}</li>
+                        </ol>
                     </div>
                 </div>
                 <div class="panel-footer">

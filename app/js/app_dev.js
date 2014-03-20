@@ -11,6 +11,7 @@ var app = angular.module('behatEditor', [
     'sitesServices',
     'reportsServices',
     'testsServices',
+    'chartingServices',
     'alertServices',
     'runServices',
     'sitesController',
@@ -21,6 +22,7 @@ var app = angular.module('behatEditor', [
     'behatServices',
     'tableMaker',
     'passFailFilter',
+    'asFilter',
     'dateRange',
     'siteName',
     'googlechart'

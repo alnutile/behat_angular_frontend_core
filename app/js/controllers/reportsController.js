@@ -1,20 +1,39 @@
 var reportsController = angular.module('reportsController', []);
 
-reportsController.controller('ReportsController', ['$scope', '$http', '$location', '$route', '$routeParams', 'ReportsDash', 'SitesServices', 'dateFilter',
-    function($scope, $http, $location, $route, $routeParams, ReportsDash, SitesServices, dateFilter){
+reportsController.controller('ReportsController', ['$scope', '$http', '$location', '$route', '$routeParams', 'ReportsDash', 'SitesServices', 'dateFilter', 'passFail',
+    function($scope, $http, $location, $route, $routeParams, ReportsDash, SitesServices, dateFilter, passFail){
         $scope.tags_filter = [];
+
         ReportsDash.query(function(data){
             $scope.reports = data.reports_all;
-            //console.log(data.reports_all);
+            passFail(data.reports_all, $scope);
+
             angular.forEach(data.reports_all, function(v,i){
+
+
                 angular.forEach(v.tags, function(value, index){
                     if($scope.tags_filter.indexOf(value) == -1) {
                         $scope.tags_filter.push(value);
                     };
                 });
+
+
             });
         });
 
+
+        //$scope.reportsFiltered = [];
+        var count = 0;
+
+        $scope.$watch('reportsFiltered', function(){
+
+            passFail($scope.reportsFiltered, $scope);
+
+        }, true);
+        //@TODO move this out into a shared Service
+
+
+        //Filters
         $scope.startDate = '';
         $scope.endDate = '';
 
