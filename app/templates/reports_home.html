@@ -42,6 +42,7 @@
                             <thead>
                             <tr>
                                 <th>Pass/Fail</th>
+                                <th>Date</th>
                                 <th>Test Name</th>
                                 <th>Tags</th>
                                 <th>Vendor</th>
@@ -49,8 +50,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="report in reports | filter:{status:passFailShow} | filter:{site_id:siteFilter} | filter:tagged | filter:search " ng-class="{danger: report.status == 0}">
+                                <tr ng-repeat="report in reports | filter:{status:passFailShow} | filter:{site_id:siteFilter} | filter:tagged | filter:dateRangeCheck | filter:search" ng-class="{danger: report.status == 0}">
                                     <td ng-bind-html="report.status | passFailFilter "></td>
+                                    <td>{{ report.created }}</td>
                                     <td>{{ report.test_name }}</td>
                                     <td><span ng-repeat="tag in report.tags"> {{tag}} </span></td>
                                     <td>{{ report.user_id }}</td>
@@ -116,7 +118,21 @@
                     </h3>
                 </div>
                 <div class="panel-body">
-                    Panel content
+                    <strong>Start: {{startDate | date:'yyyy-MM-dd'}}</strong>
+                    <br>
+                    <strong>End: {{endDate | date:'yyyy-MM-dd'}}</strong>
+                </div>
+                <div class="panel-body">
+                    <div style="display:inline-block; min-height:290px;">
+                        <div class="well well-sm" ng-model="startDate">
+                            <datepicker max="endDate" show-weeks="showWeeks" starting-day="1" ng-click="startDateCheck()"></datepicker>
+                        </div>
+                    </div>
+                    <div style="display:inline-block; min-height:290px;">
+                        <div class="well well-sm" ng-model="endDate">
+                            <datepicker min="startDate" show-weeks="showWeeks" starting-day="1"></datepicker>
+                        </div>
+                    </div>
                 </div>
                 <div class="panel-footer">
                     Panel footer
