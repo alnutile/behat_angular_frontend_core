@@ -23,30 +23,42 @@
                     </h3>
                 </div>
                 <div class="panel-body">
-
-                    <div class="col-xs-8">
-                        <input class="form-control" type="text" ng-model="search" placeholder="search tests">
+                    <div class="row clearfix">
+                        <div class="col-md-4">
+                            <input class="form-control" type="text" ng-model="search" placeholder="search tests">
+                        </div>
+                        <div class="col-md-8">
+                            <h5>Active Filters: </h5>
+                            <ul class="list-inline">
+                                <li>Site: {{ siteFilter|siteName:this }}</li>
+                                <li>Tag: {{ tagged }}</li>
+                                <li>Pass/Fail: <span ng-bind-html="passFailShow | passFailFilter"></span> </li>
+                            </ul>
+                        </div>
                     </div>
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th>Pass/Fail</th>
-                            <th>Test Name</th>
-                            <th>Tags</th>
-                            <th>Vendor</th>
-                            <th>Results</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="report in reports | filter:{status:passFailShow} | filter:tagged | filter:search " ng-class="{danger: report.status == 0}">
-                                <td ng-bind-html="report.status | passFailFilter "></td>
-                                <td>{{ report.test_name }}</td>
-                                <td><span ng-repeat="tag in report.tags"> {{tag}} </span></td>
-                                <td>{{ report.user_id }}</td>
-                                <td><a href="#/reports/{{ report.rid }}">drill down</a></td>
+                    <hr>
+                    <div class="row clearfix">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>Pass/Fail</th>
+                                <th>Test Name</th>
+                                <th>Tags</th>
+                                <th>Vendor</th>
+                                <th>Results</th>
                             </tr>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="report in reports | filter:{status:passFailShow} | filter:{site_id:siteFilter} | filter:tagged | filter:search " ng-class="{danger: report.status == 0}">
+                                    <td ng-bind-html="report.status | passFailFilter "></td>
+                                    <td>{{ report.test_name }}</td>
+                                    <td><span ng-repeat="tag in report.tags"> {{tag}} </span></td>
+                                    <td>{{ report.user_id }}</td>
+                                    <td><a href="#/reports/{{ report.rid }}">drill down</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="panel-footer">
                 </div>
@@ -56,14 +68,25 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        Panel title
+                        Site
                     </h3>
                 </div>
                 <div class="panel-body">
-                    Panel content
+                    <select ng-model="siteFilter" ng-options="site.nid as site.title for site in sites">
+                        <option value="">-site filter-</option>
+                    </select>
                 </div>
-                <div class="panel-footer">
-                    Panel footer
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Test Related Tags
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <select ng-model="tagged" ng-options="tag as tag for tag in tags_filter">
+                        <option value="">-test filter-</option>
+                    </select>
                 </div>
             </div>
             <div class="panel panel-default">
