@@ -29,6 +29,7 @@ sitesController.controller('SiteController', ['$scope', '$http', '$location', '$
             $scope.charts.coverage = $scope.charts.total - $scope.charts.not_running;
             $scope.charts.usd_save = $scope.charts.coverage * 10 * 125;
 
+            //@TODO this is being used by reportsController too so centralize it into a service
             angular.forEach(data.testFiles, function(v,i){
                 angular.forEach(v.tags, function(value, index){
                     //set tags
