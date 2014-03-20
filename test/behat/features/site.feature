@@ -3,6 +3,7 @@
  
    Scenario: I should see on the Create New Test
      Given I am on "/sites/2/tests/test2_feature"
+     And I wait
      Then I should see "Feature: Test WikiPedia"
      And I press "run-test"
      Then I should see "Running test..."
