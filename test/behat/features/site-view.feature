@@ -8,6 +8,7 @@ Feature: Site View
     Then I should see "test2.feature"
     Then I should see "test1.feature"
     And I follow "Create New Test"
+    And I wait
     Then I should see "Test Preview/Edit"
 
   Scenario: Should be able to view a test
