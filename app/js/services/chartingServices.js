@@ -1,6 +1,6 @@
 var chartingServices = angular.module('chartingServices', []);
 
-chartingServices.factory('passFail', ['$rootScope',
+chartingServices.factory('passFailChart', ['$rootScope',
         function($rootScope){
             return function(data, $scope) {
                 //Charts
@@ -13,7 +13,7 @@ chartingServices.factory('passFail', ['$rootScope',
                 $scope.charts.usd_save = 0;
                 $scope.sites_results = {};
 
-                var setSiteName = function(site_id) {
+                $scope.setSiteName = function(site_id) {
                     var title;
                     angular.forEach($scope.sites, function(v,i){
                         if(v.nid == site_id) {
@@ -36,7 +36,7 @@ chartingServices.factory('passFail', ['$rootScope',
                     } else {
                         $scope.sites_results[v.site_id].not_running =  $scope.sites_results[v.site_id].not_running + 1;
                     }
-                    $scope.sites_results[v.site_id].site_name = setSiteName(v.site_id);
+                    $scope.sites_results[v.site_id].site_name = $scope.setSiteName(v.site_id);
                     //@TODO just for example data
                     $scope.sites_results[v.site_id].goal = Math.floor((Math.random()*20)+10);
 

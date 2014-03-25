@@ -1,7 +1,12 @@
 var reportsController = angular.module('reportsController', []);
 
-reportsController.controller('ReportsController', ['$scope', '$http', '$location', '$route', '$routeParams', 'ReportsDash', 'SitesServices', 'dateFilter', 'passFail',
-    function($scope, $http, $location, $route, $routeParams, ReportsDash, SitesServices, dateFilter, passFail){
+reportsController.controller('ReportsController', ['$scope', '$http', '$location', '$route', '$routeParams', 'ReportsDash', 'SitesServices', 'dateFilter', 'passFailChart',
+    function($scope, $http, $location, $route, $routeParams, ReportsDash, SitesServices, dateFilter, passFailChart){
+
+
+        ($routeParams.siteid != undefined) ? $scope.siteFilter = $routeParams.siteid : null;
+
+
         $scope.tags_filter = [];
         $scope.groupTests = false;
         $scope.breadcrumbs = [
@@ -17,7 +22,7 @@ reportsController.controller('ReportsController', ['$scope', '$http', '$location
 
         ReportsDash.query(function(data){
             $scope.reports = data.reports_all;
-            passFail(data.reports_all, $scope);
+            passFailChart(data.reports_all, $scope);
             sitePieChart();
 
             angular.forEach(data.reports_all, function(v,i){
@@ -26,19 +31,70 @@ reportsController.controller('ReportsController', ['$scope', '$http', '$location
                         $scope.tags_filter.push(value);
                     };
                 });
-
             });
         });
 
+        $scope.getSiteName = function(site_id){
+            return $scope.setSiteName(site_id);
+        };
+
         var count = 0;
 
+        $scope.siteFilterChange = function(report) {
+
+            $location.search('siteid', $scope.siteFilter);
+
+            if($scope.siteFilter != undefined) {
+                if($scope.siteFilter == report.site_id) {
+                    return true;
+                }
+            } else {
+                return true;
+            }
+        };
+
         $scope.$watch('reportsFiltered', function(){
-            passFail($scope.reportsFiltered, $scope);
+            passFailChart($scope.reportsFiltered, $scope);
         }, true);
 
         $scope.sitesCoverageData = [];
 
         //@TODO move this out into a shared Service
+
+        var siteCoverageChart = function() {
+
+            //Each site Total Tests
+            //Each site Total Goals
+
+//            angular.forEach($scope.sites_results, function(v){
+//                var data = {
+//                    "cols": [
+//                        {id: "sites", label: "Sites", type: "string", "p":{}},
+//                        {id: "p", label: "State", type: "number", "p": {}}
+//                    ], "rows": [
+//                        {
+//                            c: [
+//                                {
+//                                    v: "Not Covered"
+//                                },
+//                                {
+//                                    v: v.passing
+//                                }
+//                            ]},
+//                        {
+//                            c: [
+//                                {
+//                                    v: "Covered"
+//                                },
+//                                {
+//                                    v: v.failing
+//                                }
+//                            ]}
+//                    ]
+//                };
+//            });
+        };
+
         var sitePieChart = function() {
             $scope.chartSitesProgressArray = [];
 
@@ -46,7 +102,7 @@ reportsController.controller('ReportsController', ['$scope', '$http', '$location
                 var data = {
                     "cols": [
                         {id: "sites", label: "Sites", type: "string", "p":{}},
-                        {id: "p", label: "State", type: "number", "p": {}},
+                        {id: "p", label: "State", type: "number", "p": {}}
                     ], "rows": [
                         {
                             c: [

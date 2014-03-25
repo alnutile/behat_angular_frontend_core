@@ -90,14 +90,20 @@
         <div class="col-md-3 column">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <a id="create-test" href="#/sites/{{ site.nid }}/tests/new" class="btn btn-success">Create New
-                        Test</a>
+                    <a id="create-test" href="#/sites/{{ site.nid }}/tests/new" class="btn btn-info">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        &nbsp;Create New Test</a>
                 </div>
                 <div class="panel-body">
-                    <a id="batches" href="#/sites/{{ site.nid }}/batches" class="btn btn-success">Batch Tests</a>
+                    <a id="batches" href="#/sites/{{ site.nid }}/batches" class="btn btn-default">
+                        <i class="glyphicon glyphicon-book"></i>
+                        &nbsp;Batch Tests</a>
                 </div>
                 <div class="panel-body">
-                    <a id="reporting" href="#/sites/{{ site.nid }}/reporting" class="btn btn-success">Reporting</a>
+                    <a class="btn btn-success" ng-href="#/reports/?siteid={{site.nid}}">
+                        <i class="glyphicon glyphicon-record"></i>
+                        &nbsp;Reporting
+                    </a>
                 </div>
             </div>
         </div>

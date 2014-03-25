@@ -64,7 +64,7 @@
                 <div class="panel-body">
                     <div class="row clearfix">
                         <div class="col-md-4">
-                            <input class="form-control" type="text" ng-model="search" placeholder="search tests">
+                            <input class="form-control" type="text" ng-model="search" placeholder="search tests" name="search_tests">
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" ng-model="groupTests"> Group tests [not working]
@@ -92,11 +92,12 @@
                                 <th>Test Name</th>
                                 <th>Tags</th>
                                 <th>Vendor</th>
+                                <th>Site</th>
                                 <th>Results</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="report in (reportsFiltered = ( reports | filter:{status:passFailShow} | filter:{site_id:siteFilter} | filter:tagged | filter:dateRangeCheck | filter:groupedByTests | filter:search))"
+                            <tr ng-repeat="report in (reportsFiltered = ( reports | filter:{status:passFailShow} | filter:siteFilterChange | filter:tagged | filter:dateRangeCheck | filter:groupedByTests | filter:search))"
                                 ng-class="{danger: report.status == 0}">
                                 <td>{{ $index + 1 }}</td>
                                 <td ng-bind-html="report.status | passFailFilter "></td>
@@ -104,6 +105,7 @@
                                 <td>{{ report.test_name }}</td>
                                 <td><span ng-repeat="tag in report.tags"> {{tag}} </span></td>
                                 <td>{{ report.user_id }}</td>
+                                <td>{{ getSiteName(report.site_id) }}</td>
                                 <td><a href="#/reports/{{ report.rid }}">drill down</a></td>
                             </tr>
                             </tbody>
@@ -125,7 +127,7 @@
                         Filter by Site
                     </div>
                     <div class="panel-body">
-                        <select ng-model="siteFilter" ng-options="site.nid as site.title for site in sites">
+                        <select ng-change="siteFilterChange(siteFilter)" ng-model="siteFilter" ng-options="site.nid as site.title for site in sites" name="site_filter">
                             <option value="">-site filter-</option>
                         </select>
                     </div>
@@ -136,7 +138,7 @@
                         Filter by Tag
                     </div>
                     <div class="panel-body">
-                        <select ng-model="tagged" ng-options="tag as tag for tag in tags_filter">
+                        <select ng-model="tagged" ng-options="tag as tag for tag in tags_filter" name="tag_filter">
                             <option value="">-test filter-</option>
                         </select>
                     </div>
