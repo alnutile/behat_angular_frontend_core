@@ -3,6 +3,7 @@ var reportsController = angular.module('reportsController', []);
 reportsController.controller('ReportsController', ['$scope', '$http', '$location', '$route', '$routeParams', 'ReportsDash', 'SitesServices', 'dateFilter', 'passFail',
     function($scope, $http, $location, $route, $routeParams, ReportsDash, SitesServices, dateFilter, passFail){
         $scope.tags_filter = [];
+        $scope.groupTests = false;
         $scope.breadcrumbs = [
             {
                 title: "Reports",
@@ -29,8 +30,6 @@ reportsController.controller('ReportsController', ['$scope', '$http', '$location
             });
         });
 
-
-        //$scope.reportsFiltered = [];
         var count = 0;
 
         $scope.$watch('reportsFiltered', function(){
@@ -41,7 +40,6 @@ reportsController.controller('ReportsController', ['$scope', '$http', '$location
 
         //@TODO move this out into a shared Service
         var sitePieChart = function() {
-            console.log($scope.sites_results);
             $scope.chartSitesProgressArray = [];
 
             angular.forEach($scope.sites_results, function(v){
@@ -87,7 +85,6 @@ reportsController.controller('ReportsController', ['$scope', '$http', '$location
                     "displayExactValues": true
                 };
 
-
                 $scope.chartSitesProgressArray.push(
                     {
                         "site_name": v.site_name,
@@ -99,21 +96,26 @@ reportsController.controller('ReportsController', ['$scope', '$http', '$location
 
                     }
                 );
-
-
-
             });
-
-            //LEFT OFF
-            // now to make ONE pie chart for EACH site
-            // then interate over each of those somehow in the partial
-
 
         };
 
         //Filters
         $scope.startDate = '';
         $scope.endDate = '';
+
+        $scope.groupedByTests = function(index) {
+//            if( $scope.groupTests == true ) {
+//                if ( $scope.testsGroupedArray.indexOf(report.test_name) == -1) {
+//                    $scope.testsGroupedArray.push(report.test_name);
+//                    return true;
+//                }
+//            } else {
+//                $scope.testsGroupedArray = [];
+//                return true;
+//            }
+            return true;
+        }
 
         $scope.dateRangeCheck = function(report) {
             var startDateFormatted = dateFilter($scope.startDate,'yyyy-MM-dd');

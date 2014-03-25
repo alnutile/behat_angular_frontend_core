@@ -12,11 +12,10 @@
                         <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
                     </accordion-heading>
                     <div ng-if="chart.site_name" ng-repeat="chart in chartSitesProgressArray" class="col-xs-4 col-md-4">
-                        {{ chart }}
+                        <div google-chart chart="chart" style="height:200px; width:200px;"></div>
                     </div>
                     <div class="col-xs-4 col-md-4">
-                        <h3>Summary Chart</h3>
-                        {{ chartsPassingFailing }}
+                        <div google-chart chart="chartsPassingFailing" style="height:200px; width:200px;"></div>
                     </div>
                 </accordion-group>
             </accordion>
@@ -66,7 +65,14 @@
                     <div class="row clearfix">
                         <div class="col-md-4">
                             <input class="form-control" type="text" ng-model="search" placeholder="search tests">
+                            <div class="checkbox">
+                                {{ groupTests }}
+                                <label>
+                                    <input type="checkbox" ng-model="groupTests"> Group tests [not working]
+                                </label>
+                            </div>
                         </div>
+
                         <div class="col-md-8">
                             <h5>Active Filters: </h5>
                             <ul class="list-inline">
@@ -91,7 +97,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="report in (reportsFiltered = ( reports | filter:{status:passFailShow} | filter:{site_id:siteFilter} | filter:tagged | filter:dateRangeCheck | filter:search))"
+                            <tr ng-repeat="report in (reportsFiltered = ( reports | filter:{status:passFailShow} | filter:{site_id:siteFilter} | filter:tagged | filter:dateRangeCheck | filter:groupedByTests | filter:search))"
                                 ng-class="{danger: report.status == 0}">
                                 <td>{{ $index + 1 }}</td>
                                 <td ng-bind-html="report.status | passFailFilter "></td>
@@ -104,6 +110,9 @@
                             </tbody>
                         </table>
                     </div>
+                    <ol>
+                        <li ng-repeat="test in testsGroupedArray">{{ test }}</li>
+                    </ol>
                 </div>
                 <div class="panel-footer">
                 </div>
