@@ -3,20 +3,28 @@ var reportsController = angular.module('reportsController', []);
 reportsController.controller('ReportsController', ['$scope', '$http', '$location', '$route', '$routeParams', 'ReportsDash', 'SitesServices', 'dateFilter', 'passFail',
     function($scope, $http, $location, $route, $routeParams, ReportsDash, SitesServices, dateFilter, passFail){
         $scope.tags_filter = [];
+        $scope.breadcrumbs = [
+            {
+                title: "Reports",
+                path:  "#"
+            }];
+        $scope.isopen = true;
+
+        SitesServices.query({meta: false}, function(data){
+            $scope.sites = data;
+        });
 
         ReportsDash.query(function(data){
             $scope.reports = data.reports_all;
             passFail(data.reports_all, $scope);
+            sitePieChart();
 
             angular.forEach(data.reports_all, function(v,i){
-
-
                 angular.forEach(v.tags, function(value, index){
                     if($scope.tags_filter.indexOf(value) == -1) {
                         $scope.tags_filter.push(value);
                     };
                 });
-
 
             });
         });
@@ -26,12 +34,82 @@ reportsController.controller('ReportsController', ['$scope', '$http', '$location
         var count = 0;
 
         $scope.$watch('reportsFiltered', function(){
-
             passFail($scope.reportsFiltered, $scope);
-
         }, true);
-        //@TODO move this out into a shared Service
 
+        $scope.sitesCoverageData = [];
+
+        //@TODO move this out into a shared Service
+        var sitePieChart = function() {
+            console.log($scope.sites_results);
+            $scope.chartSitesProgressArray = [];
+
+            angular.forEach($scope.sites_results, function(v){
+                var data = {
+                    "cols": [
+                        {id: "sites", label: "Sites", type: "string", "p":{}},
+                        {id: "p", label: "State", type: "number", "p": {}},
+                    ], "rows": [
+                        {
+                            c: [
+                                {
+                                    v: "Passing"
+                                },
+                                {
+                                    v: v.passing
+                                }
+                            ]},
+                        {
+                            c: [
+                                {
+                                    v: "Failing"
+                                },
+                                {
+                                    v: v.failing
+                                }
+                            ]},
+                        {
+                            c: [
+                                {
+                                    v: "Not Run"
+                                },
+                                {
+                                    v: v.not_running
+                                }
+                            ]}
+                    ]
+                };
+
+                var options = {
+                    "title": v.site_name,
+                    "isStacked": "true",
+                    "is3D": true,
+                    "displayExactValues": true
+                };
+
+
+                $scope.chartSitesProgressArray.push(
+                    {
+                        "site_name": v.site_name,
+                        "data": data,
+                        "type": "PieChart",
+                        "displayed": true,
+                        "options": options,
+                        "formatters": {}
+
+                    }
+                );
+
+
+
+            });
+
+            //LEFT OFF
+            // now to make ONE pie chart for EACH site
+            // then interate over each of those somehow in the partial
+
+
+        };
 
         //Filters
         $scope.startDate = '';
@@ -55,10 +133,6 @@ reportsController.controller('ReportsController', ['$scope', '$http', '$location
             }
         };
 
-        SitesServices.query({meta: false}, function(data){
-            $scope.sites = data;
-            //console.log(data);
-        });
         $scope.formats = 'yyyy-mm-dd';
         $scope.nav      = { name: 'nav', url: 'templates/nav.html'}
         $scope.bc       = { name: 'bc', url: 'templates/bc.html'}

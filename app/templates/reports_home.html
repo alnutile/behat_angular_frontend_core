@@ -1,25 +1,65 @@
 <div class="container">
     <span ng-include="nav.url" class="slide-animate"></span>
+
     <div ng-include="bc.url"></div>
     <div class="row clearfix">
         <div class="col-md-8 column">
+            <!-- sites charts -->
+            <accordion>
+                <accordion-group is-open="isopen">
+                    <accordion-heading>
+                        <i class="glyphicon glyphicon-list-alt"></i> &nbsp;Sites
+                        <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+                    </accordion-heading>
+                    <div ng-if="chart.site_name" ng-repeat="chart in chartSitesProgressArray" class="col-xs-4 col-md-4">
+                        {{ chart }}
+                    </div>
+                    <div class="col-xs-4 col-md-4">
+                        <h3>Summary Chart</h3>
+                        {{ chartsPassingFailing }}
+                    </div>
+                </accordion-group>
+            </accordion>
+            <!-- end sites charts -->
+            <!-- summary data -->
+            <accordion>
+                <accordion-group is-open="isopen">
+                    <accordion-heading>
+                        <i class="glyphicon glyphicon-list"></i>&nbsp; Summary
+                        <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+                    </accordion-heading>
+                    <div class="col-md-2 column text-center">
+                        <h5>Tests Created</h5>
+                        <strong>{{ charts.total }}</strong>
+                    </div>
+                    <div class="col-md-2 column column text-center">
+                        <h5>Tests Passing</h5>
+                        <strong>{{ charts.passing }}</strong>
+                    </div>
+                    <div class="col-md-2 column column text-center">
+                        <h5>Tests Failing</h5>
+                        <strong>{{ charts.failing }}</strong>
+                    </div>
+                    <div class="col-md-2 column column text-center">
+                        <h5>Sites with Coverage</h5>
+                        <strong>{{ charts.total - charts.not_running }}</strong>
+                    </div>
+                    <div class="col-md-2 column column text-center">
+                        <h5>Sites without Coverage</h5>
+                        <strong>{{ charts.not_running }}</strong>
+                    </div>
+                    <div class="col-md-2 column column text-center">
+                        <h5>USD Saved to date</h5>
+                        <!-- numbers still not clear right now 1 test = 10 person hours saved at $125 an hour -->
+                        <strong>{{ charts.total - charts.not_running * 10 * 125 | currency }}</strong>
+                    </div>
+                </accordion-group>
+            </accordion>
+            <!-- end summary data -->
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        Report Charts
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    {{charts}}
-                </div>
-                <div class="panel-footer">
-
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        Reports
+                        <i class="glyphicon glyphicon-th-list"></i> &nbsp;Reports
                     </h3>
                 </div>
                 <div class="panel-body">
@@ -32,7 +72,7 @@
                             <ul class="list-inline">
                                 <li>Site: {{ siteFilter|siteName:this }}</li>
                                 <li>Tag: {{ tagged }}</li>
-                                <li>Pass/Fail: <span ng-bind-html="passFailShow | passFailFilter"></span> </li>
+                                <li>Pass/Fail: <span ng-bind-html="passFailShow | passFailFilter"></span></li>
                             </ul>
                         </div>
                     </div>
@@ -41,6 +81,7 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                             <tr>
+                                <th>Count</th>
                                 <th>Pass/Fail</th>
                                 <th>Date</th>
                                 <th>Test Name</th>
@@ -50,19 +91,18 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="report in (reportsFiltered = ( reports | filter:{status:passFailShow} | filter:{site_id:siteFilter} | filter:tagged | filter:dateRangeCheck | filter:search))" ng-class="{danger: report.status == 0}">
-                                    <td ng-bind-html="report.status | passFailFilter "></td>
-                                    <td>{{ report.created }}</td>
-                                    <td>{{ report.test_name }}</td>
-                                    <td><span ng-repeat="tag in report.tags"> {{tag}} </span></td>
-                                    <td>{{ report.user_id }}</td>
-                                    <td><a href="#/reports/{{ report.rid }}">drill down</a></td>
-                                </tr>
+                            <tr ng-repeat="report in (reportsFiltered = ( reports | filter:{status:passFailShow} | filter:{site_id:siteFilter} | filter:tagged | filter:dateRangeCheck | filter:search))"
+                                ng-class="{danger: report.status == 0}">
+                                <td>{{ $index + 1 }}</td>
+                                <td ng-bind-html="report.status | passFailFilter "></td>
+                                <td>{{ report.created }}</td>
+                                <td>{{ report.test_name }}</td>
+                                <td><span ng-repeat="tag in report.tags"> {{tag}} </span></td>
+                                <td>{{ report.user_id }}</td>
+                                <td><a href="#/reports/{{ report.rid }}">drill down</a></td>
+                            </tr>
                             </tbody>
                         </table>
-                        <ol>
-                            <li ng-repeat="f in reportsFiltered">{{ f.test_name }}</li>
-                        </ol>
                     </div>
                 </div>
                 <div class="panel-footer">
@@ -70,38 +110,35 @@
             </div>
         </div>
         <div class="col-md-4 column">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        Site
-                    </h3>
+            <div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="glyphicon glyphicon-list-alt"></i> &nbsp;
+                        Filter by Site
+                    </div>
+                    <div class="panel-body">
+                        <select ng-model="siteFilter" ng-options="site.nid as site.title for site in sites">
+                            <option value="">-site filter-</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <select ng-model="siteFilter" ng-options="site.nid as site.title for site in sites">
-                        <option value="">-site filter-</option>
-                    </select>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="glyphicon glyphicon-list-alt"></i> &nbsp;
+                        Filter by Tag
+                    </div>
+                    <div class="panel-body">
+                        <select ng-model="tagged" ng-options="tag as tag for tag in tags_filter">
+                            <option value="">-test filter-</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        Test Related Tags
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <select ng-model="tagged" ng-options="tag as tag for tag in tags_filter">
-                        <option value="">-test filter-</option>
-                    </select>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        Pass / Fail
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <div class="col-xs-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="glyphicon glyphicon-list-alt"></i> &nbsp;
+                        Filter by Pass / Fail
+                    </div>
+                    <div class="panel-body">
                         <select ng-model="passFailShow" id="pass_fail_filter">
                             <option value="">all</option>
                             <option value="1">passing</option>
@@ -110,35 +147,28 @@
                         </select>
                     </div>
                 </div>
-                <div class="panel-footer">
-                    Panel footer
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        Results by Date
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <strong>Start: {{startDate | date:'yyyy-MM-dd'}}</strong>
-                    <br>
-                    <strong>End: {{endDate | date:'yyyy-MM-dd'}}</strong>
-                </div>
-                <div class="panel-body">
-                    <div style="display:inline-block; min-height:290px;">
-                        <div class="well well-sm" ng-model="startDate">
-                            <datepicker max="endDate" show-weeks="showWeeks" starting-day="1" ng-click="startDateCheck()"></datepicker>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="glyphicon glyphicon-list-alt"></i> &nbsp;
+                        Date Range
+                    </div>
+                    <div class="panel-body">
+                        <strong>Start: {{startDate | date:'yyyy-MM-dd'}}</strong>
+                        <br>
+                        <strong>End: {{endDate | date:'yyyy-MM-dd'}}</strong>
+                        <br>
+                        <div style="display:inline-block; min-height:290px;">
+                            <div class="well well-sm" ng-model="startDate">
+                                <datepicker max="endDate" show-weeks="showWeeks" starting-day="1"
+                                            ng-click="startDateCheck()"></datepicker>
+                            </div>
+                        </div>
+                        <div style="display:inline-block; min-height:290px;">
+                            <div class="well well-sm" ng-model="endDate">
+                                <datepicker min="startDate" show-weeks="showWeeks" starting-day="1"></datepicker>
+                            </div>
                         </div>
                     </div>
-                    <div style="display:inline-block; min-height:290px;">
-                        <div class="well well-sm" ng-model="endDate">
-                            <datepicker min="startDate" show-weeks="showWeeks" starting-day="1"></datepicker>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-footer">
-                    Panel footer
                 </div>
             </div>
         </div>
