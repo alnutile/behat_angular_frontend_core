@@ -53,3 +53,10 @@ Feature: Reports Testing
     And I wait
     Then I should not see "test331.feature"
     And I should see "test126.feature"
+
+  Scenario: Sites own report
+    Given I am on "/sites/2"
+    And I follow "reporting"
+    And I wait
+    Then I should not see "test331.feature"
+    And I should see "test2.feature"
