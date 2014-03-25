@@ -138,6 +138,6 @@ reportsController.controller('ReportsController', ['$scope', '$http', '$location
         $scope.formats = 'yyyy-mm-dd';
         $scope.nav      = { name: 'nav', url: 'templates/nav.html'}
         $scope.bc       = { name: 'bc', url: 'templates/bc.html'}
-        $scope.nav_message = "Mocked data. You can click on <b>test2.feature view</b> or <b>edit</b> and <b>Create New Test</b></b>"
+        $scope.nav_message = "Mocked data. You can click on Site 2 has decent reports to show."
 
     }]);
