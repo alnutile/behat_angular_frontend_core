@@ -27,7 +27,7 @@ Feature: Site View
   Scenario: On the Site page I should see Reporting
     Given I am on "/sites/2"
     And I wait
-    Then I should see "Report: Passing Failing"
+    Then I should see "Report Summary"
     And I should see "Tests Created"
     And I should see "($1,244.00)"
     And I should see "test5.feature"
