@@ -3,6 +3,7 @@
 var app = angular.module('behatEditor', [
     'ngRoute',
     'ngTable',
+    'chartjs',
     'ngMockE2E',
     'ngAnimate',
     'ui.ace',
@@ -14,6 +15,8 @@ var app = angular.module('behatEditor', [
     'chartingServices',
     'alertServices',
     'runServices',
+    'sites_helpers',
+    'chartjs_services',
     'sitesController',
     'reportsController',
     'cloneTestCtrl',

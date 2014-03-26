@@ -4,7 +4,16 @@
             Report Summary
         </h3>
     </div>
-        <div google-chart chart="chartsPassingFailing" style="height:200px; width:250px;"></div>
+    <div class="panel-body">
+        <div class="col-lg-9 col-sm-9 col-md-9">
+            <cjs-doughnut dataset="chartsPassingFailing.chart" options="chartsPassFailOptions" segement-stroke-width="5"></cjs-doughnut>
+        </div>
+        <div class="col-lg-3 col-sm-3 col-md-3">
+            <h4>Totals</h4>
+            <h5>Passing {{ chartsPassingFailing.passing }}</h5>
+            <h5>Failing {{ chartsPassingFailing.failing }}</h5>
+        </div>
+    </div>
     <div class="panel-footer">
     </div>
 </div>

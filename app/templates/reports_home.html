@@ -11,11 +11,30 @@
                         <i class="glyphicon glyphicon-list-alt"></i> &nbsp;Sites
                         <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
                     </accordion-heading>
-                    <div ng-if="chart.site_name" ng-repeat="chart in chartSitesProgressArray" class="col-xs-4 col-md-4">
-                        <div google-chart chart="chart" style="height:200px; width:200px;"></div>
+
+                    <div class="row">
+                        <h4>Sites Passing/Failing Charts</h4>
+                        <div ng-repeat="chart in chartsPassFail.charts" class="col-lg-4 col-sm-4">
+                            <div  class="text-center">
+                                <h5>{{ chart.name }}</h5>
+                                <cjs-doughnut dataset="chart.chart" options="chartsPassFailOptions" segement-stroke-width="5"></cjs-doughnut>
+                                <div class="text-center">
+                                    Passing: {{ chart.passing }}
+                                    Failing: {{ chart.failing }}
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-xs-4 col-md-4">
-                        <div google-chart chart="chartsPassingFailing" style="height:200px; width:200px;"></div>
+                    <div class="row">
+                        <h4>Passing/Failing Overview</h4>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            <cjs-doughnut dataset="chartsPassingFailing.chart" options="chartsPassFailOptions" segement-stroke-width="5"></cjs-doughnut>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4 well">
+                            <h4>Totals</h4>
+                            <h5>Passing {{ chartsPassingFailing.passing }}</h5>
+                            <h5>Failing {{ chartsPassingFailing.failing }}</h5>
+                        </div>
                     </div>
                 </accordion-group>
             </accordion>

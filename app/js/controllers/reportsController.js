@@ -1,7 +1,7 @@
 var reportsController = angular.module('reportsController', []);
 
-reportsController.controller('ReportsController', ['$scope', '$http', '$location', '$route', '$routeParams', 'ReportsDash', 'SitesServices', 'dateFilter', 'passFailChart',
-    function($scope, $http, $location, $route, $routeParams, ReportsDash, SitesServices, dateFilter, passFailChart){
+reportsController.controller('ReportsController', ['$scope', '$http', '$location', '$route', '$routeParams', 'ReportsDash', 'SitesServices', 'dateFilter', 'passFailChart', 'SiteHelpers', 'ChartsPassFail',
+    function($scope, $http, $location, $route, $routeParams, ReportsDash, SitesServices, dateFilter, passFailChart, SiteHelpers, ChartsPassFail){
 
 
         ($routeParams.siteid != undefined) ? $scope.siteFilter = $routeParams.siteid : null;
@@ -23,7 +23,8 @@ reportsController.controller('ReportsController', ['$scope', '$http', '$location
         ReportsDash.query(function(data){
             $scope.reports = data.reports_all;
             passFailChart(data.reports_all, $scope);
-            sitePieChart();
+            $scope.chartsPassFail = ChartsPassFail($scope.sites_results);
+            $scope.chartsPassFailOptions = [];
 
             angular.forEach(data.reports_all, function(v,i){
                 angular.forEach(v.tags, function(value, index){
@@ -32,13 +33,14 @@ reportsController.controller('ReportsController', ['$scope', '$http', '$location
                     };
                 });
             });
+
+
         });
 
         $scope.getSiteName = function(site_id){
             return $scope.setSiteName(site_id);
         };
 
-        var count = 0;
 
         $scope.siteFilterChange = function(report) {
 
@@ -59,102 +61,7 @@ reportsController.controller('ReportsController', ['$scope', '$http', '$location
 
         $scope.sitesCoverageData = [];
 
-        //@TODO move this out into a shared Service
-
-        var siteCoverageChart = function() {
-
-            //Each site Total Tests
-            //Each site Total Goals
-
-//            angular.forEach($scope.sites_results, function(v){
-//                var data = {
-//                    "cols": [
-//                        {id: "sites", label: "Sites", type: "string", "p":{}},
-//                        {id: "p", label: "State", type: "number", "p": {}}
-//                    ], "rows": [
-//                        {
-//                            c: [
-//                                {
-//                                    v: "Not Covered"
-//                                },
-//                                {
-//                                    v: v.passing
-//                                }
-//                            ]},
-//                        {
-//                            c: [
-//                                {
-//                                    v: "Covered"
-//                                },
-//                                {
-//                                    v: v.failing
-//                                }
-//                            ]}
-//                    ]
-//                };
-//            });
-        };
-
-        var sitePieChart = function() {
-            $scope.chartSitesProgressArray = [];
-
-            angular.forEach($scope.sites_results, function(v){
-                var data = {
-                    "cols": [
-                        {id: "sites", label: "Sites", type: "string", "p":{}},
-                        {id: "p", label: "State", type: "number", "p": {}}
-                    ], "rows": [
-                        {
-                            c: [
-                                {
-                                    v: "Passing"
-                                },
-                                {
-                                    v: v.passing
-                                }
-                            ]},
-                        {
-                            c: [
-                                {
-                                    v: "Failing"
-                                },
-                                {
-                                    v: v.failing
-                                }
-                            ]},
-                        {
-                            c: [
-                                {
-                                    v: "Not Run"
-                                },
-                                {
-                                    v: v.not_running
-                                }
-                            ]}
-                    ]
-                };
-
-                var options = {
-                    "title": v.site_name,
-                    "isStacked": "true",
-                    "is3D": true,
-                    "displayExactValues": true
-                };
-
-                $scope.chartSitesProgressArray.push(
-                    {
-                        "site_name": v.site_name,
-                        "data": data,
-                        "type": "PieChart",
-                        "displayed": true,
-                        "options": options,
-                        "formatters": {}
-
-                    }
-                );
-            });
-
-        };
+        //@TODO move this out into a shared ChartJSService
 
         //Filters
         $scope.startDate = '';

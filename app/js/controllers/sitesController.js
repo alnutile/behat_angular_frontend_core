@@ -5,8 +5,8 @@ sitesController.controller('SitesController', ['$scope', '$http', '$location', '
         $scope.sites = SitesServices.query();
     }]);
 
-sitesController.controller('SiteController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'TableMaker', 'ReportSiteNumbers',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, TableMaker, ReportSiteNumbers){
+sitesController.controller('SiteController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'TableMaker', 'ReportSiteNumbers', 'SiteHelpers', 'ChartsPassFail',
+    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, TableMaker, ReportSiteNumbers, SiteHelpers, ChartsPassFail){
         $scope.nav                  = { name: 'nav', url: 'templates/nav.html'}
         $scope.bc                   = { name: 'bc', url: 'templates/bc.html'}
         $scope.report_filter        = { name: 'report_filter', url: 'templates/report_filter.html'}
@@ -47,52 +47,23 @@ sitesController.controller('SiteController', ['$scope', '$http', '$location', '$
                 } else {
                     $scope.charts.not_running = $scope.charts.not_running + 1;
                 }
-
             });
             $scope.chartsPassingFailing = {}
-            $scope.chartsPassingFailing.data =  {
-                "cols" : [
-                    {id: "states", label: "Test States", type: "string", "p": {}},
-                    {id: "t", label: "Passing", type: "number", "p": {}},
-                    {id: "s", label: "Failing", type: "number", "p": {}},
-                    {id: "n", label: "Not Running", type: "number", "p": {}}
-                ], "rows": [
-                    {c: [
-                            {
-                                v: "Passing"
-                            },
-                            {
-                                v: $scope.charts.passing
-                            }
-                    ]},
-                    {c: [
-                            {
-                                v: "Failing"
-                            },
-                            {
-                                v: $scope.charts.failing
-                            }
-                        ]
+            $scope.chartsPassingFailing =
+            {'chart':
+                [
+                    {
+                        value: $scope.charts.passing,
+                        color:"#F38630"
                     },
-                    {c:
-                        [
-                            {
-                                v: "Not Run"
-                            },
-                            {
-                                v: $scope.charts.not_running
-                            }
-                        ]
-                    },
-                ]};
-            $scope.chartsPassingFailing.type = 'PieChart';
-            $scope.chartsPassingFailing.options = {
-                'title': "Report: Passing Failing",
-                'isStacked': "true",
-                "fill": 20
-            }
-
-
+                    {
+                        value: $scope.charts.failing,
+                        color:"#E0E4CC"
+                    }
+                ],
+                'passing': $scope.charts.passing,
+                'failing': $scope.charts.failing
+            };
 
             $scope.breadcrumbs = [
                 {

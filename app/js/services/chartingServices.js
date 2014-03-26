@@ -59,44 +59,21 @@ chartingServices.factory('passFailChart', ['$rootScope',
                 });
 
                 $scope.chartsPassingFailing = {};
-                $scope.chartsPassingFailing.data =  {
-                    "cols" : [
-                        {id: "states", label: "Test States", type: "string", "p": {}},
-                        {id: "t", label: "State", type: "number", "p": {}},
-                    ], "rows": [
-                        {c: [
-                            {
-                                v: "Passing"
-                            },
-                            {
-                                v: $scope.charts.passing
-                            }
-                        ]},
-                        {c: [
-                            {
-                                v: "Failing"
-                            },
-                            {
-                                v: $scope.charts.failing
-                            }
-                        ]
-                        },
-                        {c:
-                            [
-                                {
-                                    v: "Not Run"
-                                },
-                                {
-                                    v: $scope.charts.not_running
-                                }
-                            ]
-                        },
-                    ]};
 
-                $scope.chartsPassingFailing.type = 'PieChart';
-                $scope.chartsPassingFailing.options = {
-                    'title': "All Sites Passing Failing",
-                    'isStacked': "false"
-                }
+                $scope.chartsPassingFailing =
+                {'chart':
+                    [
+                        {
+                            value: $scope.charts.passing,
+                            color:"#F38630"
+                        },
+                        {
+                            value: $scope.charts.failing,
+                            color:"#E0E4CC"
+                        }
+                    ],
+                    'passing': $scope.charts.passing,
+                    'failing': $scope.charts.failing
+                };
             }
         }]);
