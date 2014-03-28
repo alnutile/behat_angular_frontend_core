@@ -5,7 +5,10 @@ settings.controller('SiteSettingsCtrl', ['$scope', '$http', '$location', '$route
         $scope.nav              = { name: 'nav',        url: 'templates/nav.html'};
         $scope.nav_message = "Mocked data. You can see what the Settings page will look like, click update though your settings are not save to this fake rest api";
         $scope.bc                   = { name: 'bc', url: 'templates/bc.html'}
-        $scope.breadcrumbs = [{ title: "Settings", path:  "#"}];
+        $scope.breadcrumbs = [
+            {title: "Site " + $routeParams.sid, path: "#/sites/" + $routeParams.sid },
+            { title: "Settings", path:  "#"}
+        ];
         SitesSettings.query({sid: $routeParams.sid}, function(data){
             $scope.settings = data.data;
             console.log(data);
