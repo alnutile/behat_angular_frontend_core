@@ -19,6 +19,7 @@ var app = angular.module('behatEditor', [
     'chartjs_services',
     'sitesController',
     'reportsController',
+    'siteSettingsCtrl',
     'cloneTestCtrl',
     'dashController',
     'testsController',
@@ -32,6 +33,9 @@ var app = angular.module('behatEditor', [
 ]);
 
 app.run(function($httpBackend) {
+
+    var site_settings_update  = '{"status":"success","data":{"defaults":{"default_tag":"@example","base_url":"http:\/\/google.com"},"github":{"github_username":"test","github_password":"test","test_folder":"tests","github_account":"testuser"},"saucelabs":{"browser":{"username":"testuser","access_key":"accessskey","browser":"firefox","os":"Windows 2003","name":"Testing with Saucelabs"},"host":"ondemand.saucelabs.com","port":80}},"message":"Success updating file"}';
+    var site_settings_default = '{"status":"success","data":{"defaults":{"default_tag":"@updated","base_url":"http:\/\/google.com"},"github":{"github_username":"test","github_password":"test","test_folder":"tests","github_account":"testuser"},"saucelabs":{"browser":{"username":"testuser","access_key":"accessskey","browser":"firefox","os":"Windows 2003","name":"Testing with Saucelabs"},"host":"ondemand.saucelabs.com","port":80}},"message":"Success getting file"}';
 
     var sites =
         [
@@ -51,7 +55,6 @@ app.run(function($httpBackend) {
             {"vid":"15","uid":"1","title":"Site 15","log":"","status":"1","comment":"0","promote":"1","sticky":"0","vuuid":"c9dd2e0a-811e-4b95-9ce0-e620b1c64d65","nid":"15","type":"site","language":"und","created":"1394208320","changed":"1394208320","tnid":"0","translate":"0","uuid":"53a45773-3de5-45d4-86f2-c493762b7aac","revision_timestamp":"1394208320","revision_uid":"1","body":[],"name":"admin","picture":"0","data":"b:0;", "default_tag": "@example7"},
             {"vid":"16","uid":"1","title":"Site 16","log":"","status":"1","comment":"0","promote":"1","sticky":"0","vuuid":"c9dd2e0a-811e-4b95-9ce0-e620b1c64d65","nid":"16","type":"site","language":"und","created":"1394208320","changed":"1394208320","tnid":"0","translate":"0","uuid":"53a45773-3de5-45d4-86f2-c493762b7aac","revision_timestamp":"1394208320","revision_uid":"1","body":[],"name":"admin","picture":"0","data":"b:0;", "default_tag": "@example7"}
         ];
-
 
     var reports_site_all =
         [
@@ -688,6 +691,8 @@ app.run(function($httpBackend) {
     $httpBackend.whenGET('/behat_editor_services_v2/reports').respond(reports_home_page);
     $httpBackend.whenGET('/behat_editor_services_v2/sites?meta=false').respond(sites);
 
+    $httpBackend.whenGET('/behat_editor_services_v2/sites/2/settings').respond(site_settings_default);
+    $httpBackend.whenPUT('/behat_editor_services_v2/sites/2/settings').respond(site_settings_update);
     $httpBackend.whenGET('/behat_editor_services_v2/sites').respond(sites);
     $httpBackend.whenGET('/behat_editor_services_v2/sites/2/reports').respond(reports_site_all);
     $httpBackend.whenGET('/behat_editor_services_v2/sites/2/reports_numbers').respond(reports_dash_site_level);
@@ -732,6 +737,10 @@ app.config(['$routeProvider',
             when('/sites/:sid', {
                 templateUrl:  path + 'templates/site-show.html',
                 controller:  'SiteController'
+            }).
+            when('/sites/:sid/settings', {
+                templateUrl:  path + 'templates/settings/edit.html',
+                controller:  'SiteSettingsCtrl'
             }).
             when('/sites/:sid/tests/new', {
                 templateUrl:  path + 'templates/test-edit.html',
