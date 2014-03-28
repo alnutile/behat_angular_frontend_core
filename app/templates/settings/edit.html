@@ -1,0 +1,84 @@
+<div class="container">
+    <span ng-include="nav.url" class="slide-animate"></span>
+    <div ng-include="bc.url"></div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="row clearfix">
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel panel-heading">Settings</div>
+                        <div class="panel panel-body">
+                            <form ng-model="settings" name="settings">
+                                <div class="form-group">
+                                    <h4>Defaults</h4>
+                                    <div class="form-group">
+                                        <label>Base URL</label>
+                                        <input class="form-control" type="text" ng-model="settings.defaults.base_url" required/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Default Tag</label>
+                                        <input class="form-control"  ng-model="settings.defaults.default_tag" required/>
+                                        <div class="help-block">This will connect all your tests under this site</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <h4>Github</h4>
+                                    <div class="form-group">
+                                        <label>Github Username</label>
+                                        <input class="form-control" type="text" ng-model="settings.github.github_username">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Github Password</label>
+                                        <input class="form-control"  ng-model="settings.github.github_username">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Github Folder</label>
+                                        <input class="form-control"  ng-model="settings.github.test_folder">
+                                        <div class="help-block">This is the folder the tests will be in. Do not start with a / slash</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <h4>Saucelabs</h4>
+                                    <div class="form-group">
+                                        <label>Username</label>
+                                        <input class="form-control" type="text" ng-model="settings.saucelabs.browser.username">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Access Key</label>
+                                        <input class="form-control"  ng-model="settings.saucelabs.browser.access_key">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Default Browser</label></br>
+                                        <select name="os" ng-change="getBrowser()" ng-model="settings.saucelabs.browser.os" ng-options="os.saucename as os.nicename for os in os_options" required/>
+                                            <option value="">--choose os--</option>
+                                        </select>
+                                        </br>
+                                        <select name="browser" ng-model="settings.saucelabs.browser.browser" ng-options="browser.saucename as browser.nicename for browser in browser_options" required/>
+                                        <option value="">--choose os--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <input type="submit" class="btn btn-success" data-ng-click="putSettings()" value="Submit">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="well">
+                        <h3>Help!</h3>
+                        Lots of help here..
+
+                        At vero eos et accusam et justo duo dolores et ea rebum. Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+
+                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.
+                    </div>
+                    <div class="col-md-12 column">
+                        <div ng-include="alerts_partial.url"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
