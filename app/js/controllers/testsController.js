@@ -1,10 +1,9 @@
 var testsController = angular.module('testsController', ['ngSanitize']);
 
-testsController.controller('TestController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert){
+testsController.controller('TestController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'Noty',
+    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, Noty){
         $scope.nav = { name: 'nav', url: 'templates/nav.html'}
         $scope.nav_message = "Mocked data. You can click on <b>run</b> or <b>edit</b>"
-        $scope.alerts = [];
         $scope.test_results = '<strong>Click run to see results...</strong>';
 
         $scope.tests = TestsServices.get({sid: $routeParams.sid, tname: $routeParams.tname}, function(data) {
@@ -15,17 +14,13 @@ testsController.controller('TestController', ['$scope', '$http', '$location', '$
             $scope.site = data;
         });
 
-        $scope.closeAlert = function(index) {
-            closeAlert(index, $scope);
-        };
-
         $scope.runTest = function() {
               runTest('success', 'Running test...', $scope);
         }
     }]);
 
-testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal){
+testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter',
+    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter){
 
         $scope.blocks = {}
         $scope.blocks.testDetailsBlock = true;
@@ -38,7 +33,6 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.ace = { name: 'ace', url: 'templates/ace.html'}
         $scope.form = { name: 'form', url: 'templates/form.html'}
         $scope.nav = { name: 'nav', url: 'templates/nav.html'}
-        $scope.alerts_partial = { name: 'alerts', url: 'templates/alerts.html'}
 
         $scope.bc = { name: 'bc', url: 'templates/bc.html'}
 
@@ -47,7 +41,6 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.form_tags = {}
         $scope.steps.default = "Your Step Here..."
 
-        $scope.alerts = [];
         $scope.test_results = '<strong>Click run to see results...</strong>';
 
         $scope.token = $http({method: 'GET', url:'/services/session/token'}).success(
@@ -81,35 +74,33 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             $scope.sites = data;
         });
 
-        $scope.closeAlert = function(index) {
-            closeAlert(index, $scope);
-        };
-
         $scope.runTest = function() {
             runTest('success', 'Running test...', $scope);
         }
 
         $scope.saveTest = function(model) {
-            addAlert('info', 'Saving test..', $scope);
+            Noty('Saving test..', 'success');
             $scope.test.content = model;
             var params = {
                 'test': $scope.test,
                 'site': $scope.site
             }
             $results = TestsServices.update({sid: $routeParams.sid, tname: $routeParams.tname}, params);
-            addAlert('info', 'Test Saved..', $scope);
+            Noty('Test Saved...', 'success');
         }
 
         $scope.addTag = function(tags) {
             var text = $scope.test_content.split("\n");
             if(text[0].indexOf('@') != -1) {
                 var tags = text[0] + " " + tags;
+                tags = sanitizerFilter(tags);
                 text[0] = tags;
                 $scope.test_content = text.join("\n");
             } else {
+                tags = sanitizerFilter(tags);
                 $scope.test_content = tags + "\n" + $scope.test_content;
             }
-            addAlert('info', 'Tag Added ' + tags + '..', $scope);
+            Noty('Tag Added ' + tags + '...');
             $scope.steps.testDetails.tag = '';
         }
 
@@ -135,12 +126,13 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                         }
                     }
                 }
+                output = sanitizerFilter(output);
                 build.push(output);
                 count++;
             });
             var new_step = build.join(' ');
             $scope.test_content = $scope.test_content + "\n" + new_step;
-            addAlert('info', 'Step Added ' + new_step + '..', $scope);
+            Noty('Step Added ' + new_step + '...', 'success');
         };
 
         //@TODO move ace into a shared service, or
@@ -226,12 +218,12 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                     if(data.error === 0){
                         $location.path("/sites/" + $scope.site_to_clone_to.nid + "/tests/" + data.data.name_dashed + "/edit");
                     } else {
-                        addAlert('warning', 'Could not save test.', $scope);
+                        Noty('Could not save the test.', 'error');
                     }
                 });
 
             }, function () {
-                addAlert('info', 'Clone was canceled no new file made.', $scope);
+                Noty('Clone was canceled no new file made', 'success');
             });
         };
     }]);

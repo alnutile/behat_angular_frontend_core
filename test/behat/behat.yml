@@ -19,3 +19,18 @@ annotations:
 closures:
   paths:
     features: features/closures
+
+
+saucelabs:
+  extensions:
+    Behat\MinkExtension\Extension:
+      default_session: selenium2
+      base_url: 'http://angular.behateditor.io/#'
+      selenium2:
+        browser: chrome
+        wd_host: 'alfrednutile2:3e3289cc-b519-43c3-8393-d61438bb20f2@ondemand.saucelabs.com/wd/hub'
+        capabilities:
+          platform: 'Windows 2012'
+          browser: chrome
+          version: '26'
+          name: 'Behat Angular'

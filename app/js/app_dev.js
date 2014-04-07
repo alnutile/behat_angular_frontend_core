@@ -26,6 +26,7 @@ var app = angular.module('behatEditor', [
     'behatServices',
     'tableMaker',
     'passFailFilter',
+    'sanitizer',
     'asFilter',
     'dateRange',
     'siteName',
