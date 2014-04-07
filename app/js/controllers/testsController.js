@@ -100,8 +100,8 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                 tags = sanitizerFilter(tags);
                 $scope.test_content = tags + "\n" + $scope.test_content;
             }
-            Noty('Tag Added ' + tags + '...');
             $scope.steps.testDetails.tag = '';
+            Noty('Tag Added ' + tags + '...');
         }
 
         $scope.addStep = function(step) {

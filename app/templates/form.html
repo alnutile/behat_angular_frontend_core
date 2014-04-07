@@ -4,33 +4,33 @@
                 <input id="tag-input" class="form-control" name="testDetailsTag" ng-model="steps.testDetails.tag" type="text" placeholder="choose a tag" ng-required="true">
                 <br>
                 <input id="add-details" class="form-control btn btn-success" type="submit" value="Add">
+                <div class="help-block">Your tag must have an @ symbol and if you are adding more than on separate with a space. @test @test1</div>
                 <br>
             </div>
         </form>
 
         <form role="form" name="backgroundsForm" ng-submit="addStep(steps.backgroundsForm)">
-            <div class="form-group">
                 <div class="form-group">
-                <div ng-hide="true" ng-model="steps.backgroundsForm.intro" ng-init="steps.backgroundsForm.intro='Background:'"></div>
-                <h6>Background:</h6>
-                <input class="form-control" name="backGroundTarget" ng-model="steps.backgroundsForm.arg_1" type="text" value="" ng-required="true" placeholder="add a background. see help for more details">
-                <br>
-                <input class="form-control btn btn-success" type="submit" name="backgroundsFormAdd" value="Add">
-                <div class="help-block" ng-model="steps.back.final"> {{ steps.backgroundsForm.intro }} {{ steps.backgroundsForm.arg_1 }}</div>
-                <br>
-                <br>
-                <div class="well">
-                    <button type="button" class="btn btn-danger" ng-click="saveTest(test_content)">save test</button>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            clone <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="site in sites"><a ng-click="cloneTest(site)" href>{{site.title}}</a></li>
-                        </ul>
+                    <div ng-hide="true" ng-model="steps.backgroundsForm.background" ng-init="steps.backgroundsForm.background='Background:'"></div>
+                    <h6>Background:</h6>
+                    <input class="form-control" name="backGroundTarget" ng-model="steps.backgroundsForm.arg_1" type="text" value="" ng-required="true" placeholder="add a background. see help for more details">
+                    <br>
+                    <input class="form-control btn btn-success" type="submit" name="backgroundsFormAdd" value="Add">
+                    <div class="help-block" ng-model="steps.back.final"> {{ steps.backgroundsForm.background }} {{ steps.backgroundsForm.arg_1 }}</div>
+                    <br>
+                    <br>
+                    <div class="well">
+                        <button type="button" class="btn btn-danger" ng-click="saveTest(test_content)">save test</button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                clone <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li ng-repeat="site in sites"><a ng-click="cloneTest(site)" href>{{site.title}}</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
         </form>
     </div>
 
