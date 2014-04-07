@@ -38,3 +38,12 @@ Feature: Test Edit
       And I press "add-details"
       And I wait
       Then I should see "Tag Added <SCRIPT"
+
+  Scenario: Test Form Fields
+      Given I am on "/sites/2/tests/test2_feature/edit"
+      And I wait
+      And I fill in "backGroundTarget" with "test"
+      Then I should see "Background: test"
+      And I press "backgroundsFormAdd"
+      And I wait
+      Then I should see "Step Added Background: \"test\"..."

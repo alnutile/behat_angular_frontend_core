@@ -1,19 +1,22 @@
     <div ng-model="blocks.testDetailsBlock" ng-init="blocks.testDetailsBLock=true" ng-show="blocks.testDetailsBlock" class="ng-animate-block-transitions ng-hide">
         <form role="form" name="testDetails" ng-submit="addTag(steps.testDetails.tag)">
             <div class="form-group">
-                <input id="tag-input" class="form-control" name="testDetailsTag" ng-model="steps.testDetails.tag" type="text" placeholder="choose a tag">
+                <input id="tag-input" class="form-control" name="testDetailsTag" ng-model="steps.testDetails.tag" type="text" placeholder="choose a tag" ng-required="true">
                 <br>
                 <input id="add-details" class="form-control btn btn-success" type="submit" value="Add">
                 <br>
             </div>
         </form>
 
-        <form role="form" name="backgrounds" ng-submit="addStep(steps.back)">
+        <form role="form" name="backgroundsForm" ng-submit="addStep(steps.backgroundsForm)">
             <div class="form-group">
-                <input class="form-control" name="backGround" ng-model="steps.back.background" type="text" value="" ng-required="true" placeholder="add a bacgkround. see help for more details">
+                <div class="form-group">
+                <div ng-hide="true" ng-model="steps.backgroundsForm.intro" ng-init="steps.backgroundsForm.intro='Background:'"></div>
+                <h6>Background:</h6>
+                <input class="form-control" name="backGroundTarget" ng-model="steps.backgroundsForm.arg_1" type="text" value="" ng-required="true" placeholder="add a background. see help for more details">
                 <br>
-                <input class="form-control btn btn-success" type="submit" value="Add">
-                <div class="help-block" ng-model="steps.back.final"> {{ steps.back.background }}</div>
+                <input class="form-control btn btn-success" type="submit" name="backgroundsFormAdd" value="Add">
+                <div class="help-block" ng-model="steps.back.final"> {{ steps.backgroundsForm.intro }} {{ steps.backgroundsForm.arg_1 }}</div>
                 <br>
                 <br>
                 <div class="well">

@@ -5,8 +5,7 @@ sanitizer.filter("sanitizer", function() {
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
+            .replace(/javascript/g, "_javascript_")
     };
 
     return function(value) {
