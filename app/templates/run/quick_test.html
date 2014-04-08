@@ -1,0 +1,22 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Quick Test
+        </h3>
+    </div>
+    <div class="panel-body">
+        <form name="quick_test_settings" class="form-horizontal">
+            <div class="form-group">
+                <label>Operation System</label>'
+                <select ng-model="quick_test.browser"></select>
+            </div>
+        </form>
+
+        <div class="well">
+            <button type="button" class="btn btn-danger" data-ng-click="runTest()">run</button>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="test-results" ng-bind-html="test_results" class="ng-animate-block-transitions"></div>
+    </div>
+</div>

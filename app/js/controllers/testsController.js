@@ -30,9 +30,10 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.reports = ReportsTestsService.get({sid: $routeParams.sid, tname: $routeParams.tname});
 
 
-        $scope.ace = { name: 'ace', url: 'templates/ace.html'}
-        $scope.form = { name: 'form', url: 'templates/form.html'}
-        $scope.nav = { name: 'nav', url: 'templates/nav.html'}
+        $scope.ace          = { name: 'ace', url: 'templates/ace.html'}
+        $scope.form         = { name: 'form', url: 'templates/form.html'}
+        $scope.nav          = { name: 'nav', url: 'templates/nav.html'}
+        $scope.quick_test   = { name: 'quick_test', url: 'templates/run/quick_test.html'}
 
         $scope.bc = { name: 'bc', url: 'templates/bc.html'}
 
