@@ -1,18 +1,17 @@
 var runServices = angular.module('runServices', []);
 
-runServices.factory('runTest', ['$routeParams', '$rootScope', 'addAlert', 'BehatServices',
-    function($routeParams, $rootScope, addAlert, BehatServices){
+runServices.factory('runTest', ['$routeParams', '$rootScope', 'addAlert', 'BehatServices', 'Noty',
+    function($routeParams, $rootScope, addAlert, BehatServices, Noty){
         return function(type, message, $scope) {
             $scope.test_results = 'Running test...';
-            addAlert('success', 'Running test...', $scope);
+            Noty('Running Test', 'information');
             BehatServices.get({sid: $routeParams.sid, tname: $routeParams.tname}, function(data){
                 if(data.errors == 0) {
                     var snag_behat_div = jQuery(data.data).get(9);
                     $scope.test_results = jQuery(snag_behat_div).html();
-                    addAlert('info', 'Test Completed...', $scope);
+                    Noty('Test Completed', 'success');
                 } else {
-                    addAlert('danger', 'Problem Running Test', $scope);
-                    //output error message
+                    Noty('Problem Running Test', 'error');
                 }
             });
         }
