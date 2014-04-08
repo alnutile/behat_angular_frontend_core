@@ -5,6 +5,6 @@
         </h3>
     </div>
     <div class="panel-body">
-        <div ng-model="test_content" ui-ace="{ theme: 'twilight', onLoad : testLoaded }">{{ test_content }}</div>
+        <div ng-model="test_content" ui-ace="{ theme: 'twilight', onLoad : aceLoaded, onChange: aceChanged }">{{ test_content }}</div>
     </div>
 </div>

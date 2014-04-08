@@ -54,6 +54,25 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             $scope.test_html = data.content_html;
         });
 
+        $scope.editor = {};
+
+        $scope.aceLoaded = function(_editor) {
+            var _session = _editor.getSession();
+            var _renderer = _editor.renderer;
+            $scope.editor = _editor;
+            // Options
+            _editor.setReadOnly(false);
+            _editor.setShowInvisibles(true);
+            _editor.setDisplayIndentGuides(true);
+            _session.setUndoManager(new ace.UndoManager());
+            _renderer.setShowGutter(true);
+
+            _session.on("change", function(){
+                var value = _editor.getValue();
+                $scope.test_content = value;
+            })
+        }
+
         SitesServices.get({sid: $routeParams.sid}, function(data) {
             $scope.site = data;
             $scope.breadcrumbs = [
@@ -81,6 +100,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.saveTest = function(model) {
             Noty('Saving test..', 'success');
             $scope.test.content = model;
+            $scope.test.content_html = '';
             var params = {
                 'test': $scope.test,
                 'site': $scope.site
@@ -101,7 +121,30 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                 $scope.test_content = tags + "\n" + $scope.test_content;
             }
             $scope.steps.testDetails.tag = '';
+            $scope.editor.setValue($scope.test_content);
             Noty('Tag Added ' + tags + '...');
+        }
+
+        $scope.addFeature = function(feature) {
+            var test_content = $scope.test_content.split("\n");
+            var new_feature = feature.feature + ' "' + feature.arg_1 + '"';
+            var found = false;
+            angular.forEach(test_content, function(v, i){
+                if(v.indexOf('Feature') != -1) {
+                    found = true;
+                    test_content[i] = new_feature;
+                }
+            });
+            if(found == false) {
+                if(test_content[0].indexOf('@') == -1) {
+                    test_content[0] = new_feature;
+                } else {
+                    test_content[1] = new_feature;
+                }
+            }
+            $scope.test_content = test_content.join("\n");
+            $scope.editor.setValue($scope.test_content);
+            Noty('Feature Added ' + new_feature + '...', 'success');
         }
 
         $scope.addStep = function(step) {
@@ -132,21 +175,9 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             });
             var new_step = build.join(' ');
             $scope.test_content = $scope.test_content + "\n" + new_step;
+            $scope.editor.setValue($scope.test_content);
             Noty('Step Added ' + new_step + '...', 'success');
         };
-
-        //@TODO move ace into a shared service, or
-        $scope.testLoaded = function(_editor) {
-            var _session = _editor.getSession();
-            var _renderer = _editor.renderer;
-
-            // Options
-            _editor.setReadOnly(true);
-            _editor.setShowInvisibles(true);
-            _editor.setDisplayIndentGuides(true);
-            _session.setUndoManager(new ace.UndoManager());
-            _renderer.setShowGutter(true);
-        }
 
         $scope.search = '';
 

@@ -1,9 +1,25 @@
     <div ng-model="blocks.testDetailsBlock" ng-init="blocks.testDetailsBLock=true" ng-show="blocks.testDetailsBlock" class="ng-animate-block-transitions ng-hide">
-        <form role="form" name="testDetails" ng-submit="addTag(steps.testDetails.tag)">
+
+        <form role="form" name="featureForm" ng-submit="addFeature(steps.featureForm)">
             <div class="form-group">
+                <div ng-hide="true" ng-model="steps.featureForm.feature" ng-init="steps.featureForm.feature='Feature:'"></div>
+                <h6>Feature:</h6>
+                <input class="form-control" name="featureTarget" ng-model="steps.featureForm.arg_1" type="text" value="" ng-required="true" placeholder="Add title to the test">
+                <br>
+                <input class="form-control btn btn-success" type="submit" name="featureFormAdd" value="Name it" ng-disabled="featureForm.$invalid || isUnchanged(steps.featureForm.arg_1)">
+                <div class="help-block" ng-model="steps.featureForm.final"> {{ steps.featureForm.feature }} {{ steps.featureForm.arg_1 }}</div>
+                <br>
+                <hr>
+            </div>
+        </form>
+
+
+        <form role="form" name="tagForm" ng-submit="addTag(steps.testDetails.tag)">
+            <div class="form-group">
+                <h6>Tags:</h6>
                 <input id="tag-input" class="form-control" name="testDetailsTag" ng-model="steps.testDetails.tag" type="text" placeholder="choose a tag" ng-required="true">
                 <br>
-                <input id="add-details" class="form-control btn btn-success" type="submit" value="Add">
+                <input id="add-details" class="form-control btn btn-success" type="submit" value="Tag it"  ng-disabled="tagForm.$invalid || isUnchanged(steps.testDetails.tag)">
                 <div class="help-block">Your tag must have an @ symbol and if you are adding more than on separate with a space. @test @test1</div>
                 <br>
             </div>
@@ -15,8 +31,10 @@
                     <h6>Background:</h6>
                     <input class="form-control" name="backGroundTarget" ng-model="steps.backgroundsForm.arg_1" type="text" value="" ng-required="true" placeholder="add a background. see help for more details">
                     <br>
-                    <input class="form-control btn btn-success" type="submit" name="backgroundsFormAdd" value="Add">
-                    <div class="help-block" ng-model="steps.back.final"> {{ steps.backgroundsForm.background }} {{ steps.backgroundsForm.arg_1 }}</div>
+                    <input class="form-control btn btn-success" type="submit" name="backgroundsFormAdd"
+                           value="Add"
+                           ng-disabled="backgroundsForm.$invalid || isUnchanged(steps.backgroundsForm.arg_1)">
+                    <div class="help-block" ng-model="steps.backgroundsForm.final"> {{ steps.backgroundsForm.background }} {{ steps.backgroundsForm.arg_1 }}</div>
                     <br>
                     <br>
                     <div class="well">
@@ -40,7 +58,7 @@
             <input class="form-control" name="search-steps" ng-model="search" ng-change="searchForms(search)" type="text" placeholder="search for steps">
         </div>
 
-        <!-- ##### Startig Points ##### -->
+        <!-- ##### Starting Points ##### -->
         <div ng-model="groups.starting" ng-hide="groups.starting"  ng-init="groups.starting=false" class="animate-hide animate-show ng-hide">
             <h5>Starting Points</h5>
 
@@ -49,9 +67,12 @@
                     <div ng-hide="true" ng-model="steps.scenarioForm.scenario" ng-init="steps.scenarioForm.scenario='Scenario:'"></div>
                     <h6>Scenario:</h6>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="scenarioFormTarget" ng-model="steps.scenarioForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.scenarioForm.arg_1='Testing the page has a link'">
+                    <input class="form-control" name="scenarioFormTarget" ng-model="steps.scenarioForm.arg_1" type="text" value=""
+                           ng-required="true"
+                           ng-init="steps.scenarioForm.arg_1='Testing the page has a link'" required="required">
                     <br>
-                    <input class="form-control btn btn-success" name="scenarioFormAdd" type="submit" value="Add">
+                    <input class="form-control btn btn-success" name="scenarioFormAdd" type="submit" value="Add"
+                           ng-disabled="scenarioForm.$invalid || steps.scenarioForm.arg_1 == 'Testing the page has a link'">
                     <div class="help-block" ng-model="steps.scenarioForm.final"> {{ steps.scenarioForm.intro }} "{{ steps.scenarioForm.arg_1 }}" </div>
                 </div>
             </form>
@@ -61,9 +82,11 @@
                     <div ng-hide="true" ng-model="steps.givenForm.intro" ng-init="steps.givenForm.intro='Given I am on'"></div>
                     <h6>Given I am on</h6>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="givenFormTarget" ng-model="steps.givenForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.givenForm.arg_1='/some/relative/path'">
+                    <input class="form-control" name="givenFormTarget" ng-model="steps.givenForm.arg_1" type="text" value=""
+                           ng-required="true" ng-init="steps.givenForm.arg_1='/some/relative/path'">
                     <br>
-                    <input class="form-control btn btn-success" name="givenFormAdd" type="submit" value="Add">
+                    <input class="form-control btn btn-success" name="givenFormAdd" type="submit" value="Add"
+                           ng-disabled="givenForm.$invalid || steps.givenForm.arg_1 == '/some/relative/path'">
                     <div class="help-block" ng-model="steps.givenForm.final"> {{ steps.givenForm.intro }} "{{ steps.givenForm.arg_1 }}" </div>
                 </div>
             </form>
@@ -82,9 +105,11 @@
                         <option value="the menu item named">the menu item</option>
                     </select>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="hoverFormTarget" ng-model="steps.hoverForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.hoverForm.arg_1='id|name|class'">
+                    <input class="form-control" name="hoverFormTarget" ng-model="steps.hoverForm.arg_1" type="text" value=""
+                           ng-required="true" ng-init="steps.hoverForm.arg_1='id|name|class'">
                     <br>
-                    <input class="form-control btn btn-success" type="submit" name="hoverFormAdd"  value="Add">
+                    <input class="form-control btn btn-success" type="submit" name="hoverFormAdd"  value="Add"
+                           ng-disabled="hoverForm.$invalid || steps.hoverForm.arg_1 == 'id|name|class'">
                     <div class="help-block" ng-model="steps.hoverForm.final"> {{ steps.hoverForm.intro }} {{ steps.hoverForm.action }} "{{ steps.hoverForm.arg_1 }}" </div>
                 </div>
             </form>
@@ -95,13 +120,14 @@
                     <div ng-hide="true" ng-model="steps.visibleForm.intro" ng-init="steps.visibleForm.intro='Then element'"></div>
                     <h6>Then element</h6>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="visibleFormTarget" ng-model="steps.visibleForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.visibleForm.arg_1='id|name|class'">
+                    <input class="form-control" name="visibleFormTarget" ng-model="steps.visibleForm.arg_1" type="text"
+                           value="" ng-required="true" ng-init="steps.visibleForm.arg_1='id|name|class'">
                     <select class="form-control" name="visibleFormAction" ng-model="steps.visibleForm.action" ng-required="true" ng-init="steps.visibleForm.action='is visible'">
                         <option value="is visible">is visible</option>
                         <option value="is not visible">is not visible</option>
                     </select>
-                    <br>
-                    <input class="form-control btn btn-success" type="submit" name="visibleFormAdd"  value="Add">
+                    <input class="form-control btn btn-success" type="submit" name="visibleFormAdd"  value="Add"
+                           ng-disabled="visibleForm.$invalid || steps.visibleForm.arg_1 == 'id|name|class'">
                     <div class="help-block" ng-model="steps.visibleForm.final"> {{ steps.visibleForm.intro }} "{{ steps.visibleForm.arg_1 }}" {{ steps.visibleForm.action }} </div>
                 </div>
             </form>
@@ -122,9 +148,10 @@
                         <option value="the xpath">xpath</option>
                     </select>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="cfpTarget" ng-model="steps.cfp.arg_1" type="textarea" value="" ng-required="true" ng-init="steps.cfp.arg_1='some text'" placeholder="enter the target either a css path or name|label|id">
-                    <br>
-                    <input class="form-control btn btn-success" type="submit" name="cfpFormAdd"  value="Add">
+                    <input class="form-control" name="cfpTarget" ng-model="steps.cfp.arg_1" type="textarea"
+                           value="" ng-required="true" ng-init="steps.cfp.arg_1='some text'" placeholder="enter the target either a css path or name|label|id">
+                    <input class="form-control btn btn-success" type="submit" name="cfpFormAdd"  value="Add"
+                           ng-disabled="cfpTarget.$invalid || steps.cfp.arg_1 == 'some text'">
                     <div class="help-block" ng-model="steps.cfp.final"> {{ steps.cfp.intro }} {{ steps.cfp.action }} {{ steps.cfp.type }} "{{ steps.cfp.arg_1 }}" </div>
                 </div>
             </form>
@@ -139,9 +166,11 @@
                         <option value="not see">not see</option>
                     </select>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="seeFormTarget" ng-model="steps.seeForm.arg_1" type="textarea" value="" ng-required="true" ng-init="steps.seeForm.arg_1='some text'" placeholder="some text on the page">
+                    <input class="form-control" name="seeFormTarget" ng-model="steps.seeForm.arg_1"
+                           type="textarea" value="" ng-required="true" ng-init="steps.seeForm.arg_1='some text'" placeholder="some text on the page">
                     <br>
-                    <input class="form-control btn btn-success" name="seeFormAdd" type="submit" value="Add">
+                    <input class="form-control btn btn-success" name="seeFormAdd" type="submit" value="Add"
+                           ng-disabled="seeForm.$invalid || steps.seeForm.arg_1 == 'some text'">
                     <div class="help-block" ng-model="steps.seeForm.final"> {{ steps.seeForm.intro }} {{ steps.seeForm.action }} {{ steps.seeForm.type }} "{{ steps.seeForm.arg_1 }}" </div>
                 </div>
             </form>
@@ -161,9 +190,10 @@
                         <option value="uncheck">uncheck</option>
                     </select>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="checkUncheckFormTarget" ng-model="steps.checkUncheckForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.checkUncheckForm.arg_1='id|name|class|value'">
-                    <br>
-                    <input class="form-control btn btn-success" type="submit" name="checkUncheckFormAdd"  value="Add">
+                    <input class="form-control" name="checkUncheckFormTarget" ng-model="steps.checkUncheckForm.arg_1" type="text"
+                           value="" ng-required="true" ng-init="steps.checkUncheckForm.arg_1='id|name|class|value'">
+                    <input class="form-control btn btn-success" type="submit" name="checkUncheckFormAdd"  value="Add"
+                           ng-disabled="checkUncheckForm.$invalid || steps.checkUncheckForm.arg_1 == 'id|name|class|value'">
                     <div class="help-block" ng-model="steps.checkUncheckForm.final"> {{ steps.checkUncheckForm.intro }} {{ steps.checkUncheckForm.action }} "{{ steps.checkUncheckForm.arg_1 }}" </div>
                 </div>
             </form>
@@ -174,13 +204,14 @@
                     <div ng-hide="true" ng-model="steps.checkedOrNotForm.intro" ng-init="steps.checkedOrNotForm.intro='Then the'"></div>
                     <h6>Then the</h6>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="checkedOrNotFormTarget" ng-model="steps.checkedOrNotForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.checkedOrNotForm.arg_1='id|name|class|value'">
+                    <input class="form-control" name="checkedOrNotFormTarget" ng-model="steps.checkedOrNotForm.arg_1"
+                           type="text" value="" ng-required="true" ng-init="steps.checkedOrNotForm.arg_1='id|name|class|value'">
                     <select class="form-control" name="checkedOrNotFormAction" ng-model="steps.checkedOrNotForm.action" ng-required="true" ng-init="steps.checkedOrNotForm.action='checkbox should be checked'">
                         <option value="checkbox should be checked">checkbox should be checked</option>
                         <option value="checkbox should not be checked">checkbox should not be checked</option>
                     </select>
-                    <br>
-                    <input class="form-control btn btn-success" type="submit" name="checkedOrNotFormAdd"  value="Add">
+                    <input class="form-control btn btn-success" type="submit" name="checkedOrNotFormAdd"  value="Add"
+                           ng-disabled="checkedOrNotForm.$invalid || steps.checkedOrNotForm.arg_1 == 'id|name|class|value'">
                     <div class="help-block" ng-model="steps.checkedOrNotForm.final"> {{ steps.checkedOrNotForm.intro }} "{{ steps.checkedOrNotForm.arg_1 }}" {{ steps.checkedOrNotForm.action }} </div>
                 </div>
             </form>
@@ -191,12 +222,13 @@
                     <div ng-hide="true" ng-model="steps.selectForm.intro" ng-init="steps.selectForm.intro='And I select'"></div>
                     <h6>And I select</h6>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="selectFormSelected" ng-model="steps.selectForm.arg_1" type="textarea" value="" ng-required="true" ng-init="steps.selectForm.arg_1='select?'">
+                    <input class="form-control" name="selectFormSelected" ng-model="steps.selectForm.arg_1" type="textarea" value=""
+                           ng-required="true" ng-init="steps.selectForm.arg_1='select?'">
                     <div ng-hide="true" ng-model="steps.selectForm.from" ng-init="steps.selectForm.from='from'"></div>
                     <h6>from</h6>
                     <input class="form-control" name="selectFormTarget" ng-model="steps.selectForm.arg_2" type="textarea" value="" ng-required="true" ng-init="steps.selectForm.arg_2='from name | label or id of select list'">
-                    <br>
-                    <input class="form-control btn btn-success" name="selectFormAdd" type="submit" value="Add">
+                    <input class="form-control btn btn-success" name="selectFormAdd" type="submit" value="Add"
+                           ng-disabled="selectForm.$invalid || steps.selectForm.arg_1 == 'select?'">
                     <div class="help-block" ng-model="steps.selectForm.final"> {{ steps.selectForm.intro }} "{{ steps.selectForm.arg_1 }}" {{ steps.selectForm.from }} "{{ steps.selectForm.arg_2 }}" </div>
                 </div>
             </form>
@@ -207,12 +239,13 @@
                     <div ng-hide="true" ng-model="steps.inputForm.intro" ng-init="steps.inputForm.intro='And I fill in'"></div>
                     <h6>And I fill in</h6>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="inputFormSelected" ng-model="steps.inputForm.arg_1" type="textarea" value="" ng-required="true" ng-init="steps.inputForm.arg_1='a form field name'">
+                    <input class="form-control" name="inputFormSelected" ng-model="steps.inputForm.arg_1" type="textarea"
+                           value="" ng-required="true" ng-init="steps.inputForm.arg_1='a form field name'">
                     <div ng-hide="true" ng-model="steps.inputForm.with" ng-init="steps.inputForm.with='with'"></div>
                     <h6>with</h6>
                     <input class="form-control" name="inputFormTarget" ng-model="steps.inputForm.arg_2" type="textarea" value="" ng-required="true" ng-init="steps.inputForm.arg_2='value to put into form field'">
-                    <br>
-                    <input class="form-control btn btn-success" name="inputFormAdd" type="submit" value="Add">
+                    <input class="form-control btn btn-success" name="inputFormAdd" type="submit" value="Add"
+                           ng-disabled="inputForm.$invalid || steps.inputForm.arg_1 == 'a form field name'">
                     <div class="help-block" ng-model="steps.inputForm.final"> {{ steps.inputForm.intro }} "{{ steps.inputForm.arg_1 }}" {{ steps.inputForm.with }} "{{ steps.inputForm.arg_2 }}" </div>
                 </div>
             </form>
@@ -223,9 +256,9 @@
                     <div ng-hide="true" ng-model="steps.shouldContain.intro" ng-init="steps.shouldContain.intro='Then the'"></div>
                     <h6>Then the</h6>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="shouldContainTarget" ng-model="steps.shouldContain.arg_1" type="textarea" value="" ng-required="true" ng-init="steps.shouldContain.arg_1='name|label|id'">
+                    <input class="form-control" name="shouldContainTarget" ng-model="steps.shouldContain.arg_1"
+                           type="textarea" value="" ng-required="true" ng-init="steps.shouldContain.arg_1='name|label|id'">
                     <br>
-
                     <select class="form-control" name="shouldContainAction" ng-model="steps.shouldContain.action" ng-required="true" ng-init="steps.shouldContain.action='field should contain'">
                         <option value="field should contain">field should contain</option>
                         <option value="field should not contain">field should not contain</option>
@@ -233,9 +266,11 @@
 
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
                     <input class="form-control" name="shouldContainTarget2" ng-model="steps.shouldContain.arg_2" type="textarea" value="" ng-required="true" ng-init="steps.shouldContain.arg_2='value to look for'">
-                    <br>
-                    <input class="form-control btn btn-success" type="submit" name="shouldContainAdd"  value="Add">
-                    <div class="help-block" ng-model="steps.shouldContain.final"> {{ steps.shouldContain.intro }} "{{ steps.shouldContain.arg_1 }}" {{ steps.shouldContain.action }} "{{ steps.shouldContain.arg_2 }}"</div>
+                    <input class="form-control btn btn-success" type="submit" name="shouldContainAdd"  value="Add"
+                           ng-disabled="shouldContain.$invalid || steps.shouldContain.arg_1 == 'name|label|id'">
+                    <div class="help-block" ng-model="steps.shouldContain.final">
+                        {{ steps.shouldContain.intro }} "{{ steps.shouldContain.arg_1 }}" {{ steps.shouldContain.action }} "{{ steps.shouldContain.arg_2 }}"
+                    </div>
                 </div>
             </form>
             <hr>
@@ -256,10 +291,13 @@
                         <option value="not exists">not exists</option>
                     </select>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="elemExistsFormTarget" ng-model="steps.elemExistsForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.elemExistsForm.arg_1='css name eg a.menu would be menu'">
-                    <br>
-                    <input class="form-control btn btn-success" name="elemExistsFormAdd" type="submit" value="Add">
-                    <div class="help-block" ng-model="steps.elemExistsForm.final"> {{ steps.elemExistsForm.intro }} {{ steps.elemExistsForm.action }} "{{ steps.elemExistsForm.arg_1 }}" </div>
+                    <input class="form-control" name="elemExistsFormTarget" ng-model="steps.elemExistsForm.arg_1"
+                           type="text" value="" ng-required="true" ng-init="steps.elemExistsForm.arg_1='css name eg a.menu would be menu'">
+                    <input class="form-control btn btn-success" name="elemExistsFormAdd" type="submit" value="Add"
+                           ng-disabled="elemExistsForm.$invalid || steps.elemExistsForm.arg_1 == 'css name eg a.menu would be menu'">
+                    <div class="help-block" ng-model="steps.elemExistsForm.final">
+                        {{ steps.elemExistsForm.intro }} {{ steps.elemExistsForm.action }} "{{ steps.elemExistsForm.arg_1 }}"
+                    </div>
                     <div class="help-block" ng-model="steps.elemExistsForm.final">Check to see if class exists eg a.menu would be "menu"</div>
                 </div>
             </form>
@@ -270,14 +308,15 @@
                     <div ng-hide="true" ng-model="steps.onClickForm.intro" ng-init="steps.onClickForm.intro='Given I click on element which has onclick handler located at'"></div>
                     <h6>Given I click on element which has onclick handler located at</h6>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="onClickFormTarget" ng-model="steps.onClickForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.onClickForm.arg_1='css path eg div.formRow:nth-child(32)'">
-                    <br>
-                    <input class="form-control btn btn-success" name="onClickFormAdd" type="submit" value="Add">
-                    <div class="help-block" ng-model="steps.onClickForm.final"> {{ steps.onClickForm.intro }} "{{ steps.onClickForm.arg_1 }}" </div>
+                    <input class="form-control" name="onClickFormTarget" ng-model="steps.onClickForm.arg_1"
+                           type="text" value="" ng-required="true" ng-init="steps.onClickForm.arg_1='css path eg div.formRow:nth-child(32)'">
+                    <input class="form-control btn btn-success" name="onClickFormAdd" type="submit" value="Add"
+                           ng-disabled="onClickForm.$invalid || steps.onClickForm.arg_1 == 'css path eg div.formRow:nth-child(32)'">
+                    <div class="help-block" ng-model="steps.onClickForm.final">
+                        {{ steps.onClickForm.intro }} "{{ steps.onClickForm.arg_1 }}"
+                    </div>
                 </div>
             </form>
-            <hr>
-
             <hr>
         </div>
 
@@ -289,15 +328,19 @@
                 <div class="form-group">
                     <div ng-hide="true" ng-model="steps.switchPopupForm.intro" ng-init="steps.switchPopupForm.intro='I switch to popup by'"></div>
                     <h6>I switch to popup by</h6>
-                    <select class="form-control" name="shouldContainAction" ng-model="steps.switchPopupForm.action" ng-required="true" ng-init="steps.switchPopupForm.action='clicking'">
+                    <select class="form-control" name="shouldContainAction" ng-model="steps.switchPopupForm.action"
+                            ng-required="true" ng-init="steps.switchPopupForm.action='clicking'">
                         <option value="clicking">clicking</option>
                         <option value="pressing">pressing</option>
                     </select>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="switchPopupFormTarget" ng-model="steps.switchPopupForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.switchPopupForm.arg_1='link or button to act on'">
-                    <br>
-                    <input class="form-control btn btn-success" name="switchPopupFormAdd" type="submit" value="Add">
-                    <div class="help-block" ng-model="steps.switchPopupForm.final"> {{ steps.switchPopupForm.intro }} {{ steps.switchPopupForm.action }} "{{ steps.switchPopupForm.arg_1 }}" </div>
+                    <input class="form-control" name="switchPopupFormTarget" ng-model="steps.switchPopupForm.arg_1" type="text" value=""
+                           ng-required="true" ng-init="steps.switchPopupForm.arg_1='link or button to act on'">
+                    <input class="form-control btn btn-success" name="switchPopupFormAdd" type="submit" value="Add"
+                           ng-disabled="switchPopupForm.$invalid || steps.switchPopupForm.arg_1 == 'link or button to act on'">
+                    <div class="help-block" ng-model="steps.switchPopupForm.final">
+                        {{ steps.switchPopupForm.intro }} {{ steps.switchPopupForm.action }} "{{ steps.switchPopupForm.arg_1 }}"
+                    </div>
                 </div>
             </form>
 
@@ -317,11 +360,16 @@
                     <div ng-hide="true" ng-model="steps.iframeSetIdForm.intro" ng-init="steps.iframeSetIdForm.intro='Given I set the name of the iframe located in element with an id of'"></div>
                     <h6>Given I set the name of the iframe located in element with an id of</h6>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="iframeSetIdFormTarget" ng-model="steps.iframeSetIdForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.iframeSetIdForm.arg_1='id of iframe'">
-                    <br>
-                    <input class="form-control btn btn-success" name="iframeSetIdFormAdd" type="submit" value="Add">
-                    <div class="help-block" ng-model="steps.iframeSetIdForm.final"> {{ steps.iframeSetIdForm.intro }} "{{ steps.iframeSetIdForm.arg_1 }}" </div>
-                    <div class="help-block" ng-model="steps.iframeSetIdForm.final"> Sets an iFrame ID to no_name_iframe if there is no ID so you can then add a Switch to iFrame step after it using the na_name_iframe ID. You must use an ID but do not pass the # </div>
+                    <input class="form-control" name="iframeSetIdFormTarget" ng-model="steps.iframeSetIdForm.arg_1"
+                           type="text" value="" ng-required="true" ng-init="steps.iframeSetIdForm.arg_1='id of iframe'">
+                    <input class="form-control btn btn-success" name="iframeSetIdFormAdd" type="submit" value="Add"
+                           ng-disabled="iframeSetIdForm.$invalid || steps.iframeSetIdForm.arg_1 == 'id of iframe'">
+                    <div class="help-block" ng-model="steps.iframeSetIdForm.final">
+                        {{ steps.iframeSetIdForm.intro }} "{{ steps.iframeSetIdForm.arg_1 }}"
+                    </div>
+                    <div class="help-block" ng-model="steps.iframeSetIdForm.final">
+                        Sets an iFrame ID to no_name_iframe if there is no ID so you can then add a Switch to iFrame step after it using the na_name_iframe ID. You must use an ID but do not pass the #
+                    </div>
                 </div>
             </form>
             <hr>
@@ -331,10 +379,13 @@
                     <div ng-hide="true" ng-model="steps.iframeSwitchForm.intro" ng-init="steps.iframeSwitchForm.intro='Given I switch to iframe with name'"></div>
                     <h6>Given I switch to iframe with name</h6>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="iframeSwitchFormTarget" ng-model="steps.iframeSwitchForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.iframeSwitchForm.arg_1='id of iframe'">
-                    <br>
-                    <input class="form-control btn btn-success" name="iframeSwitchFormAdd" type="submit" value="Add">
-                    <div class="help-block" ng-model="steps.iframeSwitchForm.final"> {{ steps.iframeSwitchForm.intro }} "{{ steps.iframeSwitchForm.arg_1 }}" </div>
+                    <input class="form-control" name="iframeSwitchFormTarget" ng-model="steps.iframeSwitchForm.arg_1"
+                           type="text" value="" ng-required="true" ng-init="steps.iframeSwitchForm.arg_1='name of iframe'">
+                    <input class="form-control btn btn-success" name="iframeSwitchFormAdd" type="submit" value="Add"
+                           ng-disabled="iframeSwitchForm.$invalid || steps.iframeSwitchForm.arg_1 == 'name of iframe'">
+                    <div class="help-block" ng-model="steps.iframeSwitchForm.final">
+                        {{ steps.iframeSwitchForm.intro }} "{{ steps.iframeSwitchForm.arg_1 }}"
+                    </div>
                 </div>
             </form>
             <hr>
@@ -350,21 +401,25 @@
                     <div ng-hide="true" ng-model="steps.checkSizeForm.intro" ng-init="steps.checkSizeForm.intro='Then the element'"></div>
                     <h6>Then the element</h6>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="checkSizeFormTarget" ng-model="steps.checkSizeForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.checkSizeForm.arg_1='name|label|id'">
+                    <input class="form-control" name="checkSizeFormTarget" ng-model="steps.checkSizeForm.arg_1"
+                           type="text" value="" ng-required="true" ng-init="steps.checkSizeForm.arg_1='name|label|id'">
                     <br>
                     <div ng-hide="true" ng-model="steps.checkSizeForm.second" ng-init="steps.checkSizeForm.second='should be'"></div>
                     <h6>should be</h6>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="checkSizeFormTarget2" ng-model="steps.checkSizeForm.arg_2" type="text" value="" ng-required="true" ng-init="steps.checkSizeForm.arg_2='% it should be'">
+                    <input class="form-control" name="checkSizeFormTarget2" ng-model="steps.checkSizeForm.arg_2" type="text" value=""
+                           ng-required="true" ng-init="steps.checkSizeForm.arg_2='% it should be'">
                     <br>
                     <div ng-hide="true" ng-model="steps.checkSizeForm.third" ng-init="steps.checkSizeForm.third='percent or greater than the window'"></div>
                     <h6>percent or greater than the window</h6>
-                    <input class="form-control btn btn-success" type="submit" name="checkSizeFormAdd"  value="Add">
-                    <div class="help-block" ng-model="steps.checkSizeForm.final"> {{ steps.checkSizeForm.intro }} "{{ steps.checkSizeForm.arg_1 }}" {{ steps.checkSizeForm.second }} "{{ steps.checkSizeForm.arg_2 }}" See if the element (name|label|id) is greater than the % of the window</div>
+                    <input class="form-control btn btn-success" type="submit" name="checkSizeFormAdd"  value="Add"
+                           ng-disabled="checkSizeForm.$invalid || steps.checkSizeForm.arg_1 == 'name|label|id' || steps.checkSizeForm.arg_2 == '% it should be'">
+                    <div class="help-block" ng-model="steps.checkSizeForm.final">
+                        {{ steps.checkSizeForm.intro }} "{{ steps.checkSizeForm.arg_1 }}" {{ steps.checkSizeForm.second }} "{{ steps.checkSizeForm.arg_2 }}" See if the element (name|label|id) is greater than the % of the window
+                    </div>
                 </div>
             </form>
             <hr>
-
         </div>
 
         <!-- ##### Low Level Features ##### -->
@@ -388,15 +443,20 @@
                         <option value="not see cookie">not see cookie</option>
                     </select>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="cookiesSeeFormArg" ng-model="steps.cookiesSeeForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.cookiesSeeForm.arg_1='monster'">
+                    <input class="form-control" name="cookiesSeeFormArg" ng-model="steps.cookiesSeeForm.arg_1"
+                           type="text" value="" ng-required="true" ng-init="steps.cookiesSeeForm.arg_1='monster'">
                     <br>
-                    <input class="form-control btn btn-success" name="cookiesSeeFormAdd" type="submit" value="Add">
-                    <div class="help-block" ng-model="steps.cookiesSeeForm.final"> {{ steps.cookiesSeeForm.intro }} {{ steps.cookiesSeeForm.action }} "{{ steps.cookiesSeeForm.arg_1 }}"</div>
+                    <input class="form-control btn btn-success" name="cookiesSeeFormAdd" type="submit" value="Add"
+                           ng-disabled="cookiesSeeForm.$invalid || steps.cookiesSeeForm.arg_1 == 'monster'">
+                    <div class="help-block" ng-model="steps.cookiesSeeForm.final">
+                        {{ steps.cookiesSeeForm.intro }} {{ steps.cookiesSeeForm.action }} "{{ steps.cookiesSeeForm.arg_1 }}"
+                    </div>
                 </div>
             </form>
             <hr>
 
-            <form role="form" name="iWaitForm" ng-submit="addStep(steps.iWaitForm)" ng-model="form_tags.iWaitForm" ng-init="form_tags.iWaitForm='Wait'" ng-show="showForm(form_tags.iWaitForm)" class="ng-hide animate-hide">
+            <form role="form" name="iWaitForm" ng-submit="addStep(steps.iWaitForm)" ng-model="form_tags.iWaitForm"
+                  ng-init="form_tags.iWaitForm='Wait'" ng-show="showForm(form_tags.iWaitForm)" class="ng-hide animate-hide">
                 <div class="form-group">
                     <div ng-hide="true" ng-model="steps.iWaitForm.intro" ng-init="steps.iWaitForm.intro='And I wait'"></div>
                     <h6>And I wait</h6>
@@ -405,66 +465,87 @@
             </form>
             <hr>
 
-            <form role="form" name="iWaitForSecondsForm" ng-submit="addStep(steps.iWaitForSecondsForm)" ng-model="form_tags.iWaitForSecondsForm" ng-init="form_tags.iWaitForSecondsForm='Wait'" ng-show="showForm(form_tags.iWaitForSecondsForm)" class="ng-hide animate-hide animate-show">
+            <form role="form" name="iWaitForSecondsForm" ng-submit="addStep(steps.iWaitForSecondsForm)"
+                  ng-model="form_tags.iWaitForSecondsForm" ng-init="form_tags.iWaitForSecondsForm='Wait'"
+                  ng-show="showForm(form_tags.iWaitForSecondsForm)" class="ng-hide animate-hide animate-show">
                 <div class="form-group">
                     <div ng-hide="true" ng-model="steps.iWaitForSecondsForm.intro" ng-init="steps.iWaitForSecondsForm.intro='And I wait for'"></div>
                     <h6>And I wait for</h6>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="iWaitForSecondsFormTarget" ng-model="steps.iWaitForSecondsForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.iWaitForSecondsForm.arg_1='seconds'">
+                    <input class="form-control" name="iWaitForSecondsFormTarget" ng-model="steps.iWaitForSecondsForm.arg_1"
+                           type="text" value="" ng-required="true" ng-init="steps.iWaitForSecondsForm.arg_1='seconds'">
                     <br>
                     <div ng-hide="true" ng-model="steps.iWaitForSecondsForm.second" ng-init="steps.iWaitForSecondsForm.second='seconds'"></div>
                     <h6>seconds</h6>
-                    <input class="form-control btn btn-success" type="submit" name="iWaitForSecondsFormAdd"  value="Add">
-                    <div class="help-block" ng-model="steps.iWaitForSecondsForm.final"> {{ steps.iWaitForSecondsForm.intro }} "{{ steps.iWaitForSecondsForm.arg_1 }}" </div>
+                    <input class="form-control btn btn-success" type="submit" name="iWaitForSecondsFormAdd"  value="Add"
+                           ng-disabled="iWaitForSecondsForm.$invalid || steps.iWaitForSecondsForm.arg_1 == 'seconds'">
+                    <div class="help-block" ng-model="steps.iWaitForSecondsForm.final">
+                        {{ steps.iWaitForSecondsForm.intro }} "{{ steps.iWaitForSecondsForm.arg_1 }}"
+                    </div>
                 </div>
             </form>
             <hr>
             
-            <form role="form" name="urlMatchForm" ng-submit="addStep(steps.urlMatchForm)" ng-model="form_tags.urlMatchForm" ng-init="form_tags.urlMatchForm='url'" ng-show="showForm(form_tags.urlMatchForm)" class="ng-hide animate-hide animate-show">
+            <form role="form" name="urlMatchForm" ng-submit="addStep(steps.urlMatchForm)" ng-model="form_tags.urlMatchForm"
+                  ng-init="form_tags.urlMatchForm='url'" ng-show="showForm(form_tags.urlMatchForm)" class="ng-hide animate-hide animate-show">
                 <div class="form-group">
                     <div ng-hide="true" ng-model="steps.urlMatchForm.intro" ng-init="steps.urlMatchForm.intro='Then the url should match'"></div>
                     <h6>Then the url should match</h6>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="urlMatchFormTarget" ng-model="steps.urlMatchForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.urlMatchForm.arg_1='http://google.com'">
+                    <input class="form-control" name="urlMatchFormTarget" ng-model="steps.urlMatchForm.arg_1"
+                           type="text" value="" ng-required="true" ng-init="steps.urlMatchForm.arg_1='http://google.com'">
                     <br>
-                    <input class="form-control btn btn-success" type="submit" name="urlMatchFormAdd"  value="Add">
-                    <div class="help-block" ng-model="steps.urlMatchForm.final"> {{ steps.urlMatchForm.intro }} "{{ steps.urlMatchForm.arg_1 }}" </div>
+                    <input class="form-control btn btn-success" type="submit" name="urlMatchFormAdd"  value="Add"
+                           ng-disabled="urlMatchForm.$invalid || steps.urlMatchForm.arg_1 == 'http://google.com'">
+                    <div class="help-block" ng-model="steps.urlMatchForm.final">
+                        {{ steps.urlMatchForm.intro }} "{{ steps.urlMatchForm.arg_1 }}"
+                    </div>
                 </div>
             </form>
             <hr>
 
-            <form role="form" name="iWaitForElementForm" ng-submit="addStep(steps.iWaitForElementForm)" ng-model="form_tags.iWaitForElementForm" ng-init="form_tags.iWaitForElementForm='Wait'" ng-show="showForm(form_tags.iWaitForElementForm)" class="ng-hide animate-hide animate-show">
+            <form role="form" name="iWaitForElementForm" ng-submit="addStep(steps.iWaitForElementForm)" ng-model="form_tags.iWaitForElementForm"
+                  ng-init="form_tags.iWaitForElementForm='Wait'" ng-show="showForm(form_tags.iWaitForElementForm)" class="ng-hide animate-hide animate-show">
                 <div class="form-group">
                     <div ng-hide="true" ng-model="steps.iWaitForElementForm.intro" ng-init="steps.iWaitForElementForm.intro='Then I wait for the element'"></div>
                     <h6>Then I wait for the element</h6>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="iWaitForElementFormTarget" ng-model="steps.iWaitForElementForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.iWaitForElementForm.arg_1='Use the full css tag eg #form .class etc'">
+                    <input class="form-control" name="iWaitForElementFormTarget" ng-model="steps.iWaitForElementForm.arg_1"
+                           type="text" value="" ng-required="true" ng-init="steps.iWaitForElementForm.arg_1='Use the full css tag eg #form .class etc'">
                     <br>
-                    <select class="form-control" name="iWaitForElementFormAction" ng-model="steps.iWaitForElementForm.action" ng-required="true" ng-init="steps.iWaitForElementForm.action='to appear'">
+                    <select class="form-control" name="iWaitForElementFormAction" ng-model="steps.iWaitForElementForm.action"
+                            ng-required="true" ng-init="steps.iWaitForElementForm.action='to appear'">
                         <option value="to appear">to appear</option>
                         <option value="to not be there">to not be there</option>
                     </select>
 
-                    <input class="form-control btn btn-success" type="submit" name="iWaitForElementFormAdd"  value="Add">
-                    <div class="help-block" ng-model="steps.iWaitForElementForm.final"> {{ steps.iWaitForElementForm.intro }} "{{ steps.iWaitForElementForm.arg_1 }}" {{ steps.iWaitForElementForm.action }}</div>
+                    <input class="form-control btn btn-success" type="submit" name="iWaitForElementFormAdd"  value="Add"
+                           ng-disabled="iWaitForElementForm.$invalid || steps.iWaitForElementForm.arg_1 == 'Use the full css tag eg #form .class etc'">
+                    <div class="help-block" ng-model="steps.iWaitForElementForm.final">
+                        {{ steps.iWaitForElementForm.intro }} "{{ steps.iWaitForElementForm.arg_1 }}" {{ steps.iWaitForElementForm.action }}
+                    </div>
                 </div>
             </form>
             <hr>
 
-            <form role="form" name="responseCodeForm" ng-submit="addStep(steps.responseCodeForm)" ng-model="form_tags.responseCodeForm" ng-init="form_tags.responseCodeForm='Response Code'" ng-show="showForm(form_tags.responseCodeForm)" class="ng-hide animate-hide">
+            <form role="form" name="responseCodeForm" ng-submit="addStep(steps.responseCodeForm)" ng-model="form_tags.responseCodeForm"
+                  ng-init="form_tags.responseCodeForm='Response Code'" ng-show="showForm(form_tags.responseCodeForm)" class="ng-hide animate-hide">
                 <div class="form-group">
                     <div ng-hide="true" ng-model="steps.responseCodeForm.intro" ng-init="steps.responseCodeForm.intro='Then the response status code should be'"></div>
                     <h6>Then the response status code should be</h6>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="responseCodeFormTarget" ng-model="steps.responseCodeForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.responseCodeForm.arg_1='200|404|403'">
+                    <input class="form-control" name="responseCodeFormTarget" ng-model="steps.responseCodeForm.arg_1" type="text" value=""
+                           ng-required="true" ng-init="steps.responseCodeForm.arg_1='200|404|403'">
                     <br>
-                    <input class="form-control btn btn-success" type="submit" name="responseCodeFormAdd"  value="Add">
+                    <input class="form-control btn btn-success" type="submit" name="responseCodeFormAdd"  value="Add"
+                           ng-disabled="responseCodeForm.$invalid || steps.responseCodeForm.arg_1 == '200|404|403'">
                     <div class="help-block" ng-model="steps.responseCodeForm.final"> {{ steps.responseCodeForm.intro }} "{{ steps.responseCodeForm.arg_1 }}" </div>
                 </div>
             </form>
             <hr>
 
-            <form role="form" name="clickAlertForm" ng-submit="addStep(steps.clickAlertForm)" ng-model="form_tags.clickAlertForm" ng-init="form_tags.clickAlertForm='Alert'" ng-show="showForm(form_tags.clickAlertForm)" class="ng-hide animate-hide">
+            <form role="form" name="clickAlertForm" ng-submit="addStep(steps.clickAlertForm)" ng-model="form_tags.clickAlertForm"
+                  ng-init="form_tags.clickAlertForm='Alert'" ng-show="showForm(form_tags.clickAlertForm)" class="ng-hide animate-hide">
                 <div class="form-group">
                     <div ng-hide="true" ng-model="steps.clickAlertForm.intro" ng-init="steps.clickAlertForm.intro='Then I click on the alert window'"></div>
                     <h6>Then I click on the alert window</h6>
@@ -474,14 +555,17 @@
             </form>
             <hr>
 
-            <form role="form" name="removeElemForm" ng-submit="addStep(steps.removeElemForm)" ng-model="form_tags.removeElemForm" ng-init="form_tags.removeElemForm='Alert'" ng-show="showForm(form_tags.removeElemForm)" class="ng-hide animate-hide">
+            <form role="form" name="removeElemForm" ng-submit="addStep(steps.removeElemForm)" ng-model="form_tags.removeElemForm"
+                  ng-init="form_tags.removeElemForm='Alert'" ng-show="showForm(form_tags.removeElemForm)" class="ng-hide animate-hide">
                 <div class="form-group">
                     <div ng-hide="true" ng-model="steps.removeElemForm.intro" ng-init="steps.removeElemForm.intro='Then I remove the element located at'"></div>
                     <h6>Then I remove the element located at</h6>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
-                    <input class="form-control" name="removeElemFormTarget" ng-model="steps.removeElemForm.arg_1" type="text" value="" ng-required="true" ng-init="steps.removeElemForm.arg_1='#ID or .class or div.class etc'">
+                    <input class="form-control" name="removeElemFormTarget" ng-model="steps.removeElemForm.arg_1"
+                           type="text" value="" ng-required="true" ng-init="steps.removeElemForm.arg_1='#ID or .class or div.class etc'">
                     <br>
-                    <input class="form-control btn btn-success" name="removeElemFormAdd" type="submit" value="Add">
+                    <input class="form-control btn btn-success" name="removeElemFormAdd" type="submit" value="Add"
+                           ng-disabled="removeElemForm.$invalid || steps.removeElemForm.arg_1 == '#ID or .class or div.class etc'">
                     <div class="help-block">get an element out of your way</div>
                 </div>
             </form>
