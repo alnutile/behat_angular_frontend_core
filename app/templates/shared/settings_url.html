@@ -1,0 +1,36 @@
+<div class="form-group">
+
+    <label>URLs</label></br>
+    {{settingsForm.urls}}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Path</th>
+                <th>Url</th>
+                <th>Default</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="v in settingsForm.urls">
+                <td>
+                    <input name="url_name_{{$index}}" class="form-control" ng-model="settingsForm.urls[$index].name" required="required">
+                </td>
+                <td>
+                    <input class="form-control" ng-model="settingsForm.urls[$index].url"  required="required">
+                </td>
+                <td>
+                    <input ng-change="unsetDefaults($index)" class="form-control" type="checkbox" ng-model="settingsForm.urls[$index].default" checked="checked: settingsForm.urls[$index].default" ng-true-value="1" ng-false-value="0">
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-xs" data-ng-click="urlRemove($index)"><i class="glyphicon glyphicon-remove"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <button type="button" class="btn btn-success" ng-click="addUrl()">add url</button>
+</div>
+
+

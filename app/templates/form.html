@@ -583,17 +583,5 @@
     </div>
 
     <div ng-model="blocks.testRunBlock" ng-init="blocks.testRunBlock=false" ng-show="blocks.testRunBlock" class="ng-animate-block-transitions ng-hide">
-        <div class="well">
-            <button type="button" class="btn btn-danger" data-ng-click="runTest()">run</button>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    Test Results
-                </h3>
-            </div>
-            <div class="panel-body">
-                <div class="test-results" ng-bind-html="test_results" class="ng-animate-block-transitions"></div>
-            </div>
-        </div>
+        <ng-include src="quick_test.url"></ng-include>
     </div>

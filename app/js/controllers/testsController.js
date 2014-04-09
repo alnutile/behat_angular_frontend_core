@@ -19,21 +19,41 @@ testsController.controller('TestController', ['$scope', '$http', '$location', '$
         }
     }]);
 
-testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter){
-
+testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers',
+    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers){
+        $scope.settingsForm = {};
+        $scope.settingsForm.browserChosenBatch = [];
         $scope.blocks = {}
         $scope.blocks.testDetailsBlock = true;
         $scope.groups = {}
+
+        SitesSettings.query({sid: $routeParams.sid}, function(data){
+            $scope.settings = data.data;
+            $scope.browser_options = [];
+            $scope.browsers = SiteHelpers.browsers();
+            //@TODO DRY this up it is here and in siteSettingsCtrl
+            angular.forEach($scope.browsers, function(v, i){
+                if($scope.settings.saucelabs.browser.browser == v.browser && $scope.settings.saucelabs.browser.version == v.version) {
+                    $scope.settingsForm.browserChosen = i;
+                }
+                $scope.browser_options.push(i);
+            });
+            //Set default URL to use
+            angular.forEach($scope.settings.urls, function(v,i){
+               if(v.default == 1) {
+                   $scope.settingsForm.url_to_run = v;
+               }
+            });
+        });
+
         $scope.reports_test_page  = { name: 'reports', url: 'templates/reports_test_page.html'}
-
         $scope.reports = ReportsTestsService.get({sid: $routeParams.sid, tname: $routeParams.tname});
-
-
-        $scope.ace = { name: 'ace', url: 'templates/ace.html'}
-        $scope.form = { name: 'form', url: 'templates/form.html'}
-        $scope.nav = { name: 'nav', url: 'templates/nav.html'}
-
+        $scope.settings_browser = { name: 'settings_browser', url: 'templates/shared/settings_browser.html'}
+        $scope.settings_browser_checkboxes = { name: 'settings_browser_checkbox', url: 'templates/shared/settings_browser_checkboxes.html'}
+        $scope.ace          = { name: 'ace', url: 'templates/ace.html'}
+        $scope.form         = { name: 'form', url: 'templates/form.html'}
+        $scope.nav          = { name: 'nav', url: 'templates/nav.html'}
+        $scope.quick_test   = { name: 'quick_test', url: 'templates/run/quick_test.html'}
         $scope.bc = { name: 'bc', url: 'templates/bc.html'}
 
         $scope.nav_message = "Mocked data. You can click on <b>any form item</b> as well as <b>run</b> and <b>any left side nav</b> <b>save</b> as well as use <b>Ace Editor</b> you can <b>Clone</b> to site 3"
@@ -94,7 +114,31 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         });
 
         $scope.runTest = function() {
+            Noty("Running Test", 'success');
             runTest('success', 'Running test...', $scope);
+        };
+
+        $scope.toggleBatchBrowser = function(browser) {
+            var idx = $scope.settingsForm.browserChosenBatch.indexOf(browser);
+            if (idx > -1) {
+                $scope.settingsForm.browserChosenBatch.splice(idx, 1);
+            }
+            else {
+                $scope.settingsForm.browserChosenBatch.push(browser);
+            }
+        };
+
+        $scope.batchRunDisabled = function() {
+            if($scope.settingsForm.browserChosenBatch.length == 0) {
+                return true;
+            }
+            return false;
+        }
+
+        $scope.runBatch = function() {
+            //@TODO send batch job
+            console.log($scope.settingsForm);
+            Noty("Running Batch job ", 'success');
         }
 
         $scope.saveTest = function(model) {
@@ -257,6 +301,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                 Noty('Clone was canceled no new file made', 'success');
             });
         };
+
     }]);
 
 testsController.controller('TestNewController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices',

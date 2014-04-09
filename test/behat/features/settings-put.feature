@@ -10,8 +10,15 @@ Feature: Test Settings Get and Put
     Given I am on "/sites/2/settings"
     Then I should see "Github Username"
     And I press "Submit"
-    Then I should see "Settings Updated"
-    And I select "Windows 8.1" from "os"
-    And I select "IE 10" from "browser"
+    And I wait
+    Then I should see "Settings updated"
+    And I select "Safari 6" from "browser"
     And I press "Submit"
+    And I wait
     Then I should see "Settings Updated"
+    And the "github_user" field should contain "test"
+    And the "sauce_user" field should contain "testuser"
+    And I press "add url"
+    And I wait
+    Then I should see "New url added"
+    And the "url_name_3" field should contain "Foo"

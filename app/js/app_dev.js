@@ -35,8 +35,8 @@ var app = angular.module('behatEditor', [
 
 app.run(function($httpBackend) {
 
-    var site_settings_update  = '{"status":"success","data":{"defaults":{"default_tag":"@example","base_url":"http:\/\/google.com"},"github":{"github_username":"test","github_password":"test","test_folder":"tests","github_account":"testuser"},"saucelabs":{"browser":{"username":"testuser","access_key":"accessskey","browser":"firefox","os":"Windows 2003","name":"Testing with Saucelabs"},"host":"ondemand.saucelabs.com","port":80}},"message":"Success updating file"}';
-    var site_settings_default = '{"status":"success","data":{"defaults":{"default_tag":"@updated","base_url":"http:\/\/google.com"},"github":{"github_username":"test","github_password":"test","test_folder":"tests","github_account":"testuser"},"saucelabs":{"browser":{"username":"testuser","access_key":"accessskey","browser":"firefox","os":"Windows 2003","name":"Testing with Saucelabs"},"host":"ondemand.saucelabs.com","port":80}},"message":"Success getting file"}';
+    var site_settings_update  = '{"status":"success","data":{"defaults":{"default_tag":"@example","base_url":"http:\/\/google.com"},"github":{"github_username":"test","github_password":"test","test_folder":"tests","urls":[{"name": "Production", "url": "http:\/\/google.com"},{"name":"Staging","url":"http:\/\/staging.google.com"},{"name":"Custom 1", "url":"http:\/\/local.google.com"}],"github_account":"testuser"},"saucelabs":{"browser":{"username":"testuser","access_key":"accessskey","browser":"chrome","platform":"Windows 2012","version":"30","name":"Testing with Saucelabs"},"host":"ondemand.saucelabs.com","port":80}},"message":"Success updating file"}';
+    var site_settings_default = '{"status":"success","data":{"defaults":{"default_tag":"@updated","base_url":"http:\/\/google.com"},"urls":[{"name": "Production", "url": "http:\/\/google.com", "default": "0"},{"name":"Staging","url":"http:\/\/staging.google.com", "default": "1"},{"name":"Custom 1", "url":"http:\/\/local.google.com", "default": "0"}],"github":{"github_username":"test","github_password":"test","test_folder":"tests","github_account":"testuser"},"saucelabs":{"browser":{"username":"testuser","access_key":"accessskey","browser":"chrome","platform":"Windows 2012","version":"30","name":"Testing with Saucelabs"},"host":"ondemand.saucelabs.com","port":80}},"message":"Success getting file"}';
 
     var sites =
         [
@@ -106,7 +106,7 @@ app.run(function($httpBackend) {
     };
 
 
-    var site  = {"vid":"2","uid":"1","title":"Test","log":"","status":"1","comment":"0","promote":"1","sticky":"0","vuuid":"ca7486d3-7a8c-407a-abfc-8162b29c82be","nid":"2","type":"site","language":"und","created":"1394207166","changed":"1394207166","tnid":"0","translate":"0","uuid":"550cb394-2ec0-4ce9-9133-e68c2a232eb2","revision_timestamp":"1394207166","revision_uid":"1","body":[],"name":"admin","picture":"0","data":"b:0;","testFiles":
+    var site  = {"vid":"2","uid":"1","title":"Site 2","log":"","status":"1","comment":"0","promote":"1","sticky":"0","vuuid":"ca7486d3-7a8c-407a-abfc-8162b29c82be","nid":"2","type":"site","language":"und","created":"1394207166","changed":"1394207166","tnid":"0","translate":"0","uuid":"550cb394-2ec0-4ce9-9133-e68c2a232eb2","revision_timestamp":"1394207166","revision_uid":"1","body":[],"name":"admin","picture":"0","data":"b:0;","testFiles":
         [
             {"name":"test1.feature","tags":['@example', '@javascript'],"path":"\/vagrant\/public\/b2.vbox.local\/private\/behat\/550cb394-2ec0-4ce9-9133-e68c2a232eb2\/features\/test1.feature","content":"@example @javascript\nFeature: ls\n  Scenario: List files in directory\n    Given I am in a directory \u0022tmp\u0022\n    And I have a file named \u0022foo\u0022\n    And I have a file named \u0022bar\u0022\n    When I run \u0022ls\u0022\n    Then I should get:\n    \u0022\u0022\u0022\n    bar\n    foo\n    \u0022\u0022\u0022\n","content_html":"@example\u003Cbr\u003EFeature: ls\u003Cbr\u003E\u0026nbsp;\u0026nbsp;  Scenario: List files in directory\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    Given I am in a directory \u0022tmp\u0022\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    And I have a file named \u0022foo\u0022\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    And I have a file named \u0022bar\u0022\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    When I run \u0022ls\u0022\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    Then I should get:\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    \u0022\u0022\u0022\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    bar\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    foo\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    \u0022\u0022\u0022\u003Cbr\u003E\u003Cbr\u003E","name_dashed":"test1_feature", "status": 1},
             {"name":"test2.feature","tags": [ '@example', '@test' ] ,"path":"\/vagrant\/public\/b2.vbox.local\/private\/behat\/550cb394-2ec0-4ce9-9133-e68c2a232eb2\/features\/test2.feature","content":"Feature: Test WikiPedia\n  Scenario: Hello World\n    Given I am on \u0022http:\/\/en.wikipedia.org\/wiki\/Main_Page\u0022\n    Then I should see \u0022Wiki\u0022","content_html":"Feature: Test WikiPedia\u003Cbr\u003E\u0026nbsp;\u0026nbsp;  Scenario: Hello World\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    Given I am on \u0022http:\/\/en.wikipedia.org\/wiki\/Main_Page\u0022\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    Then I should see \u0022Wiki\u0022\u003Cbr\u003E","name_dashed":"test2_feature", "status": 0},
@@ -744,15 +744,15 @@ app.config(['$routeProvider',
                 controller:  'SiteSettingsCtrl'
             }).
             when('/sites/:sid/tests/new', {
-                templateUrl:  path + 'templates/test-edit.html',
+                templateUrl:  path + 'templates/tests/test-edit.html',
                 controller:  'TestNewController'
             }).
             when('/sites/:sid/tests/:tname', {
-                templateUrl:  path + 'templates/test-show.html',
+                templateUrl:  path + 'templates/tests/test-show.html',
                 controller:  'TestController'
             }).
             when('/sites/:sid/tests/:tname/edit', {
-                templateUrl:  path + 'templates/test-edit.html',
+                templateUrl:  path + 'templates/tests/test-edit.html',
                 controller:  'TestEditController'
             }).
             otherwise({

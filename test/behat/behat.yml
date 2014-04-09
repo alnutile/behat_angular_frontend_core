@@ -32,5 +32,5 @@ saucelabs:
         capabilities:
           platform: 'Windows 2012'
           browser: chrome
-          version: '26'
+          version: '30'
           name: 'Behat Angular'
