@@ -128,4 +128,5 @@ class FeatureContext extends MinkContext
     public function iDestroyMyCookies() {
         $this->getMainContext()->getSession()->reset();
     }
+
 }
