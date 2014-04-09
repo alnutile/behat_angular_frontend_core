@@ -22,10 +22,10 @@ testsController.controller('TestController', ['$scope', '$http', '$location', '$
 testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers',
     function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers){
         $scope.settingsForm = {};
+        $scope.settingsForm.browserChosenBatch = [];
         $scope.blocks = {}
         $scope.blocks.testDetailsBlock = true;
         $scope.groups = {}
-        $scope.reports_test_page  = { name: 'reports', url: 'templates/reports_test_page.html'}
 
         SitesSettings.query({sid: $routeParams.sid}, function(data){
             $scope.settings = data.data;
@@ -46,8 +46,10 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             });
         });
 
+        $scope.reports_test_page  = { name: 'reports', url: 'templates/reports_test_page.html'}
         $scope.reports = ReportsTestsService.get({sid: $routeParams.sid, tname: $routeParams.tname});
         $scope.settings_browser = { name: 'settings_browser', url: 'templates/shared/settings_browser.html'}
+        $scope.settings_browser_checkboxes = { name: 'settings_browser_checkbox', url: 'templates/shared/settings_browser_checkboxes.html'}
         $scope.ace          = { name: 'ace', url: 'templates/ace.html'}
         $scope.form         = { name: 'form', url: 'templates/form.html'}
         $scope.nav          = { name: 'nav', url: 'templates/nav.html'}
@@ -112,8 +114,31 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         });
 
         $scope.runTest = function() {
-            console.log($scope.settingsForm);
+            Noty("Running Test", 'success');
             runTest('success', 'Running test...', $scope);
+        };
+
+        $scope.toggleBatchBrowser = function(browser) {
+            var idx = $scope.settingsForm.browserChosenBatch.indexOf(browser);
+            if (idx > -1) {
+                $scope.settingsForm.browserChosenBatch.splice(idx, 1);
+            }
+            else {
+                $scope.settingsForm.browserChosenBatch.push(browser);
+            }
+        };
+
+        $scope.batchRunDisabled = function() {
+            if($scope.settingsForm.browserChosenBatch.length == 0) {
+                return true;
+            }
+            return false;
+        }
+
+        $scope.runBatch = function() {
+            //@TODO send batch job
+            console.log($scope.settingsForm);
+            Noty("Running Batch job ", 'success');
         }
 
         $scope.saveTest = function(model) {
@@ -276,6 +301,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                 Noty('Clone was canceled no new file made', 'success');
             });
         };
+
     }]);
 
 testsController.controller('TestNewController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices',
