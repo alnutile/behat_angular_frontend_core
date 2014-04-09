@@ -21,7 +21,7 @@ testsController.controller('TestController', ['$scope', '$http', '$location', '$
 
 testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers',
     function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers){
-
+        $scope.settingsForm = {};
         $scope.blocks = {}
         $scope.blocks.testDetailsBlock = true;
         $scope.groups = {}
@@ -31,8 +31,18 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             $scope.settings = data.data;
             $scope.browser_options = [];
             $scope.browsers = SiteHelpers.browsers();
+            //@TODO DRY this up it is here and in siteSettingsCtrl
             angular.forEach($scope.browsers, function(v, i){
+                if($scope.settings.saucelabs.browser.browser == v.browser && $scope.settings.saucelabs.browser.version == v.version) {
+                    $scope.settingsForm.browserChosen = i;
+                }
                 $scope.browser_options.push(i);
+            });
+            //Set default URL to use
+            angular.forEach($scope.settings.urls, function(v,i){
+               if(v.default == 1) {
+                   $scope.settingsForm.url_to_run = v;
+               }
             });
         });
 
@@ -102,6 +112,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         });
 
         $scope.runTest = function() {
+            console.log($scope.settingsForm);
             runTest('success', 'Running test...', $scope);
         }
 

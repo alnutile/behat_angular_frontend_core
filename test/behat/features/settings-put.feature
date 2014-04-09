@@ -18,3 +18,7 @@ Feature: Test Settings Get and Put
     Then I should see "Settings Updated"
     And the "github_user" field should contain "test"
     And the "sauce_user" field should contain "testuser"
+    And I press "add url"
+    And I wait
+    Then I should see "New url added"
+    And the "url_name_3" field should contain "Foo"

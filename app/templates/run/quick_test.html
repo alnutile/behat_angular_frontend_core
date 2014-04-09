@@ -1,19 +1,22 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">
-            Quick Test
-        </h3>
+            <h3 class="panel-title">Quick Test</h3>
     </div>
     <div class="panel-body">
-        <form name="quick_test_settings" class="form-horizontal">
+        <form name="quick_test_settings" class="form-horizontal col-lg-11">
             <ng-include src="settings_browser.url"></ng-include>
 
-            <!-- tokens for site -->
-
-            <div class="well">
-                <button type="button" class="btn btn-danger" data-ng-click="runTest()">Run</button>
+            <div class="form-group">
+                <select ng-model="settingsForm.url_to_run" ng-options="url.name + '-' + url.url for url in settings.urls" class="form-control"></select>
             </div>
+                <button type="button" class="btn btn-danger" data-ng-click="runTest()">Run</button>
         </form>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Test Results</h3>
     </div>
     <div class="panel-body">
         <div class="test-results" ng-bind-html="test_results" class="ng-animate-block-transitions"></div>

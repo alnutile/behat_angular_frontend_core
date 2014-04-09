@@ -29,10 +29,24 @@ settings.controller('SiteSettingsCtrl', ['$scope', '$http', '$location', '$route
             $scope.settingsForm.chosenUrls = [];
         });
 
+        $scope.unsetDefaults = function(index) {
+            angular.forEach($scope.settingsForm.urls, function(v, i){
+               if(i != index) {
+                   $scope.settingsForm.urls[i].default = "0";
+               }
+            });
+        };
+
+        $scope.urlRemove = function(index) {
+          $scope.urlRemoved = $scope.settingsForm.urls[index];
+          $scope.settingsForm.urls.splice(index, 1);
+          Noty("<i class='glyphicon glyphicon-remove'></i>&nbsp;Item removed..", 'information');
+        };
+
         $scope.alerts = [];
 
         $scope.addUrl = function() {
-            var url = { name: "Foo", url: "http://local.foo.com" };
+            var url = { name: "Foo", url: "http://local.foo.com", default: "0"};
             $scope.settingsForm.urls.push(url);
             Noty("New url added", 'warning');
         };
