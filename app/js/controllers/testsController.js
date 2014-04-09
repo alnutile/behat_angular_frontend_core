@@ -19,22 +19,26 @@ testsController.controller('TestController', ['$scope', '$http', '$location', '$
         }
     }]);
 
-testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter){
+testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings',
+    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings){
 
         $scope.blocks = {}
         $scope.blocks.testDetailsBlock = true;
         $scope.groups = {}
         $scope.reports_test_page  = { name: 'reports', url: 'templates/reports_test_page.html'}
 
+        SitesSettings.query({sid: $routeParams.sid}, function(data){
+            $scope.settings = data.data;
+        });
+
+
+
         $scope.reports = ReportsTestsService.get({sid: $routeParams.sid, tname: $routeParams.tname});
-
-
+        $scope.settings_browser = { name: 'settings_browser', url: 'templates/shared/settings_browser.html'}
         $scope.ace          = { name: 'ace', url: 'templates/ace.html'}
         $scope.form         = { name: 'form', url: 'templates/form.html'}
         $scope.nav          = { name: 'nav', url: 'templates/nav.html'}
         $scope.quick_test   = { name: 'quick_test', url: 'templates/run/quick_test.html'}
-
         $scope.bc = { name: 'bc', url: 'templates/bc.html'}
 
         $scope.nav_message = "Mocked data. You can click on <b>any form item</b> as well as <b>run</b> and <b>any left side nav</b> <b>save</b> as well as use <b>Ace Editor</b> you can <b>Clone</b> to site 3"

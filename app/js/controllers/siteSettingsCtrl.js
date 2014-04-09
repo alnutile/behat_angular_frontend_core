@@ -1,103 +1,42 @@
 var settings = angular.module('siteSettingsCtrl', []);
 
-settings.controller('SiteSettingsCtrl', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesSettings', 'addAlert',
-    function($scope, $http, $location, $route, $routeParams, SitesSettings, addAlert){
+settings.controller('SiteSettingsCtrl', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesSettings', 'addAlert', 'SiteHelpers', 'Noty',
+    function($scope, $http, $location, $route, $routeParams, SitesSettings, addAlert, SiteHelpers, Noty){
+        $scope.nav_message      = "Mocked data. You can see what the Settings page will look like, click update though your settings are not save to this fake rest api";
         $scope.nav              = { name: 'nav',        url: 'templates/nav.html'};
-        $scope.nav_message = "Mocked data. You can see what the Settings page will look like, click update though your settings are not save to this fake rest api";
-        $scope.bc                   = { name: 'bc', url: 'templates/bc.html'}
+        $scope.bc               = { name: 'bc', url: 'templates/bc.html'}
+        $scope.settings_browser = { name: 'settings_browser', url: 'templates/shared/settings_browser.html'}
         $scope.breadcrumbs = [
             {title: "Site " + $routeParams.sid, path: "#/sites/" + $routeParams.sid },
             { title: "Settings", path:  "#"}
         ];
         SitesSettings.query({sid: $routeParams.sid}, function(data){
             $scope.settings = data.data;
-            console.log(data);
+            $scope.settingsForm = $scope.settings;
+
+            $scope.browsers = SiteHelpers.browsers();
+            $scope.browser_options = [];
+            $scope.settingsForm.browserChosen = false;
+
+            angular.forEach($scope.browsers, function(v, i){
+                if($scope.settings.saucelabs.browser.browser == v.browser && $scope.settings.saucelabs.browser.version == v.version) {
+                    $scope.settingsForm.browserChosen = i;
+                }
+                $scope.browser_options.push(i);
+            });
         });
+
         $scope.alerts = [];
         $scope.putSettings = function() {
-            var settings = angular.copy($scope.settings);
-            SitesSettings.updateSettings({sid: $routeParams.sid}, settings, function(data){
-                console.log(data.message);
+            var browser = $scope.settingsForm.browserChosen;
+            var browserObject = SiteHelpers.getBrowserObejectFromBrowser(browser);
+            for (var attrname in browserObject) { $scope.settingsForm.saucelabs.browser[attrname] = browserObject[attrname]; }
+            $scope.settings = $scope.settingsForm;
+            SitesSettings.updateSettings({sid: $routeParams.sid}, $scope.settings, function(data){
                 addAlert(data.status, data.message, $scope);
             });
+            Noty('<i class="glyphicon glyphicon-cog"></i>&nbsp;Settings updated', 'success');
             addAlert('success', 'Settings Updated', $scope);
-        };
-
-        $scope.alerts_partial = { name: 'alerts', url: 'templates/alerts.html'}
-        $scope.os_options =
-        [
-                        { 'nicename': 'Windows 8.2', 'saucename': 'win12r2' },
-                        { 'nicename':'Windows 8.1', 'saucename': 'win12' },
-                        { 'nicename':'Windows 7', 'saucename': 'win2008' },
-                        { 'nicename': 'Mac OS/Mobile', 'saucename': 'mac10' },
-                        { 'nicename': 'Linux/Android/Chrome', 'saucename': 'linux' }
-        ];
-
-        $scope.browser_options = {};
-
-        $scope.getBrowser = function() {
-          var os = $scope.settings.saucelabs.browser.os;
-          $scope.browser_options = $scope.browser_types[os];
-        };
-
-        $scope.browser_types = {
-            'win12r2': [{
-                    'nicename': 'IE 11',
-                    'saucename': 'internet explorer|11'
-                },
-                {
-                    'nicename': 'Firefox 26',
-                    'saucename': 'firefox|26'
-                },
-                {
-                    'nicename': 'Firefox 25',
-                    'saucename': 'firefox|25'
-                }
-            ],
-            'win12': [
-                {
-                    'nicename': 'IE 10',
-                    'saucename': 'internet explorer|10'
-                }
-            ],
-            'win2008': [
-                {
-                    'nicename': 'IE 9',
-                    'saucename': 'internet explorer|9'
-                }
-            ],
-            'mac10': [
-                {
-                    'nicename': 'iPad - 6.1',
-                    'saucename': 'ipad|6.1'
-                },
-                {
-                    'nicename': 'iPhone - 6.1',
-                    'saucename': 'iphone|6.1'
-                },
-                {
-                    'nicename': 'Safari 6',
-                    'saucename': 'safari|6'
-                }
-            ],
-            'linux': [
-                {
-                    'nicename': 'Google Chrome - 30',
-                    'saucename': 'chrome|30'
-                },
-                {
-                    'nicename': 'Android 4.3',
-                    'saucename': 'android|4.3'
-                },
-                {
-                    'nicename': 'Firefox 26',
-                    'saucename': 'firefox|26'
-                },
-                {
-                    'nicename': 'Firefox 25',
-                    'saucename': 'firefox|25'
-                }
-           ]
         };
 
     }]);

@@ -8,16 +8,16 @@
                     <div class="panel panel-default">
                         <div class="panel panel-heading">Settings</div>
                         <div class="panel panel-body">
-                            <form ng-model="settings" name="settings">
+                            <form ng-model="settingsForm" ng-submit="putSettings()">
                                 <div class="form-group">
                                     <h4>Defaults</h4>
                                     <div class="form-group">
                                         <label>Base URL</label>
-                                        <input class="form-control" type="text" ng-model="settings.defaults.base_url" required/>
+                                        <input class="form-control" type="text" ng-model="settingsForm.defaults.base_url" required/>
                                     </div>
                                     <div class="form-group">
                                         <label>Default Tag</label>
-                                        <input class="form-control"  ng-model="settings.defaults.default_tag" required/>
+                                        <input class="form-control"  ng-model="settingsForm.defaults.default_tag" required/>
                                         <div class="help-block">This will connect all your tests under this site</div>
                                     </div>
                                 </div>
@@ -26,15 +26,15 @@
                                     <h4>Github</h4>
                                     <div class="form-group">
                                         <label>Github Username</label>
-                                        <input class="form-control" type="text" ng-model="settings.github.github_username">
+                                        <input class="form-control" name="github_user" type="text" ng-model="settingsForm.github.github_username">
                                     </div>
                                     <div class="form-group">
                                         <label>Github Password</label>
-                                        <input class="form-control"  ng-model="settings.github.github_username">
+                                        <input class="form-control"  ng-model="settingsForm.github.github_username">
                                     </div>
                                     <div class="form-group">
                                         <label>Github Folder</label>
-                                        <input class="form-control"  ng-model="settings.github.test_folder">
+                                        <input class="form-control" ng-model="settingsForm.github.test_folder">
                                         <div class="help-block">This is the folder the tests will be in. Do not start with a / slash</div>
                                     </div>
                                 </div>
@@ -43,24 +43,15 @@
                                     <h4>Saucelabs</h4>
                                     <div class="form-group">
                                         <label>Username</label>
-                                        <input class="form-control" type="text" ng-model="settings.saucelabs.browser.username">
+                                        <input class="form-control" name="sauce_user" type="text" ng-model="settingsForm.saucelabs.browser.username">
                                     </div>
                                     <div class="form-group">
                                         <label>Access Key</label>
-                                        <input class="form-control"  ng-model="settings.saucelabs.browser.access_key">
+                                        <input class="form-control"  ng-model="settingsForm.saucelabs.browser.access_key">
                                     </div>
-                                    <div class="form-group">
-                                        <label>Default Browser</label></br>
-                                        <select name="os" ng-change="getBrowser()" ng-model="settings.saucelabs.browser.os" ng-options="os.saucename as os.nicename for os in os_options" required/>
-                                            <option value="">--choose os--</option>
-                                        </select>
-                                        </br>
-                                        <select name="browser" ng-model="settings.saucelabs.browser.browser" ng-options="browser.saucename as browser.nicename for browser in browser_options" required/>
-                                        <option value="">--choose os--</option>
-                                        </select>
-                                    </div>
+                                    <ng-include src="settings_browser.url"></ng-include>
                                 </div>
-                                <input type="submit" class="btn btn-success" data-ng-click="putSettings()" value="Submit">
+                                <input type="submit" class="btn btn-success" value="Submit">
                             </form>
                         </div>
                     </div>
