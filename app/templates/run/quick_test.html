@@ -6,14 +6,14 @@
     </div>
     <div class="panel-body">
         <form name="quick_test_settings" class="form-horizontal">
-            <div class="form-group">
-                <ng-include src="settings_browser.url"></ng-include>
+            <ng-include src="settings_browser.url"></ng-include>
+
+            <!-- tokens for site -->
+
+            <div class="well">
+                <button type="button" class="btn btn-danger" data-ng-click="runTest()">Run</button>
             </div>
         </form>
-
-        <div class="well">
-            <button type="button" class="btn btn-danger" data-ng-click="runTest()">run</button>
-        </div>
     </div>
     <div class="panel-body">
         <div class="test-results" ng-bind-html="test_results" class="ng-animate-block-transitions"></div>

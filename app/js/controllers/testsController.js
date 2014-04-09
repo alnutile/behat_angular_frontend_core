@@ -19,8 +19,8 @@ testsController.controller('TestController', ['$scope', '$http', '$location', '$
         }
     }]);
 
-testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings){
+testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers',
+    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers){
 
         $scope.blocks = {}
         $scope.blocks.testDetailsBlock = true;
@@ -29,9 +29,12 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
 
         SitesSettings.query({sid: $routeParams.sid}, function(data){
             $scope.settings = data.data;
+            $scope.browser_options = [];
+            $scope.browsers = SiteHelpers.browsers();
+            angular.forEach($scope.browsers, function(v, i){
+                $scope.browser_options.push(i);
+            });
         });
-
-
 
         $scope.reports = ReportsTestsService.get({sid: $routeParams.sid, tname: $routeParams.tname});
         $scope.settings_browser = { name: 'settings_browser', url: 'templates/shared/settings_browser.html'}

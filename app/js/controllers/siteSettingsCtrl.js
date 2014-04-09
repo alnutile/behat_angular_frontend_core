@@ -6,10 +6,12 @@ settings.controller('SiteSettingsCtrl', ['$scope', '$http', '$location', '$route
         $scope.nav              = { name: 'nav',        url: 'templates/nav.html'};
         $scope.bc               = { name: 'bc', url: 'templates/bc.html'}
         $scope.settings_browser = { name: 'settings_browser', url: 'templates/shared/settings_browser.html'}
+        $scope.settings_url = { name: 'settings_url', url: 'templates/shared/settings_url.html'}
         $scope.breadcrumbs = [
             {title: "Site " + $routeParams.sid, path: "#/sites/" + $routeParams.sid },
             { title: "Settings", path:  "#"}
         ];
+
         SitesSettings.query({sid: $routeParams.sid}, function(data){
             $scope.settings = data.data;
             $scope.settingsForm = $scope.settings;
@@ -24,9 +26,17 @@ settings.controller('SiteSettingsCtrl', ['$scope', '$http', '$location', '$route
                 }
                 $scope.browser_options.push(i);
             });
+            $scope.settingsForm.chosenUrls = [];
         });
 
         $scope.alerts = [];
+
+        $scope.addUrl = function() {
+            var url = { name: "Foo", url: "http://local.foo.com" };
+            $scope.settingsForm.urls.push(url);
+            Noty("New url added", 'warning');
+        };
+
         $scope.putSettings = function() {
             var browser = $scope.settingsForm.browserChosen;
             var browserObject = SiteHelpers.getBrowserObejectFromBrowser(browser);
