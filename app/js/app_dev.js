@@ -725,19 +725,19 @@ app.config(['$routeProvider',
         var path = '';
         $routeProvider.
             when('/', {
-                templateUrl:  path + 'templates/dash.html',
+                templateUrl:  path + 'templates/dash/dash.html',
                 controller:  'DashController'
             }).
             when('/reports', {
-                templateUrl:  path + 'templates/reports_home.html',
+                templateUrl:  path + 'templates/reports/reports_home.html',
                 controller:  'ReportsController'
             }).
             when('/sites', {
-                templateUrl:  path + 'templates/sites.html',
+                templateUrl:  path + 'templates/sites/sites.html',
                 controller:  'SitesController'
             }).
             when('/sites/:sid', {
-                templateUrl:  path + 'templates/site-show.html',
+                templateUrl:  path + 'templates/sites/site-show.html',
                 controller:  'SiteController'
             }).
             when('/sites/:sid/settings', {
@@ -760,5 +760,3 @@ app.config(['$routeProvider',
                 redirectTo: '/'
             });
     }]);
-
-

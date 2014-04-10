@@ -3,8 +3,8 @@ var settings = angular.module('siteSettingsCtrl', []);
 settings.controller('SiteSettingsCtrl', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesSettings', 'addAlert', 'SiteHelpers', 'Noty',
     function($scope, $http, $location, $route, $routeParams, SitesSettings, addAlert, SiteHelpers, Noty){
         $scope.nav_message      = "Mocked data. You can see what the Settings page will look like, click update though your settings are not save to this fake rest api";
-        $scope.nav              = { name: 'nav',        url: 'templates/nav.html'};
-        $scope.bc               = { name: 'bc', url: 'templates/bc.html'}
+        $scope.nav              = { name: 'nav',        url: 'templates/shared/nav.html'};
+        $scope.bc               = { name: 'bc', url: 'templates/shared/bc.html'}
         $scope.settings_browser = { name: 'settings_browser', url: 'templates/shared/settings_browser.html'}
         $scope.settings_url = { name: 'settings_url', url: 'templates/shared/settings_url.html'}
         $scope.breadcrumbs = [

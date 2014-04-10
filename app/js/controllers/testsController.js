@@ -2,7 +2,7 @@ var testsController = angular.module('testsController', ['ngSanitize']);
 
 testsController.controller('TestController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'Noty',
     function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, Noty){
-        $scope.nav = { name: 'nav', url: 'templates/nav.html'}
+        $scope.nav = { name: 'nav', url: 'templates/shared/nav.html'}
         $scope.nav_message = "Mocked data. You can click on <b>run</b> or <b>edit</b>"
         $scope.test_results = '<strong>Click run to see results...</strong>';
 
@@ -56,11 +56,11 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.settings_browser = { name: 'settings_browser', url: 'templates/shared/settings_browser.html'}
         $scope.tags_to_run = { name: 'tags_to_run', url: 'templates/shared/tags_to_run.html'}
         $scope.settings_browser_checkboxes = { name: 'settings_browser_checkbox', url: 'templates/shared/settings_browser_checkboxes.html'}
-        $scope.ace          = { name: 'ace', url: 'templates/ace.html'}
-        $scope.form         = { name: 'form', url: 'templates/form.html'}
-        $scope.nav          = { name: 'nav', url: 'templates/nav.html'}
+        $scope.ace          = { name: 'ace', url: 'templates/shared/ace.html'}
+        $scope.form         = { name: 'form', url: 'templates/tests/form.html'}
+        $scope.nav          = { name: 'nav', url: 'templates/shared/nav.html'}
         $scope.quick_test   = { name: 'quick_test', url: 'templates/run/quick_test.html'}
-        $scope.bc = { name: 'bc', url: 'templates/bc.html'}
+        $scope.bc = { name: 'bc', url: 'templates/shared/bc.html'}
 
         $scope.nav_message = "Mocked data. You can click on <b>any form item</b> as well as <b>run</b> and <b>any left side nav</b> <b>save</b> as well as use <b>Ace Editor</b> you can <b>Clone</b> to site 3"
         $scope.steps = {}
@@ -274,7 +274,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.cloneTest = function (site) {
             $scope.site_to_clone_to = site;
             var cloneModalInstanceCtrl = $modal.open({
-                templateUrl: 'templates/modal_clone.html',
+                templateUrl: 'templates/shared/modal_clone.html',
                 controller: 'CloneTestCtrl',
                 resolve: {
                     site_chosen: function () {
@@ -319,9 +319,9 @@ testsController.controller('TestNewController', ['$scope', '$http', '$location',
             }
         );
 
-        $scope.ace = { name: 'ace', url: 'templates/ace.html'}
-        $scope.form = { name: 'form', url: 'templates/form.html'}
-        $scope.nav = { name: 'nav', url: 'templates/nav.html'}
+        $scope.ace = { name: 'ace', url: 'templates/shared/ace.html'}
+        $scope.form = { name: 'form', url: 'templates/tests/form.html'}
+        $scope.nav = { name: 'nav', url: 'templates/shared/nav.html'}
         $scope.nav_message = "Mocked data. <b>Not much here go and edit <a href='#/sites/2/tests/test2_feature/edit'>test2</a></b>"
 
         $scope.test = {};

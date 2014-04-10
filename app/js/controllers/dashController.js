@@ -6,9 +6,9 @@ dash.controller('DashController', ['$scope', '$http', '$location', '$route', '$r
             $scope.sites = data;
             $scope.tableParams = TableMaker(data)
         });
-        $scope.nav              = { name: 'nav',        url: 'templates/nav.html'};
-        $scope.report_numbers   = { name: 'numbers',    url: 'templates/report_numbers.html'};
-        $scope.report_chart     = { name: 'chart',      url: 'templates/report_chart.html'};
+        $scope.nav              = { name: 'nav',        url: 'templates/shared/nav.html'};
+        $scope.report_numbers   = { name: 'numbers',    url: 'templates/reports/report_numbers.html'};
+        $scope.report_chart     = { name: 'chart',      url: 'templates/reports/report_chart.html'};
         $scope.nav_message = "Mocked data. You can click on <b>Site 2 [working mock].</b> and <b><i class='glyphicon glyphicon-record'></i> Reporting</b> has lots to offer";
         ReportsDashboard.query({}, function(data){
             console.log(data);

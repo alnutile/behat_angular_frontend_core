@@ -1,18 +1,21 @@
     <div ng-model="blocks.testDetailsBlock" ng-init="blocks.testDetailsBLock=true" ng-show="blocks.testDetailsBlock" class="ng-animate-block-transitions ng-hide">
 
-        <form role="form" name="featureForm" ng-submit="addFeature(steps.featureForm)">
+        <form class="form-inline" role="form" name="featureForm" ng-submit="addFeature(steps.featureForm)">
             <div class="form-group">
                 <div ng-hide="true" ng-model="steps.featureForm.feature" ng-init="steps.featureForm.feature='Feature:'"></div>
-                <h6>Feature:</h6>
-                <input class="form-control" name="featureTarget" ng-model="steps.featureForm.arg_1" type="text" value="" ng-required="true" placeholder="Add title to the test">
-                <br>
-                <input class="form-control btn btn-success" type="submit" name="featureFormAdd" value="Name it" ng-disabled="featureForm.$invalid || isUnchanged(steps.featureForm.arg_1)">
-                <div class="help-block" ng-model="steps.featureForm.final"> {{ steps.featureForm.feature }} {{ steps.featureForm.arg_1 }}</div>
-                <br>
-                <hr>
+                <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;Feature:</h5>
+                <div class="form-group">
+                    <input class="form-control" name="featureTarget" ng-model="steps.featureForm.arg_1" type="text" value="" ng-required="true" placeholder="Add title to the test">
+                </div>
+                <div class="form-group">
+                    <input class="form-control btn btn-success" type="submit" name="featureFormAdd" value="Name it" ng-disabled="featureForm.$invalid || isUnchanged(steps.featureForm.arg_1)">
+                </div>
+                <div class="help-block" ng-model="steps.featureForm.final">
+                    <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.featureForm.feature }} {{ steps.featureForm.arg_1 }}
+                </div>
             </div>
         </form>
-
+        <hr>
 
         <form role="form" name="tagForm" ng-submit="addTag(steps.testDetails.tag)">
             <div class="form-group">

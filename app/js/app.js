@@ -29,27 +29,27 @@ app.config(['$routeProvider',
         var path = '';
         $routeProvider.
             when('/', {
-                templateUrl:  path + 'templates/dash.html',
+                templateUrl:  path + 'templates/dash/dash.html',
                 controller:  'DashController'
             }).
             when('/sites', {
-                templateUrl:  path + 'templates/sites.html',
+                templateUrl:  path + 'templates/sites/sites.html',
                 controller:  'SitesController'
             }).
             when('/sites/:sid', {
-                templateUrl:  path + 'templates/site-show.html',
+                templateUrl:  path + 'templates/sites/site-show.html',
                 controller:  'SiteController'
             }).
             when('/sites/:sid/tests/new', {
-                templateUrl:  path + 'templates/test-edit.html',
+                templateUrl:  path + 'templates/tests/test-edit.html',
                 controller:  'TestNewController'
             }).
             when('/sites/:sid/tests/:tname', {
-                templateUrl:  path + 'templates/test-show.html',
+                templateUrl:  path + 'templates/tests/test-show.html',
                 controller:  'TestController'
             }).
             when('/sites/:sid/tests/:tname/edit', {
-                templateUrl:  path + 'templates/test-edit.html',
+                templateUrl:  path + 'templates/tests/test-edit.html',
                 controller:  'TestEditController'
             }).
             otherwise({

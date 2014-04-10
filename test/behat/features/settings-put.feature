@@ -15,10 +15,12 @@ Feature: Test Settings Get and Put
     And I select "Safari 6" from "browser"
     And I press "Submit"
     And I wait
-    Then I should see "Settings Updated"
+    And I wait
+    Then I should see "Settings updated"
     And the "github_user" field should contain "test"
     And the "sauce_user" field should contain "testuser"
     And I press "add url"
+    And I wait
     And I wait
     Then I should see "New url added"
     And the "url_name_3" field should contain "Foo"

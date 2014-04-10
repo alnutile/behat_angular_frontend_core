@@ -99,8 +99,8 @@ reportsController.controller('ReportsController', ['$scope', '$http', '$location
         };
 
         $scope.formats = 'yyyy-mm-dd';
-        $scope.nav      = { name: 'nav', url: 'templates/nav.html'}
-        $scope.bc       = { name: 'bc', url: 'templates/bc.html'}
+        $scope.nav      = { name: 'nav', url: 'templates/shared/nav.html'}
+        $scope.bc       = { name: 'bc', url: 'templates/shared/bc.html'}
         $scope.nav_message = "Mocked data. You can click on Site 2 has decent reports to show."
 
     }]);

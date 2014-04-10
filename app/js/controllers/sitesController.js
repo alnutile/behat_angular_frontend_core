@@ -7,12 +7,12 @@ sitesController.controller('SitesController', ['$scope', '$http', '$location', '
 
 sitesController.controller('SiteController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'TableMaker', 'ReportSiteNumbers', 'SiteHelpers', 'ChartsPassFail',
     function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, TableMaker, ReportSiteNumbers, SiteHelpers, ChartsPassFail){
-        $scope.nav                  = { name: 'nav', url: 'templates/nav.html'}
-        $scope.bc                   = { name: 'bc', url: 'templates/bc.html'}
+        $scope.nav                  = { name: 'nav', url: 'templates/shared/nav.html'}
+        $scope.bc                   = { name: 'bc', url: 'templates/shared/bc.html'}
         $scope.report_filter        = { name: 'report_filter', url: 'templates/report_filter.html'}
-        $scope.reports_template     = { name: 'reports', url: 'templates/reports.html'}
-        $scope.report_numbers_site  = { name: 'numbers',    url: 'templates/report_numbers_site.html'};
-        $scope.report_chart         = { name: 'chart',      url: 'templates/report_chart.html'};
+        $scope.reports_template     = { name: 'reports', url: 'templates/reports/reports.html'}
+        $scope.report_numbers_site  = { name: 'numbers',    url: 'templates/reports/report_numbers_site.html'};
+        $scope.report_chart         = { name: 'chart',      url: 'templates/reports/report_chart.html'};
         $scope.reports_all = ReportSiteNumbers.get({sid: $routeParams.sid});
 
         $scope.nav_message = "Mocked data. You can click on <b>test2.feature view</b> or <b>edit</b> and <b>Create New Test</b></b>"

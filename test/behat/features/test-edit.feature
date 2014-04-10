@@ -12,10 +12,13 @@ Feature: Test Edit
     Then I fill in "tag-input" with "@tag"
     And I press "add-details"
     And I wait
+    And I wait
     Then I should see "Tag Added @tag.."
     And I press the element ".scenarios > div:nth-child(1) > h4:nth-child(1) > a:nth-child(1)"
     Then I fill in "cfpTarget" with "some different text"
     And I press "cfpFormAdd"
+    And I wait
+    And I wait
     And I wait
     Then I should see "Step Added And I follow"
     And I should see "Then I should"
@@ -25,9 +28,12 @@ Feature: Test Edit
     And I fill in "seeFormTarget" with "some other other text"
     And I press "seeFormAdd"
     And I wait
+    And I wait
     Then I should see "Step Added Then I should"
     Then I select "not see" from "seeFormAction"
     And I press "seeFormAdd"
+    And I wait
+    And I wait
     And I wait
     Then I should see "Step Added Then I should not see"
 
@@ -37,6 +43,8 @@ Feature: Test Edit
       Then I fill in "tag-input" with "<SCRIPT>alert('XSS')</SCRIPT » >"
       And I press "add-details"
       And I wait
+      And I wait
+      And I wait
       Then I should see "Tag Added <SCRIPT"
 
   Scenario: Test Form Fields
@@ -45,5 +53,6 @@ Feature: Test Edit
       And I fill in "backGroundTarget" with "test"
       Then I should see "Background: test"
       And I press "backgroundsFormAdd"
+      And I wait
       And I wait
       Then I should see "Step Added Background: \"test\"..."
