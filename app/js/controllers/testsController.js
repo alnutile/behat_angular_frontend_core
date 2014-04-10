@@ -19,8 +19,8 @@ testsController.controller('TestController', ['$scope', '$http', '$location', '$
         }
     }]);
 
-testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers){
+testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent',
+    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers, tagsPresent){
         $scope.settingsForm = {};
         $scope.settingsForm.browserChosenBatch = [];
         $scope.blocks = {}
@@ -46,9 +46,15 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             });
         });
 
+        $scope.tagsPresentInTest = [];
+        $scope.$watch('test_content', function(){
+            $scope.tagsPresentInTest = tagsPresent($scope.test_content);
+        });
+
         $scope.reports_test_page  = { name: 'reports', url: 'templates/reports_test_page.html'}
         $scope.reports = ReportsTestsService.get({sid: $routeParams.sid, tname: $routeParams.tname});
         $scope.settings_browser = { name: 'settings_browser', url: 'templates/shared/settings_browser.html'}
+        $scope.tags_to_run = { name: 'tags_to_run', url: 'templates/shared/tags_to_run.html'}
         $scope.settings_browser_checkboxes = { name: 'settings_browser_checkbox', url: 'templates/shared/settings_browser_checkboxes.html'}
         $scope.ace          = { name: 'ace', url: 'templates/ace.html'}
         $scope.form         = { name: 'form', url: 'templates/form.html'}
@@ -114,6 +120,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         });
 
         $scope.runTest = function() {
+            console.log($scope.settingsForm);
             Noty("Running Test", 'success');
             runTest('success', 'Running test...', $scope);
         };

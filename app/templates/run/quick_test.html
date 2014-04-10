@@ -5,6 +5,7 @@
     <div class="panel-body">
         <form name="quick_test_settings" class="form-horizontal col-lg-11">
             <ng-include src="settings_browser.url"></ng-include>
+            <ng-include src="tags_to_run.url"></ng-include>
 
             <div class="form-group">
                 <select name="url-run" ng-model="settingsForm.url_to_run" ng-options="url.name + '-' + url.url for url in settings.urls" class="form-control"></select>
