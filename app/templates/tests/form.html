@@ -578,7 +578,7 @@
     </div>
 
     <div ng-model="blocks.testTokensBlock" ng-init="blocks.testTokensBlock=false" ng-show="blocks.testTokensBlock" class="ng-animate-block-transitions ng-hide">
-        <p>Tokens coming soon...</p>
+        <ng-include src="tokens_admin.url"></ng-include>
     </div>
 
     <div ng-model="blocks.testResultsBlock" ng-init="blocks.testResultsBlock=false" ng-show="blocks.testResultsBlock" class="ng-animate-block-transitions ng-hide">

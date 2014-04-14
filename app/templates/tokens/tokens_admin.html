@@ -1,0 +1,35 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Tokens Admin</h3>
+    </div>
+    <div class="panel-body">
+            <div class="form-group">
+                <div ng-repeat="(key, value) in tokens">
+                    <h4>Token file: {{key}}</h4>
+                    <table class="table table-bordered table-hover table-condensed">
+                        <thead>
+                        <tr>
+                            <th>Token</th>
+                            <th>Value</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="row in value">
+                                <td>
+                                    <a href="#" ng-model="tokens[key].token" editable-text="row.token">{{ row.token|| "empty" }}</a>
+                                </td>
+                                <td>
+                                    <a href="#" ng-model="tokens[key].value" editable-text="row.value">{{ row.value|| "empty" }}</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- @LEFT_OFF make add button for new row make service for tags crud finally add new set -->
+                    <button id="update_tokens_{{$index}}" type="button" class="btn btn-success" ng-click="updateTokens(tokens[key], key)">Update</button>
+                    <button id="add_row_tokens_{{$index}}" type="button" class="btn btn-default" ng-click="addTokenRow(tokens[key])">Add Row</button>
+                </div>
+            </div>
+
+        <button id="add_new_token_set" ng-click="addTokenSet()" type="button" class="btn-default btn">Add New Set</button>
+    </div>
+</div>

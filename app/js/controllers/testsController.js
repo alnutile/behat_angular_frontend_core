@@ -19,8 +19,8 @@ testsController.controller('TestController', ['$scope', '$http', '$location', '$
         }
     }]);
 
-testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers, tagsPresent){
+testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent', 'TokensHelpers',
+    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers, tagsPresent, TokensHelpers){
         $scope.settingsForm = {};
         $scope.settingsForm.browserChosenBatch = [];
         $scope.blocks = {}
@@ -51,7 +51,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             $scope.tagsPresentInTest = tagsPresent($scope.test_content);
         });
 
-        $scope.reports_test_page  = { name: 'reports', url: 'templates/reports_test_page.html'}
+        $scope.reports_test_page  = { name: 'reports', url: 'templates/reports/reports_test_page.html'}
         $scope.reports = ReportsTestsService.get({sid: $routeParams.sid, tname: $routeParams.tname});
         $scope.settings_browser = { name: 'settings_browser', url: 'templates/shared/settings_browser.html'}
         $scope.tags_to_run = { name: 'tags_to_run', url: 'templates/shared/tags_to_run.html'}
@@ -60,6 +60,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.form         = { name: 'form', url: 'templates/tests/form.html'}
         $scope.nav          = { name: 'nav', url: 'templates/shared/nav.html'}
         $scope.quick_test   = { name: 'quick_test', url: 'templates/run/quick_test.html'}
+        $scope.tokens_admin   = { name: 'tokens_admin', url: 'templates/tokens/tokens_admin.html'}
         $scope.bc = { name: 'bc', url: 'templates/shared/bc.html'}
 
         $scope.nav_message = "Mocked data. You can click on <b>any form item</b> as well as <b>run</b> and <b>any left side nav</b> <b>save</b> as well as use <b>Ace Editor</b> you can <b>Clone</b> to site 3"
@@ -74,11 +75,33 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                 $http.defaults.headers.post['X-CSRF-Token'] = data;
             }
         );
+
         $scope.tests = TestsServices.get({sid: $routeParams.sid, tname: $routeParams.tname}, function(data) {
             $scope.test = data;
+            $scope.tokens = data.tokens;
+            console.log($scope.tokens);
             $scope.test_content = data.content;
             $scope.test_html = data.content_html;
         });
+
+        $scope.tokensForm = {};
+
+        $scope.updateTokens = function(tokensForm, token_name) {
+            TokensHelpers.updateTokens($routeParams.sid, $routeParams.tname, token_name, tokensForm);
+        };
+
+        $scope.addTokenRow = function(tokensForm) {
+            Noty("New row added", 'success');
+            TokensHelpers.tokensAppendRow(tokensForm);
+        }
+
+        $scope.addTokenSet = function() {
+            Noty("New Set Added", 'success');
+            var newSet = TokensHelpers.newTokenSet($routeParams.tname);
+            $scope.tokens[newSet.name] = newSet.set;
+        }
+
+
 
         $scope.editor = {};
 

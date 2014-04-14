@@ -19,7 +19,6 @@ Feature: Test Edit
     And I press "cfpFormAdd"
     And I wait
     And I wait
-    And I wait
     Then I should see "Step Added And I follow"
     And I should see "Then I should"
     Then I fill in "search-steps" with "blah"
@@ -34,7 +33,6 @@ Feature: Test Edit
     And I press "seeFormAdd"
     And I wait
     And I wait
-    And I wait
     Then I should see "Step Added Then I should not see"
 
   Scenario: Test XSS
@@ -42,7 +40,6 @@ Feature: Test Edit
       And I wait
       Then I fill in "tag-input" with "<SCRIPT>alert('XSS')</SCRIPT » >"
       And I press "add-details"
-      And I wait
       And I wait
       And I wait
       Then I should see "Tag Added <SCRIPT"
