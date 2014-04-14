@@ -3,6 +3,7 @@
 var app = angular.module('behatEditor', [
     'ngRoute',
     'ngTable',
+    'tokensResource',
     'chartjs',
     'ngMockE2E',
     'ngAnimate',
@@ -24,17 +25,20 @@ var app = angular.module('behatEditor', [
     'dashController',
     'testsController',
     'behatServices',
+    'tokensService',
     'tableMaker',
     'passFailFilter',
     'tagsService',
     'sanitizer',
     'asFilter',
+    'xeditable',
     'dateRange',
     'siteName',
     'googlechart'
 ]);
 
-app.run(function($httpBackend) {
+app.run(function($httpBackend, editableOptions) {
+    editableOptions.theme = 'bs3';
 
     var site_settings_update  = '{"status":"success","data":{"defaults":{"default_tag":"@example","base_url":"http:\/\/google.com"},"github":{"github_username":"test","github_password":"test","test_folder":"tests","urls":[{"name": "Production", "url": "http:\/\/google.com"},{"name":"Staging","url":"http:\/\/staging.google.com"},{"name":"Custom 1", "url":"http:\/\/local.google.com"}],"github_account":"testuser"},"saucelabs":{"browser":{"username":"testuser","access_key":"accessskey","browser":"chrome","platform":"Windows 2012","version":"30","name":"Testing with Saucelabs"},"host":"ondemand.saucelabs.com","port":80}},"message":"Success updating file"}';
     var site_settings_default = '{"status":"success","data":{"defaults":{"default_tag":"@updated","base_url":"http:\/\/google.com"},"urls":[{"name": "Production", "url": "http:\/\/google.com", "default": "0"},{"name":"Staging","url":"http:\/\/staging.google.com", "default": "1"},{"name":"Custom 1", "url":"http:\/\/local.google.com", "default": "0"}],"github":{"github_username":"test","github_password":"test","test_folder":"tests","github_account":"testuser"},"saucelabs":{"browser":{"username":"testuser","access_key":"accessskey","browser":"chrome","platform":"Windows 2012","version":"30","name":"Testing with Saucelabs"},"host":"ondemand.saucelabs.com","port":80}},"message":"Success getting file"}';
@@ -131,7 +135,8 @@ app.run(function($httpBackend) {
         "full_path":"\/vagrant\/public\/b2.vbox.local\/private\/behat\/550cb394-2ec0-4ce9-9133-e68c2a232eb2","test_files_root_path":"\/vagrant\/public\/b2.vbox.local\/private\/behat\/550cb394-2ec0-4ce9-9133-e68c2a232eb2\/features"};
 
 
-    var test2_feature = {"name":"test2.feature","path":"\/vagrant\/public\/b2.vbox.local\/private\/behat\/550cb394-2ec0-4ce9-9133-e68c2a232eb2\/features\/test2.feature","content":"Feature: Test WikiPedia\n  Scenario: Hello World\n    Given I am on \u0022http:\/\/en.wikipedia.org\/wiki\/Main_Page\u0022\n    Then I should see \u0022Wiki\u0022","content_html":"Feature: Test WikiPedia\u003Cbr\u003E\u0026nbsp;\u0026nbsp;  Scenario: Hello World\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    Given I am on \u0022http:\/\/en.wikipedia.org\/wiki\/Main_Page\u0022\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    Then I should see \u0022Wiki\u0022\u003Cbr\u003E","name_dashed":"test2_feature"};
+    var test2_feature = {"name":"test2.feature","path":"\/vagrant\/public\/b2.vbox.local\/private\/behat\/550cb394-2ec0-4ce9-9133-e68c2a232eb2\/features\/test2.feature","content":"Feature: Test WikiPedia\n  Scenario: Hello World\n    Given I am on \u0022http:\/\/en.wikipedia.org\/wiki\/Main_Page\u0022\n    Then I should see \u0022Wiki\u0022","content_html":"Feature: Test WikiPedia\u003Cbr\u003E\u0026nbsp;\u0026nbsp;  Scenario: Hello World\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    Given I am on \u0022http:\/\/en.wikipedia.org\/wiki\/Main_Page\u0022\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    Then I should see \u0022Wiki\u0022\u003Cbr\u003E","name_dashed":"test2_feature","tokens":{'12345.tokens':[{ 'token': 'foo', 'value': 'bar' },{ 'token': 'foo2', 'value': 'bar2'}],'67890.tokens':[{ 'token': 'foo33', 'value': 'bar33' }, { 'token': 'foo44', 'value': 'bar44' }]}};
+
     var test3_feature = {"name":"test3.feature","path":"\/vagrant\/public\/b2.vbox.local\/private\/behat\/550cb394-2ec0-4ce9-9133-e68c2a232eb2\/features\/test3.feature","content":"Feature: Test WikiPedia\n  Scenario: Hello World\n    Given I am on \u0022http:\/\/en.wikipedia.org\/wiki\/Main_Page\u0022\n    Then I should see \u0022Wiki\u0022","content_html":"Feature: Test WikiPedia\u003Cbr\u003E\u0026nbsp;\u0026nbsp;  Scenario: Hello World\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    Given I am on \u0022http:\/\/en.wikipedia.org\/wiki\/Main_Page\u0022\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    Then I should see \u0022Wiki\u0022\u003Cbr\u003E","name_dashed":"test3_feature"};
 
     var test_cloned = {
@@ -714,6 +719,10 @@ app.run(function($httpBackend) {
     $httpBackend.whenGET('/behat_editor_services_v2/sites/2/reports').respond(reports_site_all);
     $httpBackend.whenGET('/behat_editor_services_v2/sites/2/tests/test2_feature/reports').respond(reports_for_test);
     $httpBackend.whenGET('/behat_editor_services_v2/sites/3/tests/test3_feature/reports').respond(reports_for_test3);
+
+    $httpBackend.whenPUT('/behat_editor_services_v2/sites/2/tests/test2_feature/tokens/12345.tokens').respond(200,
+        { status: 'success', message: "Updated Tokens", data: null }
+    );
 
     $httpBackend.whenGET(/^templates\//).passThrough();
 

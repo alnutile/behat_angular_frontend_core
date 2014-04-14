@@ -19,7 +19,8 @@ module.exports = function(config){
       'app/js/angular-ui/*.*',
       'app/js/angular-ace/*.(',
       'app/js/charts/*.*',
-      'app/js/ng-table/*.*'
+      'app/js/ng-table/*.*',
+      'app/js/xeditable/*.*'
     ],
 
     autoWatch : true,
