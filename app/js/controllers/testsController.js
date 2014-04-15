@@ -19,8 +19,8 @@ testsController.controller('TestController', ['$scope', '$http', '$location', '$
         }
     }]);
 
-testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent', 'TokensHelpers',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers, tagsPresent, TokensHelpers){
+testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent', 'TokensHelpers', 'BatchServices',
+    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers, tagsPresent, TokensHelpers, BatchServices){
         $scope.settingsForm = {};
         $scope.settingsForm.browserChosenBatch = [];
         $scope.blocks = {}
@@ -153,6 +153,8 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             runTest('success', 'Running test...', $scope);
         };
 
+
+        /** BATCH AREA **/
         $scope.toggleBatchBrowser = function(browser) {
             var idx = $scope.settingsForm.browserChosenBatch.indexOf(browser);
             if (idx > -1) {
@@ -172,10 +174,19 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
 
         $scope.runBatch = function() {
             //@TODO send batch job to url
-            
-            console.log($scope.settingsForm);
-            Noty("Running Batch job ", 'success');
+            var params = {
+                'batch_settings': $scope.settingsForm,
+                'testData': $scope.test
+            };
+
+            BatchServices.runOnce({sid: $routeParams.sid}, params, function(data){
+                Noty(data.message, 'success');
+
+            }, function(data){
+                Noty(data.message, 'error');
+            })
         }
+        /** END BATCH AREA **/
 
         $scope.saveTest = function(model) {
             Noty('Saving test..', 'success');

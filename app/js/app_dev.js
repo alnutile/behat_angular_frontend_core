@@ -5,6 +5,7 @@ var app = angular.module('behatEditor', [
     'ngTable',
     'tokensResource',
     'chartjs',
+    'batchServices',
     'ngMockE2E',
     'ngAnimate',
     'ui.ace',
@@ -722,6 +723,10 @@ app.run(function($httpBackend, editableOptions) {
 
     $httpBackend.whenPUT('/behat_editor_services_v2/sites/2/tests/test2_feature/tokens/12345.tokens').respond(200,
         { status: 'success', message: "Updated Tokens", data: null }
+    );
+
+    $httpBackend.whenPOST('/behat_editor_services_v2/sites/2/batches/runOnce').respond(200,
+        { status: 'success', message: "Batch job running you can see the batch info here", data: { bid: 10 }  }
     );
 
     $httpBackend.whenGET(/^templates\//).passThrough();

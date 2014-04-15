@@ -19,4 +19,4 @@ Feature: Test the Quick test area
     And I press the element "div:nth-child(8) > label > input"
     And I press "Run Batch"
     And I wait
-    Then I should see "Running Batch job"
+    Then I should see "Batch job running you can see the batch info here"

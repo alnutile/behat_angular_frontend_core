@@ -34,3 +34,14 @@ Feature: Tokens Panel
      Then I should see "Use Token Set"
      And I select "12345.tokens" from "token_set_to_use"
      #the fact I made it this far means it worked
+
+  Scenario: Select Tokens for batch
+       Given I am on "/sites/2/tests/test2_feature/edit"
+       And I wait
+       And I press the element "div.run-test"
+       Then I should see "Use Token Set"
+       And I select "12345.tokens" from "token_set_to_use"
+       And I press the element "div:nth-child(8) > label > input"
+       And I press "Run Batch"
+       And I wait
+       Then I should see "Batch job running you can see the batch info here"
