@@ -260,8 +260,10 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                         }
                     }
                 }
-                output = sanitizerFilter(output);
-                build.push(output);
+                if (output.length !== 0) {
+                    output = sanitizerFilter(output);
+                    build.push(output);
+                }
                 count++;
             });
             var new_step = build.join(' ');
