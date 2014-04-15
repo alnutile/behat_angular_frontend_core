@@ -25,8 +25,9 @@
                         </tbody>
                     </table>
                     <!-- @LEFT_OFF make add button for new row make service for tags crud finally add new set -->
-                    <button id="update_tokens_{{$index}}" type="button" class="btn btn-success" ng-click="updateTokens(tokens[key], key)">Update</button>
-                    <button id="add_row_tokens_{{$index}}" type="button" class="btn btn-default" ng-click="addTokenRow(tokens[key])">Add Row</button>
+                    <button id="update_tokens_{{$index}}" type="button" class="btn btn-success btn-sm" ng-click="updateTokens(tokens[key], key)">Update</button>
+                    <button id="add_row_tokens_{{$index}}" type="button" class="btn btn-default btn-sm" ng-click="addTokenRow(tokens[key])">Add Row</button>
+                    <button id="clone_tokens_{{$index}}" type="button" class="btn btn-warning btn-sm" ng-click="cloneTokens(tokens[key])">Clone Set</button>
                 </div>
             </div>
 

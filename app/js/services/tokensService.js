@@ -1,3 +1,4 @@
+"use strict";
 var tokensService = angular.module('tokensService', []);
 
 tokensService.
@@ -19,27 +20,44 @@ tokensService.
                     var tokensDefault = {'token': "Foo1", 'value': "Bar1" };
                     subSet.push(tokensDefault);
                     return subSet;
-                }
+                };
 
                 helpers.updateTokens = function(site, test, token_name, tokenSet) {
                     TokensResource.updateTokens({sid:site, tname: test, token_name: token_name}, tokenSet, function(data){
                         Noty("Tokens Updated", 'success');
-                        return data;
+                        return tokenSet;
                     }, function(message) {
                         var status = message.status;
                         Noty("Error submitting tokens for update Status: " + status, 'error')
                         return message;
                     });
-                }
+                };
 
-                helpers.newTokenSet = function(testname) {
-                    var timeStamp = new Date().getTime();
-                    var token_filename = testname + '.' + timeStamp + '.token';
-                    var token_filename_id = testname + '_' + timeStamp + '_token';
-                    var subSet = [];
+                helpers.cloneTokens = function(test_name, parent_set_name, parent_set, test_scope) {
+                    var set_to_clone        = parent_set[parent_set_name];
+                    var set_name            = helpers.makeName(test_name);
+                    test_scope.tokens[set_name] = set_to_clone;
+                    return test_scope.tokens;
+                };
+
+                helpers.newTokenSet = function(testname, subSet) {
+                    var token_filename = helpers.makeName(testname);
+                    var subSet = subSet || [];
                     var default_rows = helpers.tokensAppendRow(subSet);
+                    Noty("New Set Added", 'success');
                     return {name: token_filename, set: default_rows };
-                }
+                };
+
+                helpers.makeName = function(parent) {
+                    var timeStamp = new Date().getTime();
+                    return  parent + '.' + timeStamp + '.token';
+                };
+
+                helpers.makeNameWithDashes = function(parent) {
+                    var timeStamp = new Date().getTime();
+                    return  parent + '_' + timeStamp + '_token';
+                };
+
 
             return helpers;
 
