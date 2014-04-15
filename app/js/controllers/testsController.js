@@ -171,7 +171,8 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         }
 
         $scope.runBatch = function() {
-            //@TODO send batch job
+            //@TODO send batch job to url
+            
             console.log($scope.settingsForm);
             Noty("Running Batch job ", 'success');
         }
