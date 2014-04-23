@@ -59,15 +59,15 @@
                                 <table class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>State</th>
-                                        <th>Test</th>
-                                        <th>Tags</th>
+                                        <th><a href="" ng-click="sortOrder('status')">&nbsp;State<i class="glyphicon" ng-class="selectedCls('status')"></i></a></th>
+                                        <th><a href="" ng-click="sortOrder('name')">&nbsp;Test<i class="glyphicon" ng-class="selectedCls('name')"></i></a></th>
+                                        <th><a href="" ng-click="sortOrder('tags')">&nbsp;Tags<i class="glyphicon" ng-class="selectedCls('tags')"></i></a></th>
                                         <th>View</th>
                                         <th>Edit</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="test in site.testFiles | filter:{status:passFailShow} | filter:tagged | filter:search " ng-class="{danger: test.status == 0}">
+                                    <tr ng-repeat="test in site.testFiles | filter:{status:passFailShow} | filter:tagged | filter:search | orderBy:tests_sort:reverse" ng-class="{danger: test.status == 0}">
                                         <td ng-bind-html="test.status | passFailFilter">
                                         </td>
                                         <td>{{ test.name }}

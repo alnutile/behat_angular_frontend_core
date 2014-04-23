@@ -83,7 +83,6 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             }
         );
 
-
         /** END SETUP PAGE **/
 
 
@@ -179,6 +178,9 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.sites = SitesServices.getSites(function(data){
             $scope.sites = data;
         });
+
+
+
         /*** END PULL IN SITES INFO ***/
 
         /** RUNNING A TEST **/
