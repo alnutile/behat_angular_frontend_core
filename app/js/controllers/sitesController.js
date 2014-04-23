@@ -5,8 +5,11 @@ sitesController.controller('SitesController', ['$scope', '$http', '$location', '
         $scope.sites = SitesServices.query();
     }]);
 
-sitesController.controller('SiteController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'TableMaker', 'ReportSiteNumbers', 'SiteHelpers', 'ChartsPassFail',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, TableMaker, ReportSiteNumbers, SiteHelpers, ChartsPassFail){
+sitesController.controller('SiteController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'TableMaker', 'ReportSiteNumbers', 'SiteHelpers', 'ChartsPassFail', 'AppHelpers',
+    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, TableMaker, ReportSiteNumbers, SiteHelpers, ChartsPassFail, AppHelpers){
+        $scope.selectedCls = AppHelpers.selectedCls;
+        $scope.sortOrder = AppHelpers.sortOrder;
+
         $scope.nav                  = { name: 'nav', url: 'templates/shared/nav.html'}
         $scope.bc                   = { name: 'bc', url: 'templates/shared/bc.html'}
         $scope.report_filter        = { name: 'report_filter', url: 'templates/report_filter.html'}
@@ -15,28 +18,8 @@ sitesController.controller('SiteController', ['$scope', '$http', '$location', '$
         $scope.report_chart         = { name: 'chart',      url: 'templates/reports/report_chart.html'};
         $scope.reports_all = ReportSiteNumbers.get({sid: $routeParams.sid});
 
-        $scope.tests_sort = {};
-        $scope.tests_sort = '-name';
-
-        $scope.sortOrder = function(column) {
-            if ($scope.reverse == false) {
-                $scope.reverse = true;
-                $scope.tests_sort = column;
-            } else {
-                $scope.reverse = false;
-                $scope.tests_sort = column;
-            }
-        };
-
-        $scope.selectedCls = function(column) {
-            if (column == $scope.tests_sort || column == '-' + $scope.tests_sort ) {
-                if($scope.reverse == true) {
-                    return "glyphicon-sort-by-attributes-alt";
-                } else {
-                    return 'glyphicon-sort-by-attributes';
-                }
-            }
-        }
+        $scope.sort = {};
+        $scope.sort = '-name';
 
         $scope.nav_message = "Mocked data. You can click on <b>test2.feature view</b> or <b>edit</b> and <b>Create New Test</b></b>"
         $scope.sites = SitesServices.get({sid: $routeParams.sid}, function(data) {

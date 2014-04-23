@@ -1,7 +1,12 @@
 var dash = angular.module('dashController', []);
 
-dash.controller('DashController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'ReportsDashboard', 'TableMaker', 'SiteHelpers', 'ChartsPassFail',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, ReportsDashboard, TableMaker, SiteHelpers, ChartsPassFail){
+dash.controller('DashController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'ReportsDashboard', 'TableMaker', 'SiteHelpers', 'ChartsPassFail', 'AppHelpers',
+    function($scope, $http, $location, $route, $routeParams, SitesServices, ReportsDashboard, TableMaker, SiteHelpers, ChartsPassFail, AppHelpers){
+        $scope.selectedCls = AppHelpers.selectedCls;
+        $scope.sortOrder = AppHelpers.sortOrder;
+        $scope.sort = {};
+        $scope.sort = '-title';
+
         $scope.sites = SitesServices.getSites(function(data){
             $scope.sites = data;
             $scope.tableParams = TableMaker(data)

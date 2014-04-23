@@ -2,7 +2,7 @@
 
 body {
     font-size: 13px !important; /* the first one :( */
-    margin-top: 80px !important;
+    margin: 80px 0px 0px 0px !important;
 }
 
 div.top {

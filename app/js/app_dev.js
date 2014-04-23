@@ -6,6 +6,7 @@ var app = angular.module('behatEditor', [
     'tokensResource',
     'chartjs',
     'batchServices',
+    'app_helpers',
     'ngMockE2E',
     'ngAnimate',
     'snap',

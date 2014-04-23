@@ -37,12 +37,21 @@
                                 <input class="form-control" placeholder="Search" ng-model="query">
                             </div>
                             <hr>
-                                <table ng-table="tableParams" class="table table-bordered table-hover">
-                                    <tr ng-repeat="site in $data | filter:query" >
-                                        <td data-title="'Name'" sortable="'title'">{{ site.title }}</td>
-                                        <td data-title="'Default Tag'" sortable="'default_tag'">{{ site.default_tag }}</td>
-                                        <td data-title="'Site ID'" sortable="'nid'"><a id="site-{{ site.nid }}" href="#/sites/{{ site.nid }}">view</a></td>
-                                    </tr>
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th><a href="" ng-click="sortOrder('title')">&nbsp;Name<i class="glyphicon" ng-class="selectedCls('title')"></i></a></th>
+                                            <th><a href="" ng-click="sortOrder('status')">&nbsp;Default Tag<i class="glyphicon" ng-class="selectedCls('status')"></i></a></th>
+                                            <th>View</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="site in sites | filter:query | orderBy:sort:reverse" >
+                                            <td data-title="'Name'" sortable="'title'">{{ site.title }}</td>
+                                            <td data-title="'Default Tag'" sortable="'default_tag'">{{ site.default_tag }}</td>
+                                            <td data-title="'Site ID'" sortable="'nid'"><a id="site-{{ site.nid }}" href="#/sites/{{ site.nid }}">view</a></td>
+                                        </tr>
+                                    </tbody>
                                 </table>
                     </div>
                     <div class="panel panel-default">

@@ -67,7 +67,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="test in site.testFiles | filter:{status:passFailShow} | filter:tagged | filter:search | orderBy:tests_sort:reverse" ng-class="{danger: test.status == 0}">
+                                    <tr ng-repeat="test in site.testFiles | filter:{status:passFailShow} | filter:tagged | filter:search | orderBy:sort:reverse" ng-class="{danger: test.status == 0}">
                                         <td ng-bind-html="test.status | passFailFilter">
                                         </td>
                                         <td>{{ test.name }}
