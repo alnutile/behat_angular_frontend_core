@@ -19,14 +19,15 @@ testsController.controller('TestController', ['$scope', '$http', '$location', '$
         }
     }]);
 
-testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent', 'TokensHelpers', 'BatchServices',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers, tagsPresent, TokensHelpers, BatchServices){
+testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent', 'TokensHelpers', 'BatchServices', 'snapRemote',
+    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers, tagsPresent, TokensHelpers, BatchServices, snapRemote){
         $scope.settingsForm = {};
         $scope.settingsForm.browserChosenBatch = [];
         $scope.blocks = {}
         $scope.blocks.testDetailsBlock = true;
         $scope.groups = {}
 
+        /** PULL IN GENERAL SETTINGS **/
         SitesSettings.query({sid: $routeParams.sid}, function(data){
             $scope.settings = data.data;
             $scope.browser_options = [];
@@ -45,11 +46,14 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                }
             });
         });
+        /** END PULL IN GENERAL SETTINGS **/
 
-        $scope.tagsPresentInTest = [];
-        $scope.$watch('test_content', function(){
-            $scope.tagsPresentInTest = tagsPresent($scope.test_content);
-        });
+        /** SETUP PAGE **/
+
+        $scope.snapOpts = {
+            minPosition: '-400',
+            touchToDrag: false
+        };
 
         $scope.reports_test_page            = { name: 'reports', url: 'templates/reports/reports_test_page.html'}
         $scope.reports                      = ReportsTestsService.get({sid: $routeParams.sid, tname: $routeParams.tname});
@@ -63,6 +67,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.quick_test                   = { name: 'quick_test', url: 'templates/run/quick_test.html'}
         $scope.tokens_admin                 = { name: 'tokens_admin', url: 'templates/tokens/tokens_admin.html'}
         $scope.bc                           = { name: 'bc', url: 'templates/shared/bc.html'}
+        $scope.snap                         = { name: 'snap', url: 'templates/shared/snap_test_output.html'}
 
         $scope.nav_message = "Mocked data. You can click on <b>any form item</b> as well as <b>run</b> and <b>any left side nav</b> <b>save</b> as well as use <b>Ace Editor</b> you can <b>Clone</b> to site 3"
         $scope.steps = {}
@@ -76,6 +81,15 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                 $http.defaults.headers.post['X-CSRF-Token'] = data;
             }
         );
+
+
+        /** END SETUP PAGE **/
+
+
+        $scope.tagsPresentInTest = [];
+        $scope.$watch('test_content', function(){
+            $scope.tagsPresentInTest = tagsPresent($scope.test_content);
+        });
 
         $scope.tests = TestsServices.get({sid: $routeParams.sid, tname: $routeParams.tname}, function(data) {
             $scope.test = data;
@@ -110,6 +124,8 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
 
         $scope.editor = {};
 
+        /**** ACE EDITOR ****/
+
         $scope.aceLoaded = function(_editor) {
             var _session = _editor.getSession();
             var _renderer = _editor.renderer;
@@ -126,7 +142,9 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                 $scope.test_content = value;
             })
         }
+        /*** END ACE ***/
 
+        /*** PULL IN SITE INFO ***/
         SitesServices.get({sid: $routeParams.sid}, function(data) {
             $scope.site = data;
             $scope.breadcrumbs = [
@@ -140,19 +158,23 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                 }
             ];
         });
+        /*** END PULL IN SITE INFO ***/
 
+        /*** PULL IN SITES INFO ***/
         //Need more data to do the pull down list as well
         //@TODO maybe the server should offer this list
         $scope.sites = SitesServices.getSites(function(data){
             $scope.sites = data;
         });
+        /*** END PULL IN SITES INFO ***/
 
+        /** RUNNING A TEST **/
         $scope.runTest = function() {
-            console.log($scope.settingsForm);
+            snapRemote.open('right');
             Noty("Running Test", 'success');
             runTest('success', 'Running test...', $scope);
         };
-
+        /** END RUNNING A TEST **/
 
         /** BATCH AREA **/
         $scope.toggleBatchBrowser = function(browser) {
@@ -275,13 +297,16 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.search = '';
 
         $scope.searchForms = function(search) {
-            console.log(search);
             $scope.search = search;
         }
 
         $scope.showForm = function(form_tags_form) {
+            //Because we are set to False at first this has to turn on all to begin with
             if($scope.search !== '') {
-                if(form_tags_form.indexOf($scope.search) !== -1) {
+                $scope.showHideGroup('all');
+                var tags    = angular.lowercase(form_tags_form);
+                var search  = angular.lowercase($scope.search);
+                if(tags.indexOf(search) !== -1) {
                    return true;
                 } else {
                    return false;

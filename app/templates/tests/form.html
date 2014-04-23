@@ -1,9 +1,9 @@
-    <div ng-model="blocks.testDetailsBlock" ng-init="blocks.testDetailsBLock=true" ng-show="blocks.testDetailsBlock" class="ng-animate-block-transitions ng-hide">
+    <div ng-model="blocks.testDetailsBlock" ng-init="blocks.testDetailsBLock=true" ng-show="blocks.testDetailsBlock">
 
         <form class="form-inline" role="form" name="featureForm" ng-submit="addFeature(steps.featureForm)">
             <div class="form-group">
                 <div ng-hide="true" ng-model="steps.featureForm.feature" ng-init="steps.featureForm.feature='Feature:'"></div>
-                <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;Feature:</h5>
+                <h5>Feature:</h5>
                 <div class="form-group">
                     <input class="form-control" name="featureTarget" ng-model="steps.featureForm.arg_1" type="text" value="" ng-required="true" placeholder="Add title to the test">
                 </div>
@@ -19,7 +19,7 @@
 
         <form class="form-inline" role="form" name="tagForm" ng-submit="addTag(steps.testDetails.tag)">
             <div class="form-group">
-                <h5><i class="glyphicon glyphicon-tags"></i>&nbsp;Tags:</h5>
+                <h5>Tags:</h5>
                 <div class="form-group">
                     <input id="tag-input" class="form-control" name="testDetailsTag" ng-model="steps.testDetails.tag" type="text" placeholder="choose a tag" ng-required="true">
                 </div>
@@ -34,7 +34,7 @@
         <form class="form-inline" role="form" name="backgroundsForm" ng-submit="addStep(steps.backgroundsForm)">
                 <div class="form-group">
                     <div ng-hide="true" ng-model="steps.backgroundsForm.background" ng-init="steps.backgroundsForm.background='Background:'"></div>
-                    <h5><i class="glyphicon glyphicon-road"></i>&nbsp;Background:</h5>
+                    <h5>Background:</h5>
                     <div class="form-group">
                         <input class="form-control" name="backGroundTarget" ng-model="steps.backgroundsForm.arg_1" type="text" value="" ng-required="true" placeholder="add a background. see help for more details">
                     </div>
@@ -72,13 +72,13 @@
         </div>
 
         <!-- ##### Starting Points ##### -->
-        <div ng-model="groups.starting" ng-hide="groups.starting"  ng-init="groups.starting=false" class="animate-hide animate-show ng-hide">
+        <div ng-model="groups.starting" ng-hide="groups.starting"  ng-init="groups.starting=false" >
             <h5>Starting Points</h5>
 
             <form class="form-inline" role="form" name="scenarioForm" ng-submit="addStep(steps.scenarioForm)" ng-model="form_tags.scenarioForm" ng-init="form_tags.scenarioForm='Scenario'" ng-show="showForm(form_tags.scenarioForm)">
                 <div class="form-group">
                     <div ng-hide="true" ng-model="steps.scenarioForm.scenario" ng-init="steps.scenarioForm.scenario='Scenario:'"></div>
-                    <h5><i class="glyphicon glyphicon-folder-open"></i>&nbsp;Scenario:</h5>
+                    <h5>Scenario:</h5>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
                     <div class="form-group">
                         <input class="form-control" name="scenarioFormTarget" ng-model="steps.scenarioForm.arg_1" type="text" value=""
@@ -93,12 +93,13 @@
                         <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.scenarioForm.intro }} "{{ steps.scenarioForm.arg_1 }}"
                     </div>
                 </div>
+                <hr>
             </form>
-            <hr>
+
             <form role="form" name="givenForm" ng-submit="addStep(steps.givenForm)" ng-model="form_tags.given" ng-init="form_tags.given='URL on Visit'" ng-show="showForm(form_tags.given)" class="form-inline">
                 <div class="form-group">
                     <div ng-hide="true" ng-model="steps.givenForm.intro" ng-init="steps.givenForm.intro='Given I am on'"></div>
-                    <h5><i class="glyphicon glyphicon-new-window"></i>&nbsp;Given I am on:</h5>
+                    <h5>Given I am on:</h5>
                     <div class="form-group">
                         <input class="form-control" name="givenFormTarget" ng-model="steps.givenForm.arg_1" type="text" value=""
                            ng-required="true" ng-init="steps.givenForm.arg_1='/some/relative/path'">
@@ -109,17 +110,18 @@
                     </div>
                     <div class="help-block" ng-model="steps.givenForm.final"><i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.givenForm.intro }} "{{ steps.givenForm.arg_1 }}" </div>
                 </div>
+                <hr>
+
             </form>
-            <hr>
         </div>
 
         <!-- ##### General Interactions ##### -->
-        <div ng-model="groups.general"  ng-hide="groups.general"  ng-init="groups.general=false">
+        <div ng-model="groups.general"  ng-hide="groups.general"  ng-init="groups.general=true" >
             <h5>General Interactions</h5>
             <form role="form" name="hoverForm" ng-submit="addStep(steps.hoverForm)" ng-model="form_tags.hoverForm" ng-init="form_tags.hoverForm='Menu Hover'" ng-show="showForm(form_tags.hoverForm)" class="ng-hide animate-hide form-inline">
                 <div class="form-group">
                     <div ng-hide="true" ng-model="steps.hoverForm.intro" ng-init="steps.hoverForm.intro='And I hover over'"></div>
-                    <h5><i class="glyphicon glyphicon-share-alt"></i>&nbsp;And I hover over:</h5>
+                    <h5>And I hover over:</h5>
                     <div class="form-group">
                         <select class="form-control" name="hoverFormAction" ng-model="steps.hoverForm.action" ng-required="true" ng-init="steps.hoverForm.action='the menu item named'">
                             <option value="a non link menu item named">a non menu link item eg list item or div</option>
@@ -139,13 +141,14 @@
                         <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.hoverForm.intro }} {{ steps.hoverForm.action }} "{{ steps.hoverForm.arg_1 }}"
                     </div>
                 </div>
+                <hr>
+
             </form>
-            <hr>
-            
+
             <form role="form" name="visibleForm" ng-submit="addStep(steps.visibleForm)" ng-model="form_tags.visibleForm" ng-init="form_tags.visibleForm='Hidden See Not See'" ng-show="showForm(form_tags.visibleForm)" class="ng-hide animate-hide form-inline">
                 <div class="form-group">
                     <div ng-hide="true" ng-model="steps.visibleForm.intro" ng-init="steps.visibleForm.intro='Then element'"></div>
-                    <h5><i class="glyphicon glyphicon-eye-open"></i>&nbsp;The element:</h5>
+                    <h5>The element:</h5>
                     <div class="form-group">
                         <input class="form-control" name="visibleFormTarget" ng-model="steps.visibleForm.arg_1" type="text"
                            value="" ng-required="true" ng-init="steps.visibleForm.arg_1='id|name|class'">
@@ -164,13 +167,14 @@
                         <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.visibleForm.intro }} "{{ steps.visibleForm.arg_1 }}" {{ steps.visibleForm.action }}
                     </div>
                 </div>
+                <hr>
+
             </form>
-            <hr>   
-            
+
             <form role="form" name="cfpForm" ng-submit="addStep(steps.cfp)" ng-model="form_tags.cfp" ng-init="form_tags.cfp='Click Press Follow Link'" ng-show="showForm(form_tags.cfp)" class="ng-hide animate-hide form-inline">
                 <div class="form-group">
                     <div ng-hide="true" ng-model="steps.cfp.intro" ng-init="steps.cfp.intro='And I'"></div>
-                    <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;And I:</h5>
+                    <h5>And I:</h5>
                     <div class="form-group">
                         <select class="form-control" name="cfpAction" ng-model="steps.cfp.action" ng-required="true" ng-init="steps.cfp.action='follow'">
                             <option value="follow">follow</option>
@@ -195,13 +199,14 @@
                         <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.cfp.intro }} {{ steps.cfp.action }} {{ steps.cfp.type }} "{{ steps.cfp.arg_1 }}"
                     </div>
                 </div>
+                <hr>
+
             </form>
-            <hr>
-            
+
             <form role="form" name="seeForm" ng-submit="addStep(steps.seeForm)" ng-model="form_tags.see" ng-init="form_tags.see='See on page'" ng-show="showForm(form_tags.see)" class="ng-hide animate-hide form-inline">
                 <div class="form-group">
                     <div ng-hide="true" ng-model="steps.seeForm.intro" ng-init="steps.seeForm.intro='Then I should'"></div>
-                    <h5><i class="glyphicon glyphicon-chevron-right"></i>&nbsp;Then I should:</h5>
+                    <h5>Then I should:</h5>
                     <div class="form-group">
                         <select class="form-control" name="seeFormAction" ng-model="steps.seeForm.action" ng-required="true" ng-init="steps.seeForm.action='see'">
                             <option value="see">see</option>
@@ -220,16 +225,17 @@
                         <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.seeForm.intro }} {{ steps.seeForm.action }} {{ steps.seeForm.type }} "{{ steps.seeForm.arg_1 }}"
                     </div>
                 </div>
+                <hr>
+
             </form>
-            <hr>
         </div>
 
         <!-- ##### Form fields and Elements ##### -->
-        <div ng-model="groups.elements" ng-hide="groups.elements"  ng-init="groups.elements=false" >
+        <div ng-model="groups.elements" ng-hide="groups.elements"  ng-init="groups.elements=true"  >
             <h5>Form fields & elements</h5>
             <form role="form" name="checkUncheckForm" ng-submit="addStep(steps.checkUncheckForm)" ng-model="form_tags.checkUncheckForm" ng-init="form_tags.checkUncheckForm='Check Un UnCheck'" ng-show="showForm(form_tags.checkUncheckForm)" class="ng-hide animate-hide form-inline">
                     <div ng-hide="true" ng-model="steps.checkUncheckForm.intro" ng-init="steps.checkUncheckForm.intro='And I'"></div>
-                    <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;And I:</h5>
+                    <h5>And I:</h5>
                     <div class="form-group">
                         <select class="form-control" name="checkUncheckFormAction" ng-model="steps.checkUncheckForm.action" ng-required="true" ng-init="steps.checkUncheckForm.action='check'">
                             <option value="check">check</option>
@@ -248,12 +254,13 @@
                     <div class="help-block" ng-model="steps.checkUncheckForm.final">
                         <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.checkUncheckForm.intro }} {{ steps.checkUncheckForm.action }} "{{ steps.checkUncheckForm.arg_1 }}"
                     </div>
+                <hr>
+
             </form>
-            <hr>
 
             <form role="form" name="checkedOrNotForm" ng-submit="addStep(steps.checkedOrNotForm)" ng-model="form_tags.checkedOrNotForm" ng-init="form_tags.checkedOrNotForm='Check Un UnCheck Checked Not'" ng-show="showForm(form_tags.checkedOrNotForm)" class="ng-hide animate-hide form-inline">
                     <div ng-hide="true" ng-model="steps.checkedOrNotForm.intro" ng-init="steps.checkedOrNotForm.intro='Then the'"></div>
-                    <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;Then the:</h5>
+                    <h5>Then the:</h5>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
                     <div class="form-group">
                         <input class="form-control" name="checkedOrNotFormTarget" ng-model="steps.checkedOrNotForm.arg_1"
@@ -273,12 +280,13 @@
                         <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;
                         {{ steps.checkedOrNotForm.intro }} "{{ steps.checkedOrNotForm.arg_1 }}" {{ steps.checkedOrNotForm.action }}
                     </div>
+                <hr>
+
             </form>
-            <hr>
 
             <form role="form" name="selectForm" ng-submit="addStep(steps.selectForm)" ng-model="form_tags.select" ng-init="form_tags.select='Select'" ng-show="showForm(form_tags.select)" class="ng-hide animate-hide animate-show form-inline">
                     <div ng-hide="true" ng-model="steps.selectForm.intro" ng-init="steps.selectForm.intro='And I select'"></div>
-                    <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;And I select:</h5>
+                    <h5>And I select:</h5>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
                     <div class="form-group">
                         <input class="form-control" name="selectFormSelected" ng-model="steps.selectForm.arg_1" type="textarea" value=""
@@ -298,12 +306,13 @@
                         <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;
                         {{ steps.selectForm.intro }} "{{ steps.selectForm.arg_1 }}" {{ steps.selectForm.from }} "{{ steps.selectForm.arg_2 }}"
                     </div>
+                <hr>
+
             </form>
-            <hr>
 
             <form role="form" name="inputForm" ng-submit="addStep(steps.inputForm)" ng-model="form_tags.inputForm" ng-init="form_tags.inputForm='Fill in Input enter'" ng-show="showForm(form_tags.inputForm)" class="ng-hide animate-hide animate-show form-inline">
                     <div ng-hide="true" ng-model="steps.inputForm.intro" ng-init="steps.inputForm.intro='And I fill in'"></div>
-                    <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;And I fill in:</h5>
+                    <h5>And I fill in:</h5>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
                     <div class="form-group">
                         <input class="form-control" name="inputFormSelected" ng-model="steps.inputForm.arg_1" type="textarea"
@@ -327,7 +336,7 @@
 
             <form role="form" name="shouldContain" ng-submit="addStep(steps.shouldContain)" ng-model="form_tags.shouldContain" ng-init="form_tags.shouldContain='value should input'" ng-show="showForm(form_tags.shouldContain)" class="ng-hide animate-hide animate-show form-inline">
                     <div ng-hide="true" ng-model="steps.shouldContain.intro" ng-init="steps.shouldContain.intro='Then the'"></div>
-                    <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;Then the:</h5>
+                    <h5>Then the:</h5>
                     <div class="form-group">
                         <input class="form-control" name="shouldContainTarget" ng-model="steps.shouldContain.arg_1"
                            type="textarea" value="" ng-required="true" ng-init="steps.shouldContain.arg_1='name|label|id'">
@@ -349,17 +358,18 @@
                     <div class="help-block" ng-model="steps.shouldContain.final">
                         {{ steps.shouldContain.intro }} "{{ steps.shouldContain.arg_1 }}" {{ steps.shouldContain.action }} "{{ steps.shouldContain.arg_2 }}"
                     </div>
+                <hr>
+
             </form>
-            <hr>
         </div>
 
         <!-- ##### CSS and DOM ##### -->
-        <div ng-model="groups.dom" ng-hide="groups.dom"  ng-init="groups.dom=false" >
+        <div ng-model="groups.dom" ng-hide="groups.dom"  ng-init="groups.dom=true"  >
             <h5>CSS and DOM</h5>
 
             <form role="form" name="elemExistsForm" ng-submit="addStep(steps.elemExistsForm)" ng-model="form_tags.elemExistsForm" ng-init="form_tags.elemExistsForm='exists'" ng-show="showForm(form_tags.elemExistsForm)" class="ng-hide animate-hide form-inline">
                     <div ng-hide="true" ng-model="steps.elemExistsForm.intro" ng-init="steps.elemExistsForm.intro='Then I see this element'"></div>
-                    <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;Then I see this element:</h5>
+                    <h5>Then I see this element:</h5>
                     <div class="form-group">
                         <select class="form-control" name="shouldContainAction" ng-model="steps.elemExistsForm.action" ng-required="true" ng-init="steps.elemExistsForm.action='exists'">
                             <option value="exists">exists</option>
@@ -378,12 +388,12 @@
                         <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.elemExistsForm.intro }} {{ steps.elemExistsForm.action }} "{{ steps.elemExistsForm.arg_1 }}"
                     </div>
                     <div class="help-block" ng-model="steps.elemExistsForm.final">Check to see if class exists eg a.menu would be "menu"</div>
+                <hr>
             </form>
-            <hr>
 
             <form role="form" name="onClickForm" ng-submit="addStep(steps.onClickForm)" ng-model="form_tags.onClickForm" ng-init="form_tags.onClickForm='click Popup'" ng-show="showForm(form_tags.onClickForm)" class="ng-hide animate-hide form-inline">
                 <div ng-hide="true" ng-model="steps.onClickForm.intro" ng-init="steps.onClickForm.intro='Given I click on element which has onclick handler located at'"></div>
-                <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;Given I click on element which has onclick handler located at:</h5>
+                <h5>Given I click on element which has onclick handler located at:</h5>
                 <div class="form-group">
                     <input class="form-control" name="onClickFormTarget" ng-model="steps.onClickForm.arg_1"
                        type="text" value="" ng-required="true" ng-init="steps.onClickForm.arg_1='css path eg div.formRow:nth-child(32)'">
@@ -395,17 +405,18 @@
                 <div class="help-block" ng-model="steps.onClickForm.final">
                     <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.onClickForm.intro }} "{{ steps.onClickForm.arg_1 }}"
                 </div>
+                <hr>
+
             </form>
         </div>
-        <hr>
 
         <!-- ##### Navigation Windows Iframes and Modals ##### -->
-        <div ng-model="groups.modals" ng-hide="groups.modals"  ng-init="groups.modals=false">
+        <div ng-model="groups.modals" ng-hide="groups.modals"  ng-init="groups.modals=true" >
             <h5>Navigation Windows iFrames Modals</h5>
 
             <form role="form" name="switchPopupForm" ng-submit="addStep(steps.switchPopupForm)" ng-model="form_tags.switchPopupForm" ng-init="form_tags.switchPopupForm='Popup switch'" ng-show="showForm(form_tags.switchPopupForm)" class="ng-hide animate-hide form-inline">
                 <div ng-hide="true" ng-model="steps.switchPopupForm.intro" ng-init="steps.switchPopupForm.intro='I switch to popup by'"></div>
-                <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;I switch to popup by:</h5>
+                <h5>I switch to popup by:</h5>
                 <div class="form-group">
                     <select class="form-control" name="shouldContainAction" ng-model="steps.switchPopupForm.action"
                             ng-required="true" ng-init="steps.switchPopupForm.action='clicking'">
@@ -424,19 +435,21 @@
                 <div class="help-block" ng-model="steps.switchPopupForm.final">
                     <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.switchPopupForm.intro }} {{ steps.switchPopupForm.action }} "{{ steps.switchPopupForm.arg_1 }}"
                 </div>
+                <hr>
+
             </form>
-            <hr>
 
             <form role="form" name="switchBackForm" ng-submit="addStep(steps.switchBackForm)" ng-model="form_tags.switchBackForm" ng-init="form_tags.switchBackForm='Switch Back'" ng-show="showForm(form_tags.switchBackForm)" class="ng-hide animate-hide form-inline">
                 <div ng-hide="true" ng-model="steps.switchBackForm.intro" ng-init="steps.switchBackForm.intro='Then I switch back to the original window'"></div>
                 <h6>Then I switch back to the original window</h6>
                 <input class="form-control btn btn-success" name="switchBackFormAdd" type="submit" value="Add">
-            </form>
-            <hr>
+                <hr>
 
-            <form role="form" name="iframeSetIdForm" ng-submit="addStep(steps.iframeSetIdForm)" ng-model="form_tags.iframeSetIdForm" ng-init="form_tags.iframeSetIdForm='Iframe name'" ng-show="showForm(form_tags.iframeSetIdForm)" class="ng-hide animate-hide">
+            </form>
+
+            <form role="form" name="iframeSetIdForm" ng-submit="addStep(steps.iframeSetIdForm)" ng-model="form_tags.iframeSetIdForm" ng-init="form_tags.iframeSetIdForm='Iframe name'" ng-show="showForm(form_tags.iframeSetIdForm)" class="ng-hide animate-hide form-inline">
                 <div ng-hide="true" ng-model="steps.iframeSetIdForm.intro" ng-init="steps.iframeSetIdForm.intro='Given I set the name of the iframe located in element with an id of'"></div>
-                <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;Given I set the name of the iframe located in element with an id of:</h5>
+                <h5>Given I set the name of the iframe located in element with an id of:</h5>
                 <div class="form-group">
                     <input class="form-control" name="iframeSetIdFormTarget" ng-model="steps.iframeSetIdForm.arg_1"
                        type="text" value="" ng-required="true" ng-init="steps.iframeSetIdForm.arg_1='id of iframe'">
@@ -451,12 +464,13 @@
                 <div class="help-block" ng-model="steps.iframeSetIdForm.final">
                     Sets an iFrame ID to no_name_iframe if there is no ID so you can then add a Switch to iFrame step after it using the na_name_iframe ID. You must use an ID but do not pass the #
                 </div>
+                <hr>
+
             </form>
-            <hr>
 
             <form role="form" name="iframeSwitchForm" ng-submit="addStep(steps.iframeSwitchForm)" ng-model="form_tags.iframeSwitchForm" ng-init="form_tags.iframeSwitchForm='Iframe switch name'" ng-show="showForm(form_tags.iframeSwitchForm)" class="ng-hide animate-hide form-inline">
                 <div ng-hide="true" ng-model="steps.iframeSwitchForm.intro" ng-init="steps.iframeSwitchForm.intro='Given I switch to iframe with name'"></div>
-                <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;Given I switch to iframe with name:</h5>
+                <h5>Given I switch to iframe with name:</h5>
                 <div class="form-group">
                     <input class="form-control" name="iframeSwitchFormTarget" ng-model="steps.iframeSwitchForm.arg_1"
                        type="text" value="" ng-required="true" ng-init="steps.iframeSwitchForm.arg_1='name of iframe'">
@@ -468,17 +482,18 @@
                 <div class="help-block" ng-model="steps.iframeSwitchForm.final">
                     <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.iframeSwitchForm.intro }} "{{ steps.iframeSwitchForm.arg_1 }}"
                 </div>
+                <hr>
+
             </form>
-            <hr>
         </div>
 
         <!-- ##### Custom ##### -->
-        <div ng-model="groups.custom" ng-hide="groups.custom"  ng-init="groups.custom=false">
+        <div ng-model="groups.custom" ng-hide="groups.custom"  ng-init="groups.custom=true" >
             <h5>Custom</h5>
             
             <form role="form" name="checkSizeForm" ng-submit="addStep(steps.checkSizeForm)" ng-model="form_tags.checkSizeForm" ng-init="form_tags.checkSizeForm='size'" ng-show="showForm(form_tags.checkSizeForm)" class="ng-hide animate-hide animate-show ng-inline">
                 <div ng-hide="true" ng-model="steps.checkSizeForm.intro" ng-init="steps.checkSizeForm.intro='Then the element'"></div>
-                <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;Then the element:</h5>
+                <h5>Then the element:</h5>
                 <div class="form-group">
                     <input class="form-control" name="checkSizeFormTarget" ng-model="steps.checkSizeForm.arg_1"
                        type="text" value="" ng-required="true" ng-init="steps.checkSizeForm.arg_1='name|label|id'">
@@ -498,12 +513,13 @@
                 <div class="help-block" ng-model="steps.checkSizeForm.final">
                     <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.checkSizeForm.intro }} "{{ steps.checkSizeForm.arg_1 }}" {{ steps.checkSizeForm.second }} "{{ steps.checkSizeForm.arg_2 }}" See if the element (name|label|id) is greater than the % of the window
                 </div>
+                <hr>
+
             </form>
-            <hr>
         </div>
 
         <!-- ##### Low Level Features ##### -->
-        <div ng-model="groups.features" ng-hide="groups.features"  ng-init="groups.features=false">
+        <div ng-model="groups.features" ng-hide="groups.features"  ng-init="groups.features=true" >
             <h5>Low level features</h5>
 
             <form role="form" name="cookiesDestForm" ng-submit="addStep(steps.cookiesDestForm)" ng-model="form_tags.cookiesDestForm" ng-init="form_tags.cookiesDestForm='Cookies'" ng-show="showForm(form_tags.cookiesDestForm)" class="ng-hide animate-hide form-inline">
@@ -512,12 +528,13 @@
                     <label>Then I destroy my cookies</label>
                     <input class="form-control btn btn-success" name="cookiesDestFormAdd" type="submit" value="Add">
                 </div>
+                <hr>
+
             </form>
-            <hr>
-            
+
             <form role="form" name="cookiesSeeForm" ng-submit="addStep(steps.cookiesSeeForm)" ng-model="form_tags.cookiesSeeForm" ng-init="form_tags.cookiesSeeForm='Cookies'" ng-show="showForm(form_tags.cookiesSeeForm)" class="ng-hide animate-hide form-inline">
                 <div ng-hide="true" ng-model="steps.cookiesSeeForm.intro" ng-init="steps.cookiesSeeForm.intro='Then I should'"></div>
-                <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;Then I should:</h5>
+                <h5>Then I should:</h5>
                 <div class="form-group">
                     <select class="form-control" name="cookiesSeeFormAction" ng-model="steps.cookiesSeeForm.action" ng-required="true" ng-init="steps.cookiesSeeForm.action='see cookie'">
                         <option value="see cookie">see cookie</option>
@@ -535,8 +552,9 @@
                 <div class="help-block" ng-model="steps.cookiesSeeForm.final">
                     {{ steps.cookiesSeeForm.intro }} {{ steps.cookiesSeeForm.action }} "{{ steps.cookiesSeeForm.arg_1 }}"
                 </div>
+                <hr>
+
             </form>
-            <hr>
 
             <form role="form" name="iWaitForm" ng-submit="addStep(steps.iWaitForm)" ng-model="form_tags.iWaitForm"
                   ng-init="form_tags.iWaitForm='Wait'" ng-show="showForm(form_tags.iWaitForm)" class="ng-hide animate-hide form-inline">
@@ -545,14 +563,15 @@
                     <label>And I wait</label>
                     <input class="form-control btn btn-success" name="iWaitFormAdd" type="submit" value="Add">
                     </div>
+                <hr>
+
             </form>
-            <hr>
 
             <form role="form" name="iWaitForSecondsForm" ng-submit="addStep(steps.iWaitForSecondsForm)"
                   ng-model="form_tags.iWaitForSecondsForm" ng-init="form_tags.iWaitForSecondsForm='Wait'"
                   ng-show="showForm(form_tags.iWaitForSecondsForm)" class="ng-hide animate-hide animate-show form-inline">
                 <div ng-hide="true" ng-model="steps.iWaitForSecondsForm.intro" ng-init="steps.iWaitForSecondsForm.intro='And I wait for'"></div>
-                <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;And I wait for:</h5>
+                <h5>And I wait for:</h5>
                 <div class="form-group">
                     <input class="form-control" name="iWaitForSecondsFormTarget" ng-model="steps.iWaitForSecondsForm.arg_1"
                        type="text" value="" ng-required="true" ng-init="steps.iWaitForSecondsForm.arg_1='seconds'">
@@ -567,13 +586,14 @@
                 <div class="help-block" ng-model="steps.iWaitForSecondsForm.final">
                     <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.iWaitForSecondsForm.intro }} "{{ steps.iWaitForSecondsForm.arg_1 }}"
                 </div>
+                <hr>
+
             </form>
-            <hr>
-            
+
             <form role="form" name="urlMatchForm" ng-submit="addStep(steps.urlMatchForm)" ng-model="form_tags.urlMatchForm"
                   ng-init="form_tags.urlMatchForm='url'" ng-show="showForm(form_tags.urlMatchForm)" class="ng-hide animate-hide animate-show form-inline">
                 <div ng-hide="true" ng-model="steps.urlMatchForm.intro" ng-init="steps.urlMatchForm.intro='Then the url should match'"></div>
-                <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;Then the url should match:</h5>
+                <h5>Then the url should match:</h5>
                 <div class="form-group">
                     <input class="form-control" name="urlMatchFormTarget" ng-model="steps.urlMatchForm.arg_1"
                        type="text" value="" ng-required="true" ng-init="steps.urlMatchForm.arg_1='http://google.com'">
@@ -585,13 +605,14 @@
                 <div class="help-block" ng-model="steps.urlMatchForm.final">
                     <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.urlMatchForm.intro }} "{{ steps.urlMatchForm.arg_1 }}"
                 </div>
+                <hr>
+
             </form>
-            <hr>
 
             <form class="form-inline" role="form" name="iWaitForElementForm" ng-submit="addStep(steps.iWaitForElementForm)" ng-model="form_tags.iWaitForElementForm"
                   ng-init="form_tags.iWaitForElementForm='Wait'" ng-show="showForm(form_tags.iWaitForElementForm)" class="ng-hide animate-hide animate-show">
                 <div ng-hide="true" ng-model="steps.iWaitForElementForm.intro" ng-init="steps.iWaitForElementForm.intro='Then I wait for the element'"></div>
-                <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;Then I wait for the element:</h5>
+                <h5>Then I wait for the element:</h5>
                 <div class="form-group">
                     <input class="form-control" name="iWaitForElementFormTarget" ng-model="steps.iWaitForElementForm.arg_1"
                        type="text" value="" ng-required="true" ng-init="steps.iWaitForElementForm.arg_1='Use the full css tag eg #form .class etc'">
@@ -610,13 +631,14 @@
                 <div class="help-block" ng-model="steps.iWaitForElementForm.final">
                     <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.iWaitForElementForm.intro }} "{{ steps.iWaitForElementForm.arg_1 }}" {{ steps.iWaitForElementForm.action }}
                 </div>
+                <hr>
+
             </form>
-            <hr>
 
             <form role="form" name="responseCodeForm" ng-submit="addStep(steps.responseCodeForm)" ng-model="form_tags.responseCodeForm"
                   ng-init="form_tags.responseCodeForm='Response Code'" ng-show="showForm(form_tags.responseCodeForm)" class="ng-hide form-inline animate-hide">
                 <div ng-hide="true" ng-model="steps.responseCodeForm.intro" ng-init="steps.responseCodeForm.intro='Then the response status code should be'"></div>
-                <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;Then the response status code should be:</h5>
+                <h5>Then the response status code should be:</h5>
                 <div class="form-group">
                     <input class="form-control" name="responseCodeFormTarget" ng-model="steps.responseCodeForm.arg_1" type="text" value=""
                        ng-required="true" ng-init="steps.responseCodeForm.arg_1='200|404|403'">
@@ -628,23 +650,23 @@
                 <div class="help-block" ng-model="steps.responseCodeForm.final">
                     <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.responseCodeForm.intro }} "{{ steps.responseCodeForm.arg_1 }}"
                 </div>
+                <hr>
             </form>
-            <hr>
 
             <form class="form-inline" role="form" name="clickAlertForm" ng-submit="addStep(steps.clickAlertForm)" ng-model="form_tags.clickAlertForm"
                   ng-init="form_tags.clickAlertForm='Alert'" ng-show="showForm(form_tags.clickAlertForm)" class="ng-hide animate-hide">
                 <div ng-hide="true" ng-model="steps.clickAlertForm.intro" ng-init="steps.clickAlertForm.intro='Then I click on the alert window'"></div>
-                <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;Then I click on the alert window:</h5>
+                <h5>Then I click on the alert window:</h5>
                 <div class="form-group">
                     <input class="form-control btn btn-success" name="clickAlertFormAdd" type="submit" value="Add">
                 </div>
                 <div class="help-block">Click on the Javascript Alert Window</div>
+                <hr>
             </form>
-            <hr>
             <form role="form" name="removeElemForm" ng-submit="addStep(steps.removeElemForm)" ng-model="form_tags.removeElemForm"
                   ng-init="form_tags.removeElemForm='Alert'" ng-show="showForm(form_tags.removeElemForm)" class="ng-hide animate-hide form-inline">
                 <div ng-hide="true" ng-model="steps.removeElemForm.intro" ng-init="steps.removeElemForm.intro='Then I remove the element located at'"></div>
-                <h5><i class="glyphicon glyphicon-th-list"></i>&nbsp;Then I remove the element located at:</h5>
+                <h5>Then I remove the element located at:</h5>
                 <div class="form-group">
                     <input class="form-control" name="removeElemFormTarget" ng-model="steps.removeElemForm.arg_1"
                        type="text" value="" ng-required="true" ng-init="steps.removeElemForm.arg_1='#ID or .class or div.class etc'">
@@ -654,20 +676,20 @@
                            ng-disabled="removeElemForm.$invalid || steps.removeElemForm.arg_1 == '#ID or .class or div.class etc'">
                 </div>
                 <div class="help-block">get an element out of your way</div>
+                <hr>
             </form>
-            <hr>
 
         </div>
     </div>
 
-    <div ng-model="blocks.testTokensBlock" ng-init="blocks.testTokensBlock=false" ng-show="blocks.testTokensBlock" class="ng-animate-block-transitions ng-hide">
+    <div ng-model="blocks.testTokensBlock" ng-init="blocks.testTokensBlock=false" ng-show="blocks.testTokensBlock">
         <ng-include src="tokens_admin.url"></ng-include>
     </div>
 
-    <div ng-model="blocks.testResultsBlock" ng-init="blocks.testResultsBlock=false" ng-show="blocks.testResultsBlock" class="ng-animate-block-transitions ng-hide">
+    <div ng-model="blocks.testResultsBlock" ng-init="blocks.testResultsBlock=false" ng-show="blocks.testResultsBlock">
         <div ng-include="reports_test_page.url"></div>
     </div>
 
-    <div ng-model="blocks.testRunBlock" ng-init="blocks.testRunBlock=false" ng-show="blocks.testRunBlock" class="ng-animate-block-transitions ng-hide">
+    <div ng-model="blocks.testRunBlock" ng-init="blocks.testRunBlock=false" ng-show="blocks.testRunBlock">
         <ng-include src="quick_test.url"></ng-include>
     </div>

@@ -1,13 +1,19 @@
-<div class="container test-ui ng-cloak">
+<ng-include src="snap.url"></ng-include>
+<snap-content snap-options="snapOpts">
+<div class="top container test-ui ng-cloak">
     <span ng-include="nav.url" class="slide-animate"></span>
+
     <div class="row clearfix">
-        <div class="col-md-12 column">
-            <div ng-include="alerts_partial.url"></div>
+        <div class="col-md-6">
+            <div ng-include="bc.url"></div>
+        </div>
+        <div class="pull-right">
+                <button type="button" class="btn btn-danger" ng-click="saveTest(test_content)">save test</button>
+                <button type="button" class="btn btn-success" snap-toggle="right">Toggle Drawer</button>
         </div>
     </div>
     <div class="row clearfix">
         <div class="col-md-12 column">
-            <div ng-include="bc.url"></div>
             <h3>
                 {{ test.name }}
             </h3>
@@ -23,28 +29,28 @@
                     <p>Add steps to your test. Search as needed [help]</p>
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <a ng-href="" type="button" ng-click="showHideGroup('starting')">Starting Points</a>
+                            <a href="" ng-href="" type="button" ng-click="showHideGroup('starting')">Starting Points</a>
                         </li>
                         <li class="list-group-item">
-                            <a ng-href="" type="button" ng-click="showHideGroup('general')">General interactions</a>
+                            <a href="" ng-href="" type="button" ng-click="showHideGroup('general')">General interactions</a>
                         </li>
                         <li class="list-group-item">
-                            <a ng-href="" ng-click="showHideGroup('elements')">Form fields & elements</a>
+                            <a href="" ng-href="" ng-click="showHideGroup('elements')">Form fields & elements</a>
                         </li>
                         <li class="list-group-item">
-                            <a ng-href="" ng-click="showHideGroup('dom')">CSS and DOM</a>
+                            <a href="" ng-href="" ng-click="showHideGroup('dom')">CSS and DOM</a>
                         </li>
                         <li class="list-group-item">
-                            <a ng-href="" ng-click="showHideGroup('modals')">Navigation Windows iFrames Modals</a>
+                            <a href="" ng-href="" ng-click="showHideGroup('modals')">Navigation Windows iFrames Modals</a>
                         </li>
                         <li class="list-group-item">
-                            <a ng-href="" ng-click="showHideGroup('custom')">Custom</a>
+                            <a href="" ng-href="" ng-click="showHideGroup('custom')">Custom</a>
                         </li>
                         <li class="list-group-item">
-                            <a ng-href="" ng-click="showHideGroup('features')">Low level features</a>
+                            <a href="" ng-href="" ng-click="showHideGroup('features')">Low level features</a>
                         </li>
                         <li class="list-group-item">
-                            <a ng-href="" ng-click="showHideGroup('all')">Show all</a>
+                            <a href="" ng-href="" ng-click="showHideGroup('all')">Show all</a>
                         </li>
                     </ul>
                 </accordion-group>
@@ -77,3 +83,4 @@
         </div>
     </div>
 </div>
+</snap-content>

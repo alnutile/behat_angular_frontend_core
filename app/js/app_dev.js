@@ -8,6 +8,7 @@ var app = angular.module('behatEditor', [
     'batchServices',
     'ngMockE2E',
     'ngAnimate',
+    'snap',
     'ui.ace',
     'ngSanitize',
     'ui.bootstrap',

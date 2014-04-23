@@ -1,0 +1,33 @@
+.snap-drawer {
+    margin-top: 80px;
+    padding: 20px;
+}
+
+.snap-drawer.snap-drawer-right {
+    width: 400px; /* see controller settings minPosition */
+}
+
+.snap-drawer-left {
+    left: 0;
+    z-index: 1;
+}
+
+.snap-drawer-right {
+    right: 0;
+    z-index: 1;
+}
+
+.snap-drawers {
+    background-color: rgb(219, 219, 219);
+
+}
+
+snap-content {
+    background-color: #FFF;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+
+body {
+    overflow: scroll;
+}

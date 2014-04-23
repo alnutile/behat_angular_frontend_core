@@ -1,9 +1,12 @@
 .ace_editor { height: 600px; }
 
-
 body {
     font-size: 13px !important; /* the first one :( */
     margin-top: 80px !important;
+}
+
+div.top {
+    margin-top: 80px;
 }
 
 .test-ui ul.nav {
@@ -54,4 +57,8 @@ body {
 
 .ng-table {
     border: 1px solid #000;
+}
+
+accordion .panel-heading {
+    cursor: pointer;
 }
