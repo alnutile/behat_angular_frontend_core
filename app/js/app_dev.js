@@ -726,6 +726,10 @@ app.run(function($httpBackend, editableOptions) {
         { status: 'success', message: "Updated Tokens", data: null }
     );
 
+    $httpBackend.whenGET(/\/behat_editor_services_v2\/sites\/[1-9][0-9]*\/repo\/branch\/master/).respond(200,
+        { status: 'success', message: "Repo Synced for branch", data: null  }
+    );
+
     $httpBackend.whenPOST('/behat_editor_services_v2/sites/2/batches/runOnce').respond(200,
         { status: 'success', message: "Batch job running you can see the batch info here", data: { bid: 10 }  }
     );

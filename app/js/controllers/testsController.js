@@ -19,8 +19,8 @@ testsController.controller('TestController', ['$scope', '$http', '$location', '$
         }
     }]);
 
-testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent', 'TokensHelpers', 'BatchServices', 'snapRemote',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers, tagsPresent, TokensHelpers, BatchServices, snapRemote){
+testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent', 'TokensHelpers', 'BatchServices', 'snapRemote', 'SitesRepo',
+    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers, tagsPresent, TokensHelpers, BatchServices, snapRemote, SitesRepo){
         $scope.settingsForm = {};
         $scope.settingsForm.browserChosenBatch = [];
         $scope.blocks = {}
@@ -65,6 +65,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.form                         = { name: 'form', url: 'templates/tests/form.html'}
         $scope.nav                          = { name: 'nav', url: 'templates/shared/nav.html'}
         $scope.quick_test                   = { name: 'quick_test', url: 'templates/run/quick_test.html'}
+        $scope.clone_block                  = { name: 'clone_block', url: 'templates/shared/clone_block.html'}
         $scope.tokens_admin                 = { name: 'tokens_admin', url: 'templates/tokens/tokens_admin.html'}
         $scope.bc                           = { name: 'bc', url: 'templates/shared/bc.html'}
         $scope.snap                         = { name: 'snap', url: 'templates/shared/snap_test_output.html'}
@@ -158,6 +159,18 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                 }
             ];
         });
+
+        $scope.syncRepo = function() {
+            SitesRepo.sync(
+                {
+                    sid: '111',
+                    branch_name: 'master'
+                }, function(data) {
+                    Noty(data.message, 'success');
+                }, function(err) {
+                    Noty(err.message, 'error');
+                });
+        }
         /*** END PULL IN SITE INFO ***/
 
         /*** PULL IN SITES INFO ***/

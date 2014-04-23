@@ -14,4 +14,22 @@ sitesService.
             query: { method:'GET', params:{sid:''}, isArray:false },
             updateSettings: { method:'PUT', params:{sid:''} }
         });
+    }]).
+    factory('SitesRepo', ['$resource', function($resource){
+        return $resource('/behat_editor_services_v2/sites/:sid/repo/:branch/:branch_name',
+            {
+                sid: "",
+                branch: '@branch'
+            },
+            {
+                query: { method:'GET', params:{sid:''}, isArray:false},
+                sync: {
+                    method: 'GET',
+                    params: {
+                        sid: ':sid',
+                        branch: 'branch',
+                        branch_name: ':branch_name'
+                    }
+            }
+        });
     }]);
