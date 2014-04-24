@@ -7,6 +7,7 @@ Feature: Site View
     Given I am on "/sites/2"
     Then I should see "test2.feature"
     Then I should see "test1.feature"
+    And I wait
     And I follow "Create New Test"
     And I wait
     And I wait

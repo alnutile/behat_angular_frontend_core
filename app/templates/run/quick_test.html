@@ -19,23 +19,4 @@
     </div>
 </div>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Batch Test</h3>
-    </div>
-    <div class="panel-body">
-        <div class="help-block">
-            This will take some time as each test is run individually. You can see the results in the results tab.
-            This will run in the background so you can close your browser window and return later.
-        </div>
-        <form name="quick_test_batch" class="form-horizontal col-lg-11">
-            <ng-include src="settings_browser_checkboxes.url"></ng-include>
-            <ng-include src="tokens_to_use.url"></ng-include>
-            <button
-                    type="button"
-                    class="btn btn-danger" data-ng-click="runBatch()"
-                    ng-disabled="batchRunDisabled()">Run Batch</button>
-        </form>
-
-    </div>
-</div>
+<ng-include src="batch_run.url"></ng-include>

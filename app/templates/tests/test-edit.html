@@ -9,6 +9,8 @@
         </div>
         <div class="pull-right">
                 <button type="button" class="btn btn-danger" ng-click="saveTest(test_content)" ng-switch-when="edit">save test</button>
+                <a type="button" class="btn btn-info" href="" ng-href="#/sites/{{site.nid}}/tests/{{test.name_dashed}}/edit" ng-switch-when="show">edit test</a>
+                <button type="button" class="btn btn-danger" ng-click="createTest(site)" ng-switch-when="create">save test</button>
                 <button type="button" class="btn btn-success" snap-toggle="right">Toggle Drawer</button>
         </div>
     </div>
@@ -21,7 +23,7 @@
     </div>
     <div class="row clearfix">
         <div class="col-md-2 column">
-            <span ng-switch-when="edit">
+            <span ng-if="action == 'create' || action == 'edit'">
                 <accordion close-others="true">
                     <accordion-group heading="Test Details" is-open="true" ng-click="showHideBlocks('testDetailsBlock')">
                         <p>Add tags, Backgrounds etc. [help]</p>
@@ -113,7 +115,7 @@
                 </accordion>
             </span>
         </div>
-        <div class="col-md-4 column" ng-switch-when="edit">
+        <div class="col-md-4 column" ng-if="action == 'create' || action == 'edit'">
             <div ng-include="form.url"></div>
         </div>
         <div class="col-md-8 column" ng-switch-when="show">
@@ -134,7 +136,7 @@
                 <ng-include src="clone_block.url"></ng-include>
             </div>
         </div>
-        <div class="col-md-6 column" ng-switch-when="edit">
+        <div class="col-md-6 column" ng-if="action == 'create' || action == 'edit'">
             <div ng-include="ace.url"></div>
         </div>
     </div>
