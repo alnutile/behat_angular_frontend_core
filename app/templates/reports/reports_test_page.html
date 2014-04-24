@@ -6,7 +6,14 @@
     </div>
     <div class="panel-body">
 
-        <table class="table table-bordered table-hover">
+        <div ng-if="action == 'create'">
+            <alert class="alert alert-info">
+                In create mode you can not Results.
+                Click Save then you will see Results.
+            </alert>
+        </div>
+
+        <table class="table table-bordered table-hover" ng-if="action != 'create'">
             <thead>
             <tr>
                 <th>Result</th>

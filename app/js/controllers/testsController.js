@@ -37,7 +37,9 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             touchToDrag: false
         };
 
-        $scope.reports                      = ReportsTestsService.get({sid: $routeParams.sid, tname: $routeParams.tname});
+        if($scope.action != 'create') {
+            $scope.reports                      = ReportsTestsService.get({sid: $routeParams.sid, tname: $routeParams.tname});
+        }
 
         /** PARTIALS **/
         $scope.reports_test_page            = { name: 'reports', url: 'templates/reports/reports_test_page.html'}
@@ -54,23 +56,29 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.tokens_admin                 = { name: 'tokens_admin', url: 'templates/tokens/tokens_admin.html'}
         $scope.bc                           = { name: 'bc', url: 'templates/shared/bc.html'}
         $scope.snap                         = { name: 'snap', url: 'templates/shared/snap_test_output.html'}
+        $scope.batch_run                    = { name: 'batch_run', url: 'templates/batches/run.html'}
 
         if($scope.action == 'edit') {
             $scope.nav_message = "Mocked data. You can click on <b>any form item</b> as well as <b>run</b> and <b>any left side nav</b> <b>save</b> as well as use <b>Ace Editor</b> you can <b>Clone</b> to site 3"
+        } else if($scope.action == 'create') {
+            $scope.nav_message = "Mocked data. You can do the normal create stuff and Save as well which will redirect you to edit."
         } else {
             $scope.nav_message = "Mocked data. You can click on <b>any form item</b> as well as <b>run</b> and Clone"
         }
+
         $scope.steps = {}
         $scope.form_tags = {}
         $scope.steps.default = "Your Step Here..."
 
         $scope.test_results = '<strong>Click run to see results...</strong>';
 
-        $scope.token = $http({method: 'GET', url:'/services/session/token'}).success(
-            function(data, status, headers, config){
-                $http.defaults.headers.post['X-CSRF-Token'] = data;
-            }
-        );
+        if($scope.action != 'create') {
+            $scope.token = $http({method: 'GET', url:'/services/session/token'}).success(
+                function(data, status, headers, config){
+                    $http.defaults.headers.post['X-CSRF-Token'] = data;
+                }
+            );
+        }
 
         /** END SETUP PAGE **/
 
@@ -80,12 +88,37 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             $scope.tagsPresentInTest = tagsPresent($scope.test_content);
         });
 
-        $scope.tests = TestsServices.get({sid: $routeParams.sid, tname: $routeParams.tname}, function(data) {
-            $scope.test = data;
-            $scope.tokens = data.tokens;
-            $scope.test_content = data.content;
-            $scope.test_html = data.content_html;
-        });
+        /** Edit and View Mode **/
+        if($scope.action != 'create') {
+            $scope.tests = TestsServices.get({sid: $routeParams.sid, tname: $routeParams.tname}, function(data) {
+                $scope.test = data;
+                $scope.tokens = data.tokens;
+                $scope.test_content = data.content;
+                $scope.test_html = data.content_html;
+            });
+        } else {
+        /** New Mode **/
+            $scope.default_tag = '@default_tag';
+
+            $scope.test = new TestsServices({
+                name_dashed: 'test_new_feature',
+                name: "New Test",
+            });
+
+            $scope.tokens ={};
+            $scope.test_content = '';
+            $scope.test_html = '';
+
+            $scope.$watch('settings', function(){
+                if($scope.settings != undefined) {
+                    $scope.default_tag = $scope.settings.defaults.default_tag;
+                    console.log($scope.settings);
+                    $scope.test_content = $scope.default_tag + "\nFeature: Your Test Feature\n  Scenario: Test Here\n    Given I am on \"/\"\n    Then I should see \"some text\"";
+                }
+            })
+        }
+
+        console.log($scope.action);
 
         /**** TOKENS ***/
         $scope.tokensForm = {};
@@ -108,6 +141,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             var name                = TokensHelpers.makeName($scope.test.name);
             $scope.tokens[name]     = parent_set;
         };
+
         /**** END TOKENS ***/
 
 
@@ -342,6 +376,16 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             });
         };
 
+
+        $scope.createTest = function(site) {
+            $scope.test.content = $scope.test_content;
+            var params = {
+                'test': $scope.test,
+                'site': $scope.site
+            }
+            $scope.testCreate($scope.site.nid, params);
+        };
+
         $scope.cloneTest = function (site) {
             $scope.site_to_clone_to = site;
             var cloneModalInstanceCtrl = $modal.open({
@@ -355,8 +399,6 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             });
 
             cloneModalInstanceCtrl.result.then(function (selectedItem) {
-                //$scope.selected = selectedItem;
-                console.log($scope.test_content)
                 //1 get the latest content
                 $scope.test.content = $scope.test_content;
                 //1 get the content
@@ -366,22 +408,23 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                     'test': $scope.test,
                     'site': $scope.site_to_clone_to
                 }
-
-                TestsServices.create({sid: $scope.site_to_clone_to.nid}, params, function(data){
-                    if(data.error === 0){
-                        $location.path("/sites/" + $scope.site_to_clone_to.nid + "/tests/" + data.data.name_dashed + "/edit");
-                    } else {
-                        Noty('Could not save the test.', 'error');
-                    }
-                });
+                $scope.testCreate($scope.site_to_clone_to.nid, params);
 
             }, function () {
                 Noty('Clone was canceled no new file made', 'success');
             });
         };
 
+        $scope.testCreate = function(sid, params) {
+            TestsServices.create({sid: sid}, params, function(data){
+                if(data.error === 0){
+                    $location.path("/sites/" + sid + "/tests/" + data.data.name_dashed + "/edit");
+                } else {
+                    Noty('Could not save the test.', 'error');
+                }
+            });
+        }
     }]);
-
 testsController.controller('TestNewController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices',
     function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices){
         $scope.token = $http({method: 'GET', url:'/services/session/token'}).success(

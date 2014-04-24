@@ -4,6 +4,12 @@
     </div>
     <div class="panel-body">
             <div class="form-group">
+                <div ng-if="action == 'create'">
+                    <alert class="alert alert-info">
+                        In Create mode you can not make Tokens.
+                        Click Save and you can then Create Tokens.
+                    </alert>
+                </div>
                 <div ng-repeat="(key, value) in tokens">
 
                     <table class="table table-bordered table-hover table-condensed">
@@ -25,7 +31,7 @@
                         </tbody>
                     </table>
                     <!-- @LEFT_OFF make add button for new row make service for tags crud finally add new set -->
-                    <div ng-switch-when="edit">
+                    <div ng-if="action == 'edit'">
                         <button id="update_tokens_{{$index}}" type="button" class="btn btn-success btn-sm" ng-click="updateTokens(tokens[key], key)">Update</button>
                         <button id="add_row_tokens_{{$index}}" type="button" class="btn btn-default btn-sm" ng-click="addTokenRow(tokens[key])">Add Row</button>
                         <button id="clone_tokens_{{$index}}" type="button" class="btn btn-warning btn-sm" ng-click="cloneTokens(tokens[key])">Clone Set</button>
@@ -33,6 +39,6 @@
                 </div>
             </div>
 
-        <button ng-switch-when="edit" id="add_new_token_set" ng-click="addTokenSet()" type="button" class="btn-default btn">Add New Set</button>
+        <button ng-if="action == 'edit'" id="add_new_token_set" ng-click="addTokenSet()" type="button" class="btn-default btn">Add New Set</button>
     </div>
 </div>

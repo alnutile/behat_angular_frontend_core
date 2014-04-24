@@ -43,8 +43,8 @@ var app = angular.module('behatEditor', [
 app.run(function($httpBackend, editableOptions) {
     editableOptions.theme = 'bs3';
 
-    var site_settings_update  = '{"status":"success","data":{"defaults":{"default_tag":"@example","base_url":"http:\/\/google.com"},"github":{"github_username":"test","github_password":"test","test_folder":"tests","urls":[{"name": "Production", "url": "http:\/\/google.com"},{"name":"Staging","url":"http:\/\/staging.google.com"},{"name":"Custom 1", "url":"http:\/\/local.google.com"}],"github_account":"testuser"},"saucelabs":{"browser":{"username":"testuser","access_key":"accessskey","browser":"chrome","platform":"Windows 2012","version":"30","name":"Testing with Saucelabs"},"host":"ondemand.saucelabs.com","port":80}},"message":"Success updating file"}';
-    var site_settings_default = '{"status":"success","data":{"defaults":{"default_tag":"@updated","base_url":"http:\/\/google.com"},"urls":[{"name": "Production", "url": "http:\/\/google.com", "default": "0"},{"name":"Staging","url":"http:\/\/staging.google.com", "default": "1"},{"name":"Custom 1", "url":"http:\/\/local.google.com", "default": "0"}],"github":{"github_username":"test","github_password":"test","test_folder":"tests","github_account":"testuser"},"saucelabs":{"browser":{"username":"testuser","access_key":"accessskey","browser":"chrome","platform":"Windows 2012","version":"30","name":"Testing with Saucelabs"},"host":"ondemand.saucelabs.com","port":80}},"message":"Success getting file"}';
+    var site_settings_update  = '{"status":"success","data":{"defaults":{"default_tag":"@updated_default_tag","base_url":"http:\/\/google.com"},"github":{"github_username":"test","github_password":"test","test_folder":"tests","urls":[{"name": "Production", "url": "http:\/\/google.com"},{"name":"Staging","url":"http:\/\/staging.google.com"},{"name":"Custom 1", "url":"http:\/\/local.google.com"}],"github_account":"testuser"},"saucelabs":{"browser":{"username":"testuser","access_key":"accessskey","browser":"chrome","platform":"Windows 2012","version":"30","name":"Testing with Saucelabs"},"host":"ondemand.saucelabs.com","port":80}},"message":"Success updating file"}';
+    var site_settings_default = '{"status":"success","data":{"defaults":{"default_tag":"@default_site_tag","base_url":"http:\/\/google.com"},"urls":[{"name": "Production", "url": "http:\/\/google.com", "default": "0"},{"name":"Staging","url":"http:\/\/staging.google.com", "default": "1"},{"name":"Custom 1", "url":"http:\/\/local.google.com", "default": "0"}],"github":{"github_username":"test","github_password":"test","test_folder":"tests","github_account":"testuser"},"saucelabs":{"browser":{"username":"testuser","access_key":"accessskey","browser":"chrome","platform":"Windows 2012","version":"30","name":"Testing with Saucelabs"},"host":"ondemand.saucelabs.com","port":80}},"message":"Success getting file"}';
 
     var sites =
         [
@@ -701,17 +701,24 @@ app.run(function($httpBackend, editableOptions) {
     $httpBackend.whenGET('/behat_editor_services_v2/reports').respond(reports_home_page);
     $httpBackend.whenGET('/behat_editor_services_v2/sites?meta=false').respond(sites);
 
-    $httpBackend.whenGET('/behat_editor_services_v2/sites/2/settings').respond(site_settings_default);
+    $httpBackend.whenGET(/\/behat_editor_services_v2\/sites\/[1-9][0-9]*\/settings/).respond(site_settings_default);
+
     $httpBackend.whenPUT('/behat_editor_services_v2/sites/2/settings').respond(site_settings_update);
     $httpBackend.whenGET('/behat_editor_services_v2/sites').respond(sites);
-    $httpBackend.whenGET('/behat_editor_services_v2/sites/2/reports').respond(reports_site_all);
+
+    $httpBackend.whenGET(/\/behat_editor_services_v2\/sites\/[1-9][0-9]*\/reports/).respond(reports_site_all);
+
     $httpBackend.whenGET('/behat_editor_services_v2/sites/2/reports_numbers').respond(reports_dash_site_level);
     $httpBackend.whenGET('/behat_editor_services_v2/sites/reports').respond(reports_dash);
     $httpBackend.whenGET('/behat_editor_services_v2/sites/1/reports').respond(reports_dash);
     $httpBackend.whenGET('/services/session/token').respond('12345');
+
     $httpBackend.whenPOST('/behat_editor_services_v2/sites/3/tests').respond(test_cloned);
+    $httpBackend.whenPOST(/\/behat_editor_services_v2\/sites\/[1-9][0-9]*\/tests/).respond(test_cloned);
+
     $httpBackend.whenGET('/behat_editor_services_v2/sites/2').respond(site);
     $httpBackend.whenGET('/behat_editor_services_v2/sites/3').respond(site3);
+
     $httpBackend.whenPUT('/behat_editor_services_v2/sites/2/tests/test2_feature').respond(function(method, url, data) {
         var results = angular.fromJson(data);
         return { error: 0, message: "Test Updated", data: results.test.content }
@@ -719,9 +726,12 @@ app.run(function($httpBackend, editableOptions) {
     $httpBackend.whenGET('/behat_editor_services_v2/sites/2/tests/test2_feature/run').respond(test_results);
     $httpBackend.whenGET('/behat_editor_services_v2/sites/2/tests/test2_feature').respond(test2_feature);
     $httpBackend.whenGET('/behat_editor_services_v2/sites/3/tests/test3_feature').respond(test3_feature);
+    $httpBackend.whenGET('/behat_editor_services_v2/sites/2/tests/test3_feature').respond(test3_feature);
     $httpBackend.whenGET('/behat_editor_services_v2/sites/2/reports').respond(reports_site_all);
+
     $httpBackend.whenGET('/behat_editor_services_v2/sites/2/tests/test2_feature/reports').respond(reports_for_test);
     $httpBackend.whenGET('/behat_editor_services_v2/sites/3/tests/test3_feature/reports').respond(reports_for_test3);
+    $httpBackend.whenGET('/behat_editor_services_v2/sites/2/tests/test3_feature/reports').respond(reports_for_test3);
 
     $httpBackend.whenPUT('/behat_editor_services_v2/sites/2/tests/test2_feature/tokens/12345.tokens').respond(200,
         { status: 'success', message: "Updated Tokens", data: null }
@@ -764,9 +774,9 @@ app.config(['$routeProvider',
                 templateUrl:  path + 'templates/settings/edit.html',
                 controller:  'SiteSettingsCtrl'
             }).
-            when('/sites/:sid/tests/new', {
+            when('/sites/:sid/tests/:action', {
                 templateUrl:  path + 'templates/tests/test-edit.html',
-                controller:  'TestNewController'
+                controller:  'TestEditController'
             }).
             when('/sites/:sid/tests/:tname/:action', {
                 templateUrl:  path + 'templates/tests/test-edit.html',
