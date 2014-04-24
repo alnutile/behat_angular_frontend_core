@@ -18,7 +18,7 @@ Feature: Site View
     And I follow "site-view-test2_feature"
     And I wait
     Then I should see "test2.feature"
-    Then I should see "Not sure what goes here.."
+    Then I should see "Feature: Test WikiPedia"
 
   Scenario: Should be able to edit a test
     Given I am on "/sites/2"

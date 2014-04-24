@@ -1,26 +1,8 @@
 var testsController = angular.module('testsController', ['ngSanitize']);
 
-testsController.controller('TestController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'Noty',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, Noty){
-        $scope.nav = { name: 'nav', url: 'templates/shared/nav.html'}
-        $scope.nav_message = "Mocked data. You can click on <b>run</b> or <b>edit</b>"
-        $scope.test_results = '<strong>Click run to see results...</strong>';
-
-        $scope.tests = TestsServices.get({sid: $routeParams.sid, tname: $routeParams.tname}, function(data) {
-            $scope.test = data;
-            $scope.test_html = data.content_html;
-        });
-        $scope.sites = SitesServices.get({sid: $routeParams.sid}, function(data) {
-            $scope.site = data;
-        });
-
-        $scope.runTest = function() {
-              runTest('success', 'Running test...', $scope);
-        }
-    }]);
-
 testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent', 'TokensHelpers', 'BatchServices', 'snapRemote', 'SitesRepo',
     function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers, tagsPresent, TokensHelpers, BatchServices, snapRemote, SitesRepo){
+        $scope.action = $routeParams.action;
         $scope.settingsForm = {};
         $scope.settingsForm.browserChosenBatch = [];
         $scope.blocks = {}
@@ -63,6 +45,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.settings_browser_checkboxes  = { name: 'settings_browser_checkbox', url: 'templates/shared/settings_browser_checkboxes.html'}
         $scope.ace                          = { name: 'ace', url: 'templates/shared/ace.html'}
         $scope.form                         = { name: 'form', url: 'templates/tests/form.html'}
+        $scope.test_view_file               = { name: 'test_view_file', url: 'templates/tests/test_view_file.html'}
         $scope.nav                          = { name: 'nav', url: 'templates/shared/nav.html'}
         $scope.quick_test                   = { name: 'quick_test', url: 'templates/run/quick_test.html'}
         $scope.clone_block                  = { name: 'clone_block', url: 'templates/shared/clone_block.html'}
@@ -70,7 +53,11 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.bc                           = { name: 'bc', url: 'templates/shared/bc.html'}
         $scope.snap                         = { name: 'snap', url: 'templates/shared/snap_test_output.html'}
 
-        $scope.nav_message = "Mocked data. You can click on <b>any form item</b> as well as <b>run</b> and <b>any left side nav</b> <b>save</b> as well as use <b>Ace Editor</b> you can <b>Clone</b> to site 3"
+        if($scope.action == 'edit') {
+            $scope.nav_message = "Mocked data. You can click on <b>any form item</b> as well as <b>run</b> and <b>any left side nav</b> <b>save</b> as well as use <b>Ace Editor</b> you can <b>Clone</b> to site 3"
+        } else {
+            $scope.nav_message = "Mocked data. You can click on <b>any form item</b> as well as <b>run</b> and Clone"
+        }
         $scope.steps = {}
         $scope.form_tags = {}
         $scope.steps.default = "Your Step Here..."
