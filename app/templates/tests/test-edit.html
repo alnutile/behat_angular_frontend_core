@@ -1,6 +1,6 @@
 <ng-include src="snap.url"></ng-include>
 <snap-content snap-options="snapOpts">
-<div class="top container test-ui ng-cloak">
+<div class="top container test-ui ng-cloak" ng-switch="action">
     <span ng-include="nav.url" class="slide-animate"></span>
 
     <div class="row clearfix">
@@ -8,7 +8,7 @@
             <div ng-include="bc.url"></div>
         </div>
         <div class="pull-right">
-                <button type="button" class="btn btn-danger" ng-click="saveTest(test_content)">save test</button>
+                <button type="button" class="btn btn-danger" ng-click="saveTest(test_content)" ng-switch-when="edit">save test</button>
                 <button type="button" class="btn btn-success" snap-toggle="right">Toggle Drawer</button>
         </div>
     </div>
@@ -21,70 +21,120 @@
     </div>
     <div class="row clearfix">
         <div class="col-md-2 column">
-            <accordion close-others="true">
-                <accordion-group heading="Test Details" is-open="true" ng-click="showHideBlocks('testDetailsBlock')">
-                    <p>Add tags, Backgrounds etc. [help]</p>
-                </accordion-group>
-                <accordion-group class="scenarios" heading="Scenarios and steps" ng-click="showHideBlocks('testStepsBlock')">
-                    <p>Add steps to your test. Search as needed [help]</p>
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <a href="" ng-href="" type="button" ng-click="showHideGroup('starting')">Starting Points</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="" ng-href="" type="button" ng-click="showHideGroup('general')">General interactions</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="" ng-href="" ng-click="showHideGroup('elements')">Form fields & elements</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="" ng-href="" ng-click="showHideGroup('dom')">CSS and DOM</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="" ng-href="" ng-click="showHideGroup('modals')">Navigation Windows iFrames Modals</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="" ng-href="" ng-click="showHideGroup('custom')">Custom</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="" ng-href="" ng-click="showHideGroup('features')">Low level features</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="" ng-href="" ng-click="showHideGroup('all')">Show all</a>
-                        </li>
-                    </ul>
-                </accordion-group>
-                <accordion-group ng-click="showHideBlocks('testTokensBlock')"  class="tokens-admin">
-                    <accordion-heading>
-                        Tokens
-                    </accordion-heading>
-                    <p>Add tokens so one test can work for many. [help]</p>
-                </accordion-group>
-                <accordion-group ng-click="showHideBlocks('testResultsBlock')">
-                    <accordion-heading>
-                        Results
-                    </accordion-heading>
-                    <p>Search and View Results</p>
-                </accordion-group>
-                <accordion-group ng-click="showHideBlocks('testRunBlock')" class="run-test">
-                    <accordion-heading>
-                        Run a test
-                    </accordion-heading>
-                    <p>Run your test [help]</p>
-                </accordion-group>
-                <accordion-group ng-click="showHideBlocks('cloneBlock')" class="clone-test">
-                    <accordion-heading>
-                        Clone Options
-                    </accordion-heading>
-                    <p>Copy the test to another repository [help]</p>
-                </accordion-group>
-            </accordion>
+            <span ng-switch-when="edit">
+                <accordion close-others="true">
+                    <accordion-group heading="Test Details" is-open="true" ng-click="showHideBlocks('testDetailsBlock')">
+                        <p>Add tags, Backgrounds etc. [help]</p>
+                    </accordion-group>
+                    <accordion-group class="scenarios" heading="Scenarios and steps" ng-click="showHideBlocks('testStepsBlock')">
+                        <p>Add steps to your test. Search as needed [help]</p>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="" ng-href="" type="button" ng-click="showHideGroup('starting')">Starting Points</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="" ng-href="" type="button" ng-click="showHideGroup('general')">General interactions</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="" ng-href="" ng-click="showHideGroup('elements')">Form fields & elements</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="" ng-href="" ng-click="showHideGroup('dom')">CSS and DOM</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="" ng-href="" ng-click="showHideGroup('modals')">Navigation Windows iFrames Modals</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="" ng-href="" ng-click="showHideGroup('custom')">Custom</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="" ng-href="" ng-click="showHideGroup('features')">Low level features</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="" ng-href="" ng-click="showHideGroup('all')">Show all</a>
+                            </li>
+                        </ul>
+                    </accordion-group>
+                    <accordion-group ng-click="showHideBlocks('testTokensBlock')"  class="tokens-admin">
+                        <accordion-heading>
+                            Tokens
+                        </accordion-heading>
+                        <p>Add tokens so one test can work for many. [help]</p>
+                    </accordion-group>
+                    <accordion-group ng-click="showHideBlocks('testResultsBlock')">
+                        <accordion-heading>
+                            Results
+                        </accordion-heading>
+                        <p>Search and View Results</p>
+                    </accordion-group>
+                    <accordion-group ng-click="showHideBlocks('testRunBlock')" class="run-test">
+                        <accordion-heading>
+                            Run a test
+                        </accordion-heading>
+                        <p>Run your test [help]</p>
+                    </accordion-group>
+                    <accordion-group ng-click="showHideBlocks('cloneBlock')" class="clone-test">
+                        <accordion-heading>
+                            Clone Options
+                        </accordion-heading>
+                        <p>Copy the test to another repository [help]</p>
+                    </accordion-group>
+                </accordion>
+            </span>
+            <span ng-switch-when="show">
+                <accordion close-others="true">
+                    <accordion-group heading="Test Details" is-open="true" ng-click="showHideBlocks('testDetailsBlock')">
+                        <p>View of the file [help]</p>
+                    </accordion-group>
+                    <accordion-group ng-click="showHideBlocks('testTokensBlock')"  class="tokens-admin">
+                        <accordion-heading>
+                            Tokens
+                        </accordion-heading>
+                        <p>Add tokens so one test can work for many. [help]</p>
+                    </accordion-group>
+                    <accordion-group ng-click="showHideBlocks('testResultsBlock')">
+                        <accordion-heading>
+                            Results
+                        </accordion-heading>
+                        <p>Search and View Results</p>
+                    </accordion-group>
+                    <accordion-group ng-click="showHideBlocks('testRunBlock')" class="run-test">
+                        <accordion-heading>
+                            Run a test
+                        </accordion-heading>
+                        <p>Run your test [help]</p>
+                    </accordion-group>
+                    <accordion-group ng-click="showHideBlocks('cloneBlock')" class="clone-test">
+                        <accordion-heading>
+                            Clone Options
+                        </accordion-heading>
+                        <p>Copy the test to another repository [help]</p>
+                    </accordion-group>
+                </accordion>
+            </span>
         </div>
-        <div class="col-md-4 column">
+        <div class="col-md-4 column" ng-switch-when="edit">
             <div ng-include="form.url"></div>
         </div>
+        <div class="col-md-8 column" ng-switch-when="show">
+            <div ng-include="test_view_file.url"></div>
+            <div ng-model="blocks.testTokensBlock" ng-init="blocks.testTokensBlock=false" ng-show="blocks.testTokensBlock">
+                <ng-include src="tokens_admin.url"></ng-include>
+            </div>
 
-        <div class="col-md-6 column">
+            <div ng-model="blocks.testResultsBlock" ng-init="blocks.testResultsBlock=false" ng-show="blocks.testResultsBlock">
+                <div ng-include="reports_test_page.url"></div>
+            </div>
+
+            <div ng-model="blocks.testRunBlock" ng-init="blocks.testRunBlock=false" ng-show="blocks.testRunBlock">
+                <ng-include src="quick_test.url"></ng-include>
+            </div>
+
+            <div ng-model="blocks.cloneBlock" ng-init="blocks.cloneBlock=false" ng-show="blocks.cloneBlock">
+                <ng-include src="clone_block.url"></ng-include>
+            </div>
+        </div>
+        <div class="col-md-6 column" ng-switch-when="edit">
             <div ng-include="ace.url"></div>
         </div>
     </div>

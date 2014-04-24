@@ -1,4 +1,4 @@
-    <div ng-model="blocks.testDetailsBlock" ng-init="blocks.testDetailsBLock=true" ng-show="blocks.testDetailsBlock">
+    <div ng-model="blocks.testDetailsBlock" ng-init="blocks.testDetailsBlock=true" ng-show="blocks.testDetailsBlock">
 
         <form class="form-inline" role="form" name="featureForm" ng-submit="addFeature(steps.featureForm)">
             <div class="form-group">
@@ -15,6 +15,7 @@
                 </div>
             </div>
         </form>
+
         <hr>
 
         <form class="form-inline" role="form" name="tagForm" ng-submit="addTag(steps.testDetails.tag)">
@@ -685,6 +686,7 @@
     <div ng-model="blocks.testRunBlock" ng-init="blocks.testRunBlock=false" ng-show="blocks.testRunBlock">
         <ng-include src="quick_test.url"></ng-include>
     </div>
+
     <div ng-model="blocks.cloneBlock" ng-init="blocks.cloneBlock=false" ng-show="blocks.cloneBlock">
         <ng-include src="clone_block.url"></ng-include>
     </div>

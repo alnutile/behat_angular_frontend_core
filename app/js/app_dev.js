@@ -768,11 +768,7 @@ app.config(['$routeProvider',
                 templateUrl:  path + 'templates/tests/test-edit.html',
                 controller:  'TestNewController'
             }).
-            when('/sites/:sid/tests/:tname', {
-                templateUrl:  path + 'templates/tests/test-show.html',
-                controller:  'TestController'
-            }).
-            when('/sites/:sid/tests/:tname/edit', {
+            when('/sites/:sid/tests/:tname/:action', {
                 templateUrl:  path + 'templates/tests/test-edit.html',
                 controller:  'TestEditController'
             }).

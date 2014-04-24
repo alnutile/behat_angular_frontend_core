@@ -1,11 +1,16 @@
+@javascript
 Feature: Test View Test
+  Background: Refresh page
+    Given I am on "/"
+    #Helps when comes with other tests
+
   Scenario: I should see on the Create New Test
-    Given I am on "/sites/2/tests/test2_feature"
+    Given I am on "/sites/2/tests/test2_feature/show"
     And I wait
-    Then I should see "test2.feature"
-    #And I press "run-test"
-    #Then I should see "Running test..."
-    #Then I should see "Test Completed..."
-    #Then I should see "2 steps (2 passed)"
-    #And I follow "edit"
-    #Then I should see "save test"
+    Then I should see "Feature: Test WikiPedia"
+    Then I should see "Tokens"
+    Then I should see "Results"
+    Then I should see "Run a test"
+    Then I should see "Clone Options"
+    Then I should not see "save"
+    Then I should not see "Scenarios and steps"

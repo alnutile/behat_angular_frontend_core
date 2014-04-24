@@ -15,9 +15,12 @@ Feature: Test Edit
     And I wait
     Then I should see "Tag Added @tag.."
     And I press the element ".scenarios > div:nth-child(1) > h4:nth-child(1) > a:nth-child(1)"
-    Then I fill in "cfpTarget" with "some different text"
-    And I press "cfpFormAdd"
     And I wait
+    And I press the element "body > div > snap-content > div > div:nth-child(4) > div.col-md-2.column > span > accordion > div > div.scenarios.panel.panel-default.ng-isolate-scope > div.panel-collapse.collapse.in > div > ul > li:nth-child(2) > a"
+    And I wait
+    Then I fill in "cfpTarget" with "some different text"
+    And I wait
+    And I press "cfpFormAdd"
     And I wait
     Then I should see "Step Added And I follow"
     And I should see "Then I should"
@@ -26,7 +29,6 @@ Feature: Test Edit
     Then I fill in "search-steps" with ""
     And I fill in "seeFormTarget" with "some other other text"
     And I press "seeFormAdd"
-    And I wait
     And I wait
     Then I should see "Step Added Then I should"
     Then I select "not see" from "seeFormAction"
