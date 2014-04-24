@@ -37,8 +37,10 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             touchToDrag: false
         };
 
-        $scope.reports_test_page            = { name: 'reports', url: 'templates/reports/reports_test_page.html'}
         $scope.reports                      = ReportsTestsService.get({sid: $routeParams.sid, tname: $routeParams.tname});
+
+        /** PARTIALS **/
+        $scope.reports_test_page            = { name: 'reports', url: 'templates/reports/reports_test_page.html'}
         $scope.settings_browser             = { name: 'settings_browser', url: 'templates/shared/settings_browser.html'}
         $scope.tags_to_run                  = { name: 'tags_to_run', url: 'templates/shared/tags_to_run.html'}
         $scope.tokens_to_use                = { name: 'tokens_to_use', url: 'templates/tokens/tokens_select_list.html'}
