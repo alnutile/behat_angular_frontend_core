@@ -55,3 +55,12 @@ Feature: Test Edit
       And I wait
       And I wait
       Then I should see "Step Added Background: \"test\"..."
+
+  Scenario: Test One Results
+      Given I am on "/sites/2/tests/test2_feature/edit"
+      And I wait
+      And I press the element "body > div > snap-content > div > div:nth-child(4) > div.col-md-2.column > span > accordion > div > div:nth-child(4) > div.panel-heading > h4 > a"
+      And I wait
+      And I follow "report-view-102"
+      And I wait
+      Then I should see "Duration"

@@ -1,7 +1,27 @@
 var testsController = angular.module('testsController', ['ngSanitize']);
 
-testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', 'ReportsTestsService', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent', 'TokensHelpers', 'BatchServices', 'snapRemote', 'SitesRepo',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, ReportsTestsService, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers, tagsPresent, TokensHelpers, BatchServices, snapRemote, SitesRepo){
+testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent', 'TokensHelpers', 'BatchServices', 'snapRemote', 'SitesRepo', 'ReportHelpers', 'ReportsServices', 'TestHelpers',
+    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers, tagsPresent, TokensHelpers, BatchServices, snapRemote, SitesRepo, ReportHelpers, ReportsServices, TestHelpers){
+
+        $scope.getReport = function(site_id, report_id) {
+            ReportsServices.get({ sid: site_id, rid: report_id},
+                function(data){
+                    $scope.side_show = 'results';
+                    var results = data.data.results;
+                    data.data.results = TestHelpers.pluckResults(results);
+                    $scope.one_report = data.data;
+                    snapRemote.open('right');
+                }, function(err){
+                    Noty(err.message, 'error');
+                });
+        };
+
+        $scope.closeRightSidebar = function() {
+            snapRemote.close();
+        }
+
+        $scope.getReports       = ReportHelpers.getReports;
+
         $scope.action = $routeParams.action;
         $scope.settingsForm = {};
         $scope.settingsForm.browserChosenBatch = [];
@@ -38,11 +58,13 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         };
 
         if($scope.action != 'create') {
-            $scope.reports                      = ReportsTestsService.get({sid: $routeParams.sid, tname: $routeParams.tname});
+            $scope.reports                  = $scope.getReports($routeParams.sid, $routeParams.tname);
         }
 
         /** PARTIALS **/
         $scope.reports_test_page            = { name: 'reports', url: 'templates/reports/reports_test_page.html'}
+        $scope.one_report_partial           = { name: 'one_report', url: 'templates/reports/_one_report.html'}
+        $scope.test_results_partial         = { name: 'test_results_partial', url: 'templates/tests/_test_results.html'}
         $scope.settings_browser             = { name: 'settings_browser', url: 'templates/shared/settings_browser.html'}
         $scope.tags_to_run                  = { name: 'tags_to_run', url: 'templates/shared/tags_to_run.html'}
         $scope.tokens_to_use                = { name: 'tokens_to_use', url: 'templates/tokens/tokens_select_list.html'}
@@ -82,7 +104,6 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
 
         /** END SETUP PAGE **/
 
-
         $scope.tagsPresentInTest = [];
         $scope.$watch('test_content', function(){
             $scope.tagsPresentInTest = tagsPresent($scope.test_content);
@@ -118,8 +139,6 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             })
         }
 
-        console.log($scope.action);
-
         /**** TOKENS ***/
         $scope.tokensForm = {};
 
@@ -143,7 +162,6 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         };
 
         /**** END TOKENS ***/
-
 
         $scope.editor = {};
 
@@ -208,6 +226,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
 
         /** RUNNING A TEST **/
         $scope.runTest = function() {
+            $scope.side_show = 'run';
             snapRemote.open('right');
             Noty("Running Test", 'success');
             runTest('success', 'Running test...', $scope);

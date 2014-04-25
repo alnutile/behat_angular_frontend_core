@@ -8,6 +8,7 @@ Feature: Test Settings Get and Put
 
   Scenario: I should see some settings
     Given I am on "/sites/2/settings"
+    And I wait
     Then I should see "Github Username"
     And I press "Submit"
     And I wait

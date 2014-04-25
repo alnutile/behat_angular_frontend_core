@@ -1,0 +1,50 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Report</h3>
+    </div>
+    <div class="panel-body">
+        <h4>{{one_report.test_name}}</h4>
+
+        <table class="table table-bordered table-striped table-condensed">
+            <thead>
+                <tr>
+                    <td>
+                        Item
+                    </td>
+                    <td>
+                        Results
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>OS</strong></td><td>{{one_report.os}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Site ID</strong></td><td>{{one_report.site_id}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Duration</strong></td><td>{{one_report.duration}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Status</strong></td><td>{{one_report.status | passFailText }}</td>
+                </tr>
+                <tr>
+                    <td><strong>User ID</strong></td><td>{{ one_report.user_id }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Browser</strong></td><td>{{one_report.browser }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Tags</strong></td><td>{{one_report.tags }}</td>
+                </tr>
+                <tr>
+                    <td><strong>URL</strong></td><td>{{one_report.url }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="test-results" ng-bind-html="one_report.results" class="ng-animate-block-transitions"></div>
+
+
+    </div>
+</div>

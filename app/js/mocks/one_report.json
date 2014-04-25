@@ -1,0 +1,19 @@
+{
+    "rid":"105",
+    "test_name":"test2.feature",
+    "site_id": 2,
+    "results":"This will show the test output",
+    "duration":"0h 5m 22s",
+    "created":"2014-03-22",
+    "status":"0",
+    "user_id":"1",
+    "settings":
+        {
+            "test": "test",
+            "test2": "test"
+        },
+    "browser":"Firefox",
+    "os":"Windows",
+    "tags":"@example @javascript",
+    "url":"http://google.com"
+}

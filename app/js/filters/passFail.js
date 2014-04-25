@@ -13,4 +13,14 @@ passFail.filter('passFailFilter', [
                 return '<i class="glyphicon glyphicon-minus"></i>';
             }
         }
-    }]);
+    }]).filter('passFailText', [
+        function() {
+            return function(text) {
+                if(text == 1 || text == "1") {
+                    return 'Pass'
+                } else {
+                    return 'Fail';
+                }
+            }
+        }
+    ]);
