@@ -20,6 +20,23 @@ app_helpers.factory('AppHelpers', ['$rootScope',
                         return 'glyphicon-sort-by-attributes';
                     }
                 }
+            },
+            tagsFilter: function(taggedItems) {
+                var tags_all = [];
+                angular.forEach(taggedItems, function(v,i){
+                    angular.forEach(v.tags, function(value, index){
+                        if(tags_all.indexOf(value) == -1) {
+                            tags_all.push(value);
+                        };
+                    });
+                });
+                return tags_all;
+            },
+            setTag: function(tag, scope) {
+                scope.filtered.tagged = tag;
+            },
+            clearTag: function(scope) {
+                scope.filtered.tagged = '';
             }
         }
     }]);

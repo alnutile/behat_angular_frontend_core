@@ -5,8 +5,8 @@ sitesController.controller('SitesController', ['$scope', '$http', '$location', '
         $scope.sites = SitesServices.query();
     }]);
 
-sitesController.controller('SiteController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'TableMaker', 'ReportSiteNumbers', 'SiteHelpers', 'ChartsPassFail', 'AppHelpers',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, TableMaker, ReportSiteNumbers, SiteHelpers, ChartsPassFail, AppHelpers){
+sitesController.controller('SiteController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'ReportSiteNumbers', 'SiteHelpers', 'ChartsPassFail', 'AppHelpers',
+    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, ReportSiteNumbers, SiteHelpers, ChartsPassFail, AppHelpers){
         $scope.selectedCls = AppHelpers.selectedCls;
         $scope.sortOrder = AppHelpers.sortOrder;
 
@@ -24,7 +24,6 @@ sitesController.controller('SiteController', ['$scope', '$http', '$location', '$
         $scope.nav_message = "Mocked data. You can click on <b>test2.feature view</b> or <b>edit</b> and <b>Create New Test</b></b>"
         $scope.sites = SitesServices.get({sid: $routeParams.sid}, function(data) {
             $scope.site = data;
-            $scope.tableParams = TableMaker(data)
             $scope.tags_filter = [];
 
             $scope.charts = {};

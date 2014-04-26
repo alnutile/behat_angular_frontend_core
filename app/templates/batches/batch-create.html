@@ -1,0 +1,58 @@
+<ng-include src="snap.url"></ng-include>
+<snap-content snap-options="snapOpts">
+    <div class="top container test-ui ng-cloak" ng-switch="action">
+        <span ng-include="nav.url" class="slide-animate"></span>
+
+        <div class="row clearfix">
+            <div class="col-md-6">
+                <div ng-include="bc.url"></div>
+            </div>
+            <div class="pull-right">
+                <button type="button" class="btn btn-danger" ng-click="saveBatch(test_content)" ng-switch-when="edit">save test</button>
+                <a type="button" class="btn btn-info" href="" ng-href="#/sites/{{site.nid}}/tests/{{test.name_dashed}}/edit" ng-switch-when="show">edit test</a>
+                <button type="button" class="btn btn-danger" ng-click="createBatch()" ng-switch-when="create">save test</button>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <h3>
+                    {{ batch.name }}
+                </h3>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-2 column">
+                <span ng-if="action == 'new' || action == 'edit'">
+                    <accordion close-others="true">
+                        <accordion-group heading="Choose Tests" is-open="true" ng-click="showHideBlocks('chooseSitesBlock')">
+                            <p>Choose tests from this Site to include in this new tab [help]</p>
+                        </accordion-group>
+                        <accordion-group ng-click="showHideBlocks('settingsBlock')"  class="tokens-admin">
+                            <accordion-heading>
+                                Batch Settings
+                            </accordion-heading>
+                            <p>Choose what browser, tags etc to use for this new batch jobs [help]</p>
+                        </accordion-group>
+                        <accordion-group ng-click="showHideBlocks('testResultsBlock')">
+                            <accordion-heading>
+                                Results
+                            </accordion-heading>
+                            <p>Search and View Results</p>
+                        </accordion-group>
+                    </accordion>
+                </span>
+            </div>
+            <div class="col-md-8 column" ng-switch-when="show">
+                <div ng-model="blocks.chooseSitesBlock" ng-init="blocks.chooseSitesBlock=true" ng-show="blocks.chooseSitesBlock">
+                    Table of Tests here to choose from
+                </div>
+                <div ng-model="blocks.settingsBlock" ng-init="blocks.settingsBlock=false" ng-show="blocks.settingsBlock">
+                    Settings block here
+                </div>
+                <div ng-model="blocks.testResultsBlock" ng-init="blocks.testResultsBlock=false" ng-show="blocks.testResultsBlock">
+                    Results block here (IF NOT NEW)
+                </div>
+            </div>
+        </div>
+    </div>
+</snap-content>
