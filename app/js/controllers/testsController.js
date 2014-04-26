@@ -3,25 +3,9 @@ var testsController = angular.module('testsController', ['ngSanitize']);
 testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent', 'TokensHelpers', 'BatchServices', 'snapRemote', 'SitesRepo', 'ReportHelpers', 'ReportsServices', 'TestHelpers',
     function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers, tagsPresent, TokensHelpers, BatchServices, snapRemote, SitesRepo, ReportHelpers, ReportsServices, TestHelpers){
 
-        $scope.getReport = function(site_id, report_id) {
-            ReportsServices.get({ sid: site_id, rid: report_id},
-                function(data){
-                    $scope.side_show = 'results';
-                    var results = data.data.results;
-                    data.data.results = TestHelpers.pluckResults(results);
-                    $scope.one_report = data.data;
-                    snapRemote.open('right');
-                }, function(err){
-                    Noty(err.message, 'error');
-                });
-        };
 
-        $scope.closeRightSidebar = function() {
-            snapRemote.close();
-        }
 
-        $scope.getReports       = ReportHelpers.getReports;
-
+        /** PULL IN GENERAL SETTINGS **/
         $scope.action = $routeParams.action;
         $scope.settingsForm = {};
         $scope.settingsForm.browserChosenBatch = [];
@@ -29,7 +13,6 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.blocks.testDetailsBlock = true;
         $scope.groups = {}
 
-        /** PULL IN GENERAL SETTINGS **/
         SitesSettings.query({sid: $routeParams.sid}, function(data){
             $scope.settings = data.data;
             $scope.browser_options = [];
@@ -51,15 +34,15 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         /** END PULL IN GENERAL SETTINGS **/
 
         /** SETUP PAGE **/
-
         $scope.snapOpts = {
             minPosition: '-400',
             touchToDrag: false
         };
 
-        if($scope.action != 'create') {
-            $scope.reports                  = $scope.getReports($routeParams.sid, $routeParams.tname);
+        $scope.closeRightSidebar = function() {
+            snapRemote.close();
         }
+
 
         /** PARTIALS **/
         $scope.reports_test_page            = { name: 'reports', url: 'templates/reports/reports_test_page.html'}
@@ -101,7 +84,6 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                 }
             );
         }
-
         /** END SETUP PAGE **/
 
         $scope.tagsPresentInTest = [];
@@ -139,6 +121,26 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             })
         }
 
+        /** REPORTS **/
+        $scope.getReports       = ReportHelpers.getReports;
+
+        $scope.getReport = function(site_id, report_id) {
+            ReportsServices.get({ sid: site_id, rid: report_id},
+                function(data){
+                    $scope.side_show = 'results';
+                    var results = data.data.results;
+                    data.data.results = TestHelpers.pluckResults(results);
+                    $scope.one_report = data.data;
+                    snapRemote.open('right');
+                }, function(err){
+                    Noty(err.message, 'error');
+                });
+        };
+
+
+        if($scope.action != 'create') {
+            $scope.reports                  = $scope.getReports($routeParams.sid, $routeParams.tname);
+        }
         /**** TOKENS ***/
         $scope.tokensForm = {};
 
