@@ -16,7 +16,7 @@
     <div class="row clearfix">
         <div class="col-md-12 column">
             <h3>
-                {{ test.name }}
+                {{ test.name }} {{ action }}
             </h3>
         </div>
     </div>
@@ -56,7 +56,7 @@
                             </li>
                         </ul>
                     </accordion-group>
-                    <accordion-group ng-click="showHideBlocks('testTokensBlock')"  class="tokens-admin">
+                    <accordion-group ng-click="showHideBlocks('testTokensBlock')"  class="tokens-admin"  ng-if="action != 'create'">
                         <accordion-heading>
                             Tokens
                         </accordion-heading>
@@ -74,7 +74,7 @@
                         </accordion-heading>
                         <p>Run your test [help]</p>
                     </accordion-group>
-                    <accordion-group ng-click="showHideBlocks('cloneBlock')" class="clone-test">
+                    <accordion-group ng-click="showHideBlocks('cloneBlock')" class="clone-test"  ng-if="action != 'create'">
                         <accordion-heading>
                             Clone Options
                         </accordion-heading>
