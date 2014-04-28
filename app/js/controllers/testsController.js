@@ -3,15 +3,14 @@ var testsController = angular.module('testsController', ['ngSanitize']);
 testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent', 'TokensHelpers', 'BatchServices', 'snapRemote', 'SitesRepo', 'ReportHelpers', 'ReportsServices', 'TestHelpers',
     function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers, tagsPresent, TokensHelpers, BatchServices, snapRemote, SitesRepo, ReportHelpers, ReportsServices, TestHelpers){
 
-
-
         /** PULL IN GENERAL SETTINGS **/
         $scope.action = $routeParams.action;
         $scope.settingsForm = {};
         $scope.settingsForm.browserChosenBatch = [];
-        $scope.blocks = {}
+        $scope.blocks = {};
         $scope.blocks.testDetailsBlock = true;
-        $scope.groups = {}
+        $scope.groups = {};
+        $scope.feature_name = 'Loading Test...';
 
         SitesSettings.query({sid: $routeParams.sid}, function(data){
             $scope.settings = data.data;
@@ -31,6 +30,8 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                }
             });
         });
+
+
         /** END PULL IN GENERAL SETTINGS **/
 
         /** SETUP PAGE **/
@@ -42,7 +43,6 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.closeRightSidebar = function() {
             snapRemote.close();
         }
-
 
         /** PARTIALS **/
         $scope.reports_test_page            = { name: 'reports', url: 'templates/reports/reports_test_page.html'}
@@ -93,11 +93,12 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
 
         /** Edit and View Mode **/
         if($scope.action != 'create') {
-            $scope.tests = TestsServices.get({sid: $routeParams.sid, tname: $routeParams.tname}, function(data) {
+            TestsServices.get({sid: $routeParams.sid, tname: $routeParams.tname}, function(data) {
                 $scope.test = data;
                 $scope.tokens = data.tokens;
                 $scope.test_content = data.content;
                 $scope.test_html = data.content_html;
+                $scope.feature_name = $scope.test.name; //TODO watch the test_content to get the feature
             });
         } else {
         /** New Mode **/
@@ -107,7 +108,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                 name_dashed: 'test_new_feature',
                 name: "New Test",
             });
-
+            $scope.feature_name = "New Test"; //TODO watch the test_content to get the feature
             $scope.tokens ={};
             $scope.test_content = '';
             $scope.test_html = '';
@@ -115,11 +116,11 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
             $scope.$watch('settings', function(){
                 if($scope.settings != undefined) {
                     $scope.default_tag = $scope.settings.defaults.default_tag;
-                    console.log($scope.settings);
                     $scope.test_content = $scope.default_tag + "\nFeature: Your Test Feature\n  Scenario: Test Here\n    Given I am on \"/\"\n    Then I should see \"some text\"";
                 }
             })
         }
+
 
         /** REPORTS **/
         $scope.getReports       = ReportHelpers.getReports;
@@ -190,16 +191,22 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         /*** PULL IN SITE INFO ***/
         SitesServices.get({sid: $routeParams.sid}, function(data) {
             $scope.site = data;
+            var file_path = $scope.test.name_dashed + '/' + $scope.action;
+            if($scope.action == 'create') {
+                file_path = 'create'
+            }
+            //TODO make it watch the Feature name as well
             $scope.breadcrumbs = [
                 {
-                    path: '#/site/' + $scope.site.nid,
+                    path: '#/sites/' + $scope.site.nid,
                     title: $scope.site.title
-                },
-                {
-                    path: '#/site' + $scope.site.nid + '/' + $scope.test.name_dashed,
-                    title: $scope.test.name
                 }
             ];
+        });
+
+        $scope.featureName = TestHelpers.featureName;
+        $scope.$watch('test_content', function(){
+            $scope.featureName($scope.test_content, $scope);
         });
 
         $scope.syncRepo = function() {
