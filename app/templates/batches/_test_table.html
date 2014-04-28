@@ -1,0 +1,51 @@
+<div class="panel-body">
+    <form name="batchCreate" ng-submit="createBatchJob()">
+
+        <div class="form-group">
+            <label>Name this batch test</label>
+            <input type="text" ng-model="batch.name" placeholder="Batch Job Name" class="form-control" required="required">
+        </div>
+        <div class="form-group">
+            <label>Choose Relavant Tags</label>
+
+        </div>
+        <div class="col-xs-2">
+            <select ng-model="passFailShow" id="pass_fail_filter">
+                <option value="">all</option>
+                <option value="1">passing</option>
+                <option value="0">failing</option>
+                <option value="3">never run</option>
+            </select>
+        </div>
+        <div class="col-xs-8">
+            <input class="form-control" type="text" ng-model="search" placeholder="search tests">
+        </div>
+        <div class="clearfix">
+            {{ tagsChosen }}
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>Choose</th>
+                    <th><a href="" ng-click="sortOrder('status')">&nbsp;State<i class="glyphicon" ng-class="selectedCls('status')"></i></a></th>
+                    <th><a href="" ng-click="sortOrder('name')">&nbsp;Test<i class="glyphicon" ng-class="selectedCls('name')"></i></a></th>
+                    <th><a href="" ng-click="sortOrder('tags')">&nbsp;Tags<i class="glyphicon" ng-class="selectedCls('tags')"></i></a></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="test in $parent.site.testFiles | filter:{status:passFailShow} | filter:tagsChosen | filter:search | orderBy:sort:reverse" ng-class="{danger: test.status == 0}">
+                    <td>
+                        <input type="checkbox" ng-model="chosenOne" ng-change="chosenTests(test.name_dashed)">
+                    </td>
+                    <td ng-bind-html="test.status | passFailFilter">
+                    </td>
+                    <td>{{ test.name }}
+                    </td>
+                    <td><span ng-repeat="tag in test.tags"> {{tag}} </span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+    <div class="help-block">Showing latest test results: <i class="glyphicon glyphicon-exclamation-sign"></i>Never Run | <i class="glyphicon glyphicon-thumbs-down"></i>Fail | <i class="glyphicon glyphicon-thumbs-up"></i>Pass</div>
+    </div>
+</div>

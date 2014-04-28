@@ -14,6 +14,8 @@ var app = angular.module('behatEditor', [
     'ui.ace',
     'ngSanitize',
     'ui.bootstrap',
+    'decipher.tags',
+    'ui.bootstrap.typeahead',
     'sitesServices',
     'reportsServices',
     'testsServices',
@@ -834,8 +836,8 @@ app.config(['$routeProvider',
                 templateUrl:  path + 'templates/batches/batches.html',
                 controller:  'BatchesController'
             }).
-            when('/sites/:sid/batches/new', {
-                templateUrl:  path + 'templates/batches/batch-create.html',
+            when('/sites/:sid/batches/:action', {
+                templateUrl:  path + 'templates/batches/batches.html',
                 controller:  'BatchesController'
             }).
             when('/sites/:sid/batches/:bid', {

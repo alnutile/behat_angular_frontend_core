@@ -25,14 +25,3 @@ Feature: Batch Interface
     Then I should not see "102"
 
 
-#  Scenario: Creating a new batch
-#    Given I am on "/sites/2/batches/create"
-#    And I wait
-#    Then I should see "Create new batch test"
-#    And I should see "Name this batch test"
-#    And I fill in "name" with "Test Batch Create"
-#    Then I should not see "test1_feature"
-#    And I fill in "choose_tag" with "@example"
-#    Then I should see "test1_feature"
-
-

@@ -1,0 +1,89 @@
+<div class="col-md-8 column">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th><a href="" ng-click="sortOrder('status')">&nbsp;Pass/Fail<i class="glyphicon" ng-class="selectedCls('status')"></i></a></th>
+            <th><a href="" ng-click="sortOrder('name')">&nbsp;Name<i class="glyphicon" ng-class="selectedCls('name')"></i></a></th>
+            <th><a href="" ng-click="sortOrder('tags')">&nbsp;Tags<i class="glyphicon" ng-class="selectedCls('tags')"></i></a></th>
+            <th>View</th>
+            <th>Run</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="batch in batches | filter:{status:passFailShow} | filter:filtered.tagged | filter:search | orderBy:sort:reverse" ng-class="{danger: batch.status == 0}">
+            <td ng-bind-html="batch.status | passFailFilter">
+            </td>
+            <td>{{ batch.name }}</td>
+            <td>
+                <span ng-repeat="tag in batch.tags"> {{tag}} </span>
+            </td>
+            <td>
+                <a ng-href="#/sites/{{ site.nid }}/batches/{{batch.bid}}/view">view</a>
+            </td>
+            <td>
+                <a ng-href="#/sites/{{ site.nid }}/batches/{{batch.bid}}/edit">edit</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-md-4 column">
+    <!-- start filter by search -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Search
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-xs-8">
+                <input name="search" class="form-control" type="text" ng-model="$parent.search" placeholder="search batches">
+            </div>
+        </div>
+    </div>
+    <!-- end filter by search -->
+
+    <!-- start filter by tags -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Filter Batches by Tag
+            </h3>
+        </div>
+        <div class="panel-body">
+            <select name="tagged" ng-model="filtered.tagged" ng-options="tag as tag for tag in tags_filter">
+                <option value="">-tag filter-</option>
+            </select>
+            <div>
+                <div class="panel-body">
+                    <ul>
+                        <li ng-repeat="tag in tags_filter"><a ng-click="setTag(tag, this)" href>{{ tag }}</a></li>
+                        <li><a ng-click="clearTag(this)" href>clear filter</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end filter by tags -->
+
+    <!-- start filter by status -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Filter Batches by Status
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-xs-2">
+                <select ng-model="$parent.passFailShow" id="pass_fail_filter">
+                    <option value="">all</option>
+                    <option value="1">passing</option>
+                    <option value="0">failing</option>
+                    <option value="3">never run</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <!-- end filter by status -->
+</div>
