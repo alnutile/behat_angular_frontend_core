@@ -5,7 +5,17 @@
 
     <div class="row clearfix">
         <div class="col-md-6">
-            <div ng-include="bc.url"></div>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="#">Dashboard</a> <span class="divider">/</span>
+                </li>
+                <li  ng-repeat="breadcrumb in breadcrumbs">
+                    <a href="{{ breadcrumb.path }}">{{ breadcrumb.title }} </a> <span class="divider">/</span>
+                </li>
+                <li>
+                    {{ feature_name }}
+                </li>
+            </ul>
         </div>
         <div class="pull-right">
                 <button type="button" class="btn btn-danger" ng-click="saveTest(test_content)" ng-switch-when="edit">save test</button>
@@ -16,7 +26,7 @@
     <div class="row clearfix">
         <div class="col-md-12 column">
             <h3>
-                {{ test.name }} {{ action }}
+                {{ feature_name }}
             </h3>
         </div>
     </div>
