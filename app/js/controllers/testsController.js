@@ -12,6 +12,8 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.groups = {};
         $scope.feature_name = 'Loading Test...';
 
+        //TODO could this be just a subset of data at the site level
+        // yes it could :(
         SitesSettings.query({sid: $routeParams.sid}, function(data){
             $scope.settings = data.data;
             $scope.browser_options = [];
@@ -119,7 +121,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                     $scope.test_content = $scope.default_tag + "\nFeature: Your Test Feature\n  Scenario: Test Here\n    Given I am on \"/\"\n    Then I should see \"some text\"";
                 }
             })
-        }
+        };
 
 
         /** REPORTS **/

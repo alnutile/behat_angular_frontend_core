@@ -37,6 +37,15 @@ app_helpers.factory('AppHelpers', ['$rootScope',
             },
             clearTag: function(scope) {
                 scope.filtered.tagged = '';
+            },
+            showHideBlocks: function(block, scope) {
+                angular.forEach(scope.blocks, function(v, k){
+                    if ( k == block ) {
+                        scope.blocks[k] = true;
+                    } else {
+                        scope.blocks[k] = false;
+                    }
+                });
             }
         }
     }]);

@@ -1,0 +1,34 @@
+<div class="col-md-2 column">
+    <span ng-if="action == 'new' || action == 'edit'">
+        <accordion close-others="true">
+            <accordion-group heading="Choose Tests" is-open="true" ng-click="showHideBlocks('chooseSitesBlock', this)">
+                <p>Choose tests from this Site to include in this new tab [help]</p>
+            </accordion-group>
+            <accordion-group ng-click="showHideBlocks('settingsBlock', this)"  class="tokens-admin">
+                <accordion-heading>
+                    Batch Settings
+                </accordion-heading>
+                    <p>Choose your batch settings</p>
+            </accordion-group>
+            <accordion-group ng-click="showHideBlocks('testResultsBlock', this)" ng-if="action != 'new'">
+                <accordion-heading>
+                    Results
+                </accordion-heading>
+                <p>Search and View Results</p>
+            </accordion-group>
+        </accordion>
+    </span>
+</div>
+<div class="col-md-8 column">
+    <div ng-model="blocks.chooseSitesBlock" ng-init="blocks.chooseSitesBlock=true" ng-show="blocks.chooseSitesBlock">
+
+        <ng-include src="tests_table_partial.url"></ng-include>
+
+    </div>
+    <div ng-model="blocks.settingsBlock" ng-init="blocks.settingsBlock=false" ng-show="blocks.settingsBlock">
+        <ng-include src="batch_settings_partial.url"></ng-include>
+    </div>
+    <div ng-model="blocks.testResultsBlock" ng-init="blocks.testResultsBlock=false" ng-show="blocks.testResultsBlock">
+        Results block here (IF NOT NEW)
+    </div>
+</div>

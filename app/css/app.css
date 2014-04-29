@@ -62,3 +62,53 @@ div.top {
 accordion .panel-heading {
     cursor: pointer;
 }
+
+.tagarea {
+    height: 20px;
+    margin-left: -40px;
+    margin-bottom: 30px;
+}
+
+.tagarea .tag_wrapper {
+    height: 30px;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 23px;
+    margin-top: 10px;
+    width: 400px;
+}
+
+.tagarea .container-fluid {
+    display: block;
+    float: left;
+    margin-top: 7px;
+}
+
+.decipher-tags-taglist {
+    display: block;
+    float: left;
+}
+
+.decipher-tags {
+    min-height: 34px;
+    border: 1px solid #ccc;
+    margin: 0px 10px;
+    padding: 0px 5px 5px 5px;
+}
+
+input.decipher-tags-input {
+    border: 1px solid #dcdcdc;
+}
+
+.tag-label {
+    padding: 20px;
+}
+
+.end-info {
+    margin-left: 0px;
+}
+
+div.row.tags {
+    margin-left: 18px;
+    margin-top: 10px;
+}
