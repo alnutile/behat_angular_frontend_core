@@ -9,80 +9,81 @@
     </ul>
 </div>
 
+<fieldset ng-disabled="!automate" class="automated">
+    <legend>Automation</legend>
+    <div class="form-group">
 
-<div class="form-group">
-    <h3>Automation</h3>
-    <p ng-if="!automate">
-        <strong>
-            (require @scheduled tag to be selected)
-        </strong>
-    </p>
+        <p ng-if="!automate">
+            <strong>
+                (require @scheduled tag to be selected)
+            </strong>
+        </p>
 
-    <label>Run this test</label>
-    <select
-            ng-options="range as range.name for range in batch_run_range"
-            ng-model="batchRunRangeSelected"
-            ng-disabled="!automate">
-    </select>
+        <label>Run this test</label>
+        <select
+                ng-options="range as range.name for range in batch_run_range"
+                ng-model="batchRunRangeSelected"
+                ng-disabled="!automate">
+        </select>
 
-    <label>Repeat On</label>
-    <ul class="list-inline">
-        <li ng-repeat="t in batch_run_days">
-            <label>{{t}}
-                <input type="checkbox"
-                       ng-model="chosenBatchRunDaysData"
-                       ng-change="choseBatchRunDays(t)"
-                       ng-disabled="!automate">
-            </label>
-        </li>
-    </ul>
+        <label>Repeat On</label>
+        <ul class="list-inline">
+            <li ng-repeat="t in batch_run_days">
+                <label>{{t}}
+                    <input type="checkbox"
+                           ng-model="chosenBatchRunDaysData"
+                           ng-change="choseBatchRunDays(t)"
+                           ng-disabled="!automate">
+                </label>
+            </li>
+        </ul>
 
-    <div class="row">
-        <div class="col-md-6">
-            <label>Start On</label>
-            <p class="input-group">
-                <input type="text" class="form-control"
-                       ng-disabled="!automate"
-                       datepicker-popup="{{format}}"
-                       ng-model="batch_start_time"
-                       is-open="cal.opened"
-                       min="minDate"
-                       datepicker-options="dateOptions"
-                       date-disabled="disabled(date, mode)"
-                       ng-required="true"
-                       close-text="Close" />
+        <div class="row">
+            <div class="col-md-6">
+                <label>Start On</label>
+                <p class="input-group">
+                    <input type="text" class="form-control"
+                           ng-disabled="!automate"
+                           datepicker-popup="{{format}}"
+                           ng-model="batch_start_time"
+                           is-open="cal.opened"
+                           min="minDate"
+                           datepicker-options="dateOptions"
+                           date-disabled="disabled(date, mode)"
+                           ng-required="true"
+                           close-text="Close" />
                   <span class="input-group-btn">
                     <button ng-disabled="!automate" class="btn btn-default" ng-click="$parent.openCal($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                   </span>
-            </p>
+                </p>
+            </div>
         </div>
     </div>
-</div>
-<div class="row end-info">
-    <h4>End</h4>
+    <div class="row end-info">
+        <h4>End</h4>
         <div class="radio">
             <label>
-                <input type="radio" ng-model="batch_end" ng-value="batch_end_never">
+                <input type="radio" ng-model="batch_end" ng-value="batch_end_never" ng-disabled="!automate">
                 Never
             </label>
         </div>
         <div class="radio">
             <label>
-                <input type="radio" ng-model="batch_end" ng-value="batch_end_occurrence">
+                <input type="radio" ng-model="batch_end" ng-value="batch_end_occurrence" ng-disabled="!automate">
                 After
             </label>
-            <input min=1 type="number" ng-model="end.batch_end_occurrence_value" ng-change="updateEnd()">
+            <input min=1 type="number" ng-model="end.batch_end_occurrence_value" ng-change="updateEnd()" ng-disabled="!automate">
             occurrences
         </div>
         <div class="radio">
 
             <p class="input-group">
                 <label>
-                    <input type="radio" ng-model="batch_end" ng-value="batch_end_on">
+                    <input type="radio" ng-model="batch_end" ng-value="batch_end_on" ng-disabled="!automate">
                     On
                 </label> &nbsp;
                 <input type="text"
-
+                       ng-disabled="!automate"
                        datepicker-popup="{{format}}"
                        ng-model="end_on.date"
                        ng-change="updateEndOnDate()"
@@ -93,7 +94,8 @@
                        close-text="Close" />
             </p>
         </div>
-</div>
+    </div>
+</fieldset>
 
 <h4>Browser to run these on [help]</h4>
 <ng-include src="'templates/shared/settings_browser.html'"></ng-include>

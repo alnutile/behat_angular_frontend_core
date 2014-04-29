@@ -112,3 +112,14 @@ div.row.tags {
     margin-left: 18px;
     margin-top: 10px;
 }
+
+.automated {
+    border: 1px solid #C7C7D1;
+    padding: 10px;
+}
+
+.automated legend {
+    width:inherit; /* Or auto */
+    padding:0 10px; /* To give a bit of padding on the left and right */
+    border-bottom:none;
+}
