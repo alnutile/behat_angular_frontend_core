@@ -18,7 +18,7 @@ angular.module("templates/tags.html", []).run(["$templateCache", function($templ
     "           class=\"decipher-tags-input\"/>\n" +
     "    <!-- may want to fiddle with limitTo here, but it was inhibiting my results\n" +
     "    so perhaps there is another way -->\n" +
-    "    <input ng-if=\"srcTags.length\"\n" +
+    "    <input placeholder='type tag with @' ng-if=\"srcTags.length\"\n" +
     "           type=\"text\"\n" +
     "           data-ng-model=\"inputTag\"\n" +
     "           class=\"decipher-tags-input\"\n" +
@@ -42,7 +42,7 @@ angular.module("templates/tag.html", []).run(["$templateCache", function($templa
   $templateCache.put("templates/tag.html",
     "<span class=\"decipher-tags-tag\"\n" +
     "      data-ng-class=\"getClasses(tag)\">{{tag.name}}\n" +
-    "      <i class=\"icon-remove\"\n" +
+    "      <i class=\"glyphicon glyphicon-remove\"\n" +
     "         data-ng-click=\"remove(tag)\">\n" +
     "      </i>\n" +
     "</span>\n" +

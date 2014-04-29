@@ -1,0 +1,110 @@
+<div class="form-group">
+    <h3>Select Batch Tags [help]</h3>
+    <ul class="list-inline">
+        <li ng-repeat="t in batch_tags_to_run">
+            <label>{{t}}
+                <input type="checkbox" ng-model="batchTagsToRun" ng-change="chosenBatchTagsToRun(t)">
+            </label>
+        </li>
+    </ul>
+</div>
+
+
+<div class="form-group">
+    <h3>Automation</h3>
+    <p ng-if="!automate">
+        <strong>
+            (require @scheduled tag to be selected)
+        </strong>
+    </p>
+
+    <label>Run this test</label>
+    <select
+            ng-options="range as range.name for range in batch_run_range"
+            ng-model="batchRunRangeSelected"
+            ng-disabled="!automate">
+    </select>
+
+    <label>Repeat On</label>
+    <ul class="list-inline">
+        <li ng-repeat="t in batch_run_days">
+            <label>{{t}}
+                <input type="checkbox"
+                       ng-model="chosenBatchRunDaysData"
+                       ng-change="choseBatchRunDays(t)"
+                       ng-disabled="!automate">
+            </label>
+        </li>
+    </ul>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label>Start On</label>
+            <p class="input-group">
+                <input type="text" class="form-control"
+                       ng-disabled="!automate"
+                       datepicker-popup="{{format}}"
+                       ng-model="batch_start_time"
+                       is-open="cal.opened"
+                       min="minDate"
+                       datepicker-options="dateOptions"
+                       date-disabled="disabled(date, mode)"
+                       ng-required="true"
+                       close-text="Close" />
+                  <span class="input-group-btn">
+                    <button ng-disabled="!automate" class="btn btn-default" ng-click="$parent.openCal($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="row end-info">
+    <h4>End</h4>
+        <div class="radio">
+            <label>
+                <input type="radio" ng-model="batch_end" ng-value="batch_end_never">
+                Never
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" ng-model="batch_end" ng-value="batch_end_occurrence">
+                After
+            </label>
+            <input min=1 type="number" ng-model="end.batch_end_occurrence_value" ng-change="updateEnd()">
+            occurrences
+        </div>
+        <div class="radio">
+
+            <p class="input-group">
+                <label>
+                    <input type="radio" ng-model="batch_end" ng-value="batch_end_on">
+                    On
+                </label> &nbsp;
+                <input type="text"
+
+                       datepicker-popup="{{format}}"
+                       ng-model="end_on.date"
+                       ng-change="updateEndOnDate()"
+                       min="minDate"
+                       datepicker-options="dateOptions"
+                       date-disabled="disabled(date, mode)"
+                       ng-required="true"
+                       close-text="Close" />
+            </p>
+        </div>
+</div>
+
+<h4>Browser to run these on [help]</h4>
+<ng-include src="'templates/shared/settings_browser.html'"></ng-include>
+
+<div class="form-group">
+    <h4>Choose environment(s)</h4>
+    <ul class="list-inline">
+        <li ng-repeat="t in settings.urls">
+            <label>{{t.name}}
+                <input type="checkbox" ng-model="envToRun" ng-change="chosenEnvToRun(t)">
+            </label>
+        </li>
+    </ul>
+</div>

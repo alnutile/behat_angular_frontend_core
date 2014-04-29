@@ -8,7 +8,8 @@
                 <div ng-include="bc.url"></div>
             </div>
             <div class="pull-right">
-                <button type="button" class="btn btn-danger" ng-click="saveBatch(test_content)" ng-if="action == 'edit'">save test</button>
+                <button type="button" class="btn btn-danger" ng-click="saveBatch(test_content)" ng-if="action == 'edit'">save</button>
+                <button type="button" class="btn btn-danger" ng-click="saveBatch(test_content)" ng-if="action == 'edit'">save and exit</button>
                 <a type="button" class="btn btn-danger" ng-href="#/sites/{{site.nid}}/batches/new" ng-if="action == 'index'">Create new batch test</a>
                 <button type="button" class="btn btn-danger" ng-click="createBatch()" ng-if="action == 'new'">save new batch job</button>
             </div>
@@ -21,47 +22,10 @@
             </div>
         </div>
         <div class="row clearfix">
-            <tags
-                    data-options="{addable: true, classes: {white: 'black', red: 'red'}}"
-                    data-src="s for s in sourceTags"
-                    data-model="tagsChosen"></tags>
 
             <ng-include src="batch_index_partial.url" ng-if="action == 'index'"></ng-include>
 
-            <div class="col-md-2 column">
-                <span ng-if="action == 'new' || action == 'edit'">
-                    <accordion close-others="true">
-                        <accordion-group heading="Choose Tests" is-open="true" ng-click="showHideBlocks('chooseSitesBlock', this)">
-                            <p>Choose tests from this Site to include in this new tab [help]</p>
-                        </accordion-group>
-                        <accordion-group ng-click="showHideBlocks('settingsBlock', this)"  class="tokens-admin">
-                            <accordion-heading>
-                                Batch Settings
-                            </accordion-heading>
-                            <p>Choose what browser, tags etc to use for this new batch jobs [help]</p>
-                        </accordion-group>
-                        <accordion-group ng-click="showHideBlocks('testResultsBlock', this)">
-                            <accordion-heading>
-                                Results
-                            </accordion-heading>
-                            <p>Search and View Results</p>
-                        </accordion-group>
-                    </accordion>
-                </span>
-            </div>
-            <div class="col-md-8 column">
-                <div ng-model="blocks.chooseSitesBlock" ng-init="blocks.chooseSitesBlock=true" ng-show="blocks.chooseSitesBlock">
-
-                    <ng-include src="tests_table_partial.url"></ng-include>
-
-                </div>
-                <div ng-model="blocks.settingsBlock" ng-init="blocks.settingsBlock=false" ng-show="blocks.settingsBlock">
-                    Settings block here
-                </div>
-                <div ng-model="blocks.testResultsBlock" ng-init="blocks.testResultsBlock=false" ng-show="blocks.testResultsBlock">
-                    Results block here (IF NOT NEW)
-                </div>
-            </div>
+            <ng-include src="batch_create_edit_partial.url" ng-if="action != 'index'"></ng-include>
 
         </div>
     </div>

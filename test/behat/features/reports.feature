@@ -56,6 +56,7 @@ Feature: Reports Testing
 
   Scenario: Sites own report
     Given I am on "/sites/2"
+		And I wait
     And I follow "reporting"
     And I wait
     Then I should not see "test331.feature"

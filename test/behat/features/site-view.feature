@@ -8,6 +8,7 @@ Feature: Site View
     Then I should see "test2.feature"
     Then I should see "test1.feature"
     And I wait
+    And I wait
     And I follow "Create New Test"
     And I wait
     And I wait
@@ -18,7 +19,7 @@ Feature: Site View
     Then I should see "test2.feature"
     And I follow "site-view-test2_feature"
     And I wait
-    Then I should see "test2.feature"
+    Then I should see "Test WikiPedia"
     Then I should see "Feature: Test WikiPedia"
 
   Scenario: Should be able to edit a test
