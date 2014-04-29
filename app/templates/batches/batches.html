@@ -9,7 +9,8 @@
             </div>
             <div class="pull-right">
                 <button type="button" class="btn btn-danger" ng-click="saveBatch(test_content)" ng-if="action == 'edit'">save</button>
-                <button type="button" class="btn btn-danger" ng-click="saveBatch(test_content)" ng-if="action == 'edit'">save and exit</button>
+                <a type="button" class="btn btn-success"  ng-if="action == 'view'" ng-href="/sites/{{site.nid}}/batches/{{batch.bid}}/edit">edit</a>
+                <button type="button" class="btn btn-success" ng-click="saveBatch(test_content)" ng-if="action == 'edit'">save and exit</button>
                 <a type="button" class="btn btn-danger" ng-href="#/sites/{{site.nid}}/batches/new" ng-if="action == 'index'">Create new batch test</a>
                 <button type="button" class="btn btn-danger" ng-click="createBatch()" ng-if="action == 'new'">save new batch job</button>
             </div>
@@ -19,6 +20,7 @@
                 <h3>
                     {{ page_title }}
                 </h3>
+                {{ batch }}
             </div>
         </div>
         <div class="row clearfix">

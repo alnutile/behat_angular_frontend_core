@@ -6,6 +6,9 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
         $scope.action = $routeParams.action || 'index';
         $scope.tagsChosen = [];
         $scope.batchTagsToRun = [];
+        $scope.chosenEnvToRunData = [];
+
+        $scope.chosen = [];
 
         /** HELPERS **/
         $scope.filtered = {};
@@ -47,10 +50,10 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
 
         if($scope.action == 'edit') {
             $scope.nav_message = "Mocked data. You can click on <b>any form item</b> as well as <b>run</b> and <b>any left side nav</b> <b>save</b> as well as use <b>Ace Editor</b> you can <b>Clone</b> to site 3"
-        } else if($scope.action == 'create') {
-            $scope.nav_message = "Mocked data. You can do the normal create stuff and Save as well which will redirect you to edit."
+        } else if($scope.action == 'new') {
+            $scope.nav_message = "Mocked data. You can filter, save and set as if really going to set."
         } else {
-            $scope.nav_message = "Mocked data. You can click on <b>any form item</b> as well as <b>run</b> and Clone"
+            $scope.nav_message = "Mocked data. You can click Create or View/Edit on Batch 102 as well as all the filters."
         }
         /** END PAGE SETUP **/
 
@@ -116,11 +119,47 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
                         title: $scope.site.title,
                         path:  "#/sites/" + $scope.site.nid
                     },
+
+                    {
+                        title: "Batches",
+                        path: "#/sites/" + $scope.site.nid + '/batches'
+                    },
                     {
                         title: "Batch New",
                         path: "#/sites/" + $scope.site.nid + '/batches/new'
                     }
                 ]
+            });
+        } else if ($scope.action == 'view' || $scope.action == 'edit') {
+            $scope.tagsChosen  = [];
+            $scope.sourceTags = [];
+            $scope.foo = [];
+            $scope.batch = {};
+            $scope.batch.tags = [];
+            BatchServices.get({sid: $routeParams.sid, bid: $routeParams.bid}, function(data) {
+                $scope.site = data.data.site;
+                $scope.batch = data.data.batch;
+                $scope.page_title = "Batch " + $scope.batch.name;
+
+                $scope.sourceTags  = $scope.tagsFilter($scope.site.testFiles);
+                $scope.breadcrumbs = [
+                    {
+                        title: $scope.site.title,
+                        path:  "#/sites/" + $scope.site.nid
+                    },
+
+                    {
+                        title: "Batches",
+                        path: "#/sites/" + $scope.site.nid + '/batches'
+                    },
+                    {
+                        title: $scope.batch.name,
+                        path: "#/sites/" + $scope.site.nid + '/batches/' + $routeParams.bid
+                    }
+                ];
+                angular.forEach($scope.batch.tests, function(v, i){
+                   console.log(v);
+                });
             });
         } else {
             $scope.action = 'index';
@@ -146,6 +185,8 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
 
         $scope.createBatch = function() {
             console.log($scope);
+            Noty("Batch Created", 'success');
+            $location.path("/sites/" + $routeParams.sid + "/batches");
         }
 
         $scope.setTagged = function() {
@@ -156,8 +197,9 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
                 }
         }
 
-        $scope.chosen = [];
+
         $scope.chosenTests = function(test_name) {
+            console.log(test_name);
             if($scope.chosen.indexOf(test_name) == -1) {
                 $scope.chosen.push(test_name);
             } else {
@@ -212,9 +254,7 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
             }
         };
 
-        $scope.chosenEnvToRunData = [];
         $scope.chosenEnvToRun = function(env) {
-            console.log(env);
             if($scope.chosenEnvToRunData.indexOf(env) == -1) {
                 $scope.chosenEnvToRunData.push(env);
             } else {
@@ -222,4 +262,8 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
             }
             console.log($scope.chosenEnvToRunData);
         };
+
+        $scope.setStartingValueChosenTests = function(test_name) {
+            console.log(test_name);
+        }
     }]);

@@ -1,5 +1,8 @@
+<h3>Batch Settings</h3>
+
+        <hr>
 <div class="form-group">
-    <h3>Select Batch Tags [help]</h3>
+    <h4>Select Batch Tags [help]</h4>
     <ul class="list-inline">
         <li ng-repeat="t in batch_tags_to_run">
             <label>{{t}}
@@ -30,7 +33,7 @@
         <ul class="list-inline">
             <li ng-repeat="t in batch_run_days">
                 <label>{{t}}
-                    <input type="checkbox"
+                    <input type="checkbox" id="{{t}}"
                            ng-model="chosenBatchRunDaysData"
                            ng-change="choseBatchRunDays(t)"
                            ng-disabled="!automate">

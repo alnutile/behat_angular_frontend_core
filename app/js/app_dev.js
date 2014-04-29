@@ -709,6 +709,33 @@ app.run(function($httpBackend, editableOptions) {
         "settings": site_settings_default
     };
 
+    var batch_102 = {
+        "site": site,
+        "batch": {
+            "bid": 102,
+            "status": 0,
+            "name": "Some name here 102",
+            "tags": ['@example', '@javascript'],
+            "tests": [
+                test3_feature,
+                test2_feature
+            ],
+            "batch_tags": [
+                '@smoke',
+                '@batch',
+                '@scheduled'
+            ],
+            "batch_run_range": "Weekly",
+            "batch_run_days": ['M', 'T', 'W'],
+            "batch_start_time": "29-April-2014",
+            "batch_end": {
+                type: "never",
+                value: 0
+            }
+        }
+
+    }
+
     var batch_index_site_level = {
         "site": site,
         "settings": site_settings_default,
@@ -803,6 +830,10 @@ app.run(function($httpBackend, editableOptions) {
         { status: 'success', message: "Batches New", data: batch_new }
     );
 
+    $httpBackend.whenGET('/behat_editor_services_v2/sites/2/batches/102').respond(200,
+        { status: 'success', message: "Batches 102", data: batch_102 }
+    );
+
     //Templates
     $httpBackend.whenGET(/^templates\//).passThrough();
 
@@ -841,7 +872,7 @@ app.config(['$routeProvider',
                 templateUrl:  path + 'templates/batches/batches.html',
                 controller:  'BatchesController'
             }).
-            when('/sites/:sid/batches/:bid', {
+            when('/sites/:sid/batches/:bid/:action', {
                 templateUrl:  path + 'templates/batches/batches.html',
                 controller:  'BatchesController'
             }).

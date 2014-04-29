@@ -3,7 +3,7 @@
 
         <div class="form-group">
             <label>Name this batch test</label>
-            <input type="text" ng-model="batch.name" placeholder="Batch Job Name" class="form-control" required="required">
+            <input id="name" type="text" ng-model="batch.name" placeholder="Batch Job Name" class="form-control" required="required">
         </div>
         <div class="form-group">
             <label>Filters</label>
@@ -18,7 +18,7 @@
                 </select>
             </div>
             <div class="col-xs-8">
-                <input class="form-control" type="text" ng-model="search" placeholder="search tests">
+                <input class="form-control" type="text" ng-model="search" id="batch-search" placeholder="search tests">
             </div>
         </div>
         <div class="row tags">
@@ -30,7 +30,7 @@
                     <tags
                         data-options="{addable: true, classes: {white: 'black', red: 'red'}}"
                         data-src="s for s in sourceTags"
-                        data-model="tagsChosen" class="tag_wrapper"></tags>
+                        data-model="tagsChosen" class="tag_wrapper" id="batch-tag-filter"></tags>
             </div>
             <div class=" col-lg-6">&nbsp;
             </div>
@@ -48,16 +48,19 @@
                 <tbody>
                 <tr ng-repeat="test in $parent.site.testFiles | filter:{status:passFailShow} | tagged:this | filter:search | orderBy:sort:reverse" ng-class="{danger: test.status == 0}">
                     <td>
-                        <input type="checkbox" ng-model="chosenOne" ng-change="chosenTests(test.name_dashed)">
+                        <input type="checkbox"
+                               ng-model="chosenOne"
+                               ng-change="chosenTests(test.name_dashed)">
                     </td>
                     <td ng-bind-html="test.status | passFailFilter">
                     </td>
-                    <td>{{ test.name }}
+                    <td>{{ $parent.tests_existing }}
                     </td>
                     <td><span ng-repeat="tag in test.tags"> {{tag}} </span></td>
                 </tr>
                 </tbody>
             </table>
+            {{$parent.tests_existing}}
         </div>
     </form>
     <div class="help-block">Showing latest test results: <i class="glyphicon glyphicon-exclamation-sign"></i>Never Run | <i class="glyphicon glyphicon-thumbs-down"></i>Fail | <i class="glyphicon glyphicon-thumbs-up"></i>Pass</div>
