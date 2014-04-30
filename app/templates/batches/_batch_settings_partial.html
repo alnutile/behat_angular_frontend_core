@@ -4,14 +4,17 @@
 <div class="form-group">
     <h4>Select Batch Tags [help]</h4>
     <ul class="list-inline">
-        <li ng-repeat="t in batch_tags_to_run">
-            <label>{{t}}
-                <input type="checkbox" ng-model="batchTagsToRun" ng-change="chosenBatchTagsToRun(t)">
+        <li ng-repeat="tag in batch_tags_to_run">
+            <label>{{tag}}
+                <input type="checkbox"
+                       id="{{tag}}"
+                       ng-model="starting_batch_tags_to_run[tag]"
+                       ng-true-value="true"
+                       ng-change="chosenBatchTagsToRun(tag)">
             </label>
         </li>
     </ul>
 </div>
-
 <fieldset ng-disabled="!automate" class="automated">
     <legend>Automation</legend>
     <div class="form-group">
@@ -21,11 +24,10 @@
                 (require @scheduled tag to be selected)
             </strong>
         </p>
-
         <label>Run this test</label>
         <select
-                ng-options="range as range.name for range in batch_run_range"
-                ng-model="batchRunRangeSelected"
+                ng-options="range.name as range.name for range in batch_run_range"
+                ng-model="batch.batch_run_range"
                 ng-disabled="!automate">
         </select>
 
@@ -34,7 +36,8 @@
             <li ng-repeat="t in batch_run_days">
                 <label>{{t}}
                     <input type="checkbox" id="{{t}}"
-                           ng-model="chosenBatchRunDaysData"
+                           ng-model="set_batch_run_days_data[t]"
+                           ng-true-value="true"
                            ng-change="choseBatchRunDays(t)"
                            ng-disabled="!automate">
                 </label>
@@ -48,7 +51,7 @@
                     <input type="text" class="form-control"
                            ng-disabled="!automate"
                            datepicker-popup="{{format}}"
-                           ng-model="batch_start_time"
+                           ng-model="batch.batch_start_time"
                            is-open="cal.opened"
                            min="minDate"
                            datepicker-options="dateOptions"
@@ -66,30 +69,44 @@
         <h4>End</h4>
         <div class="radio">
             <label>
-                <input type="radio" ng-model="batch_end" ng-value="batch_end_never" ng-disabled="!automate">
+                <input type="radio"
+                       id="never"
+                       ng-model="batch.batch_end.type"
+                       value="never"
+                       ng-disabled="!automate">
                 Never
             </label>
         </div>
         <div class="radio">
             <label>
-                <input type="radio" ng-model="batch_end" ng-value="batch_end_occurrence" ng-disabled="!automate">
+                <input type="radio"
+                       id="occurrence"
+                       ng-model="batch.batch_end.type"
+                       value="occurrence"
+                       ng-disabled="!automate">
                 After
             </label>
-            <input min=1 type="number" ng-model="end.batch_end_occurrence_value" ng-change="updateEnd()" ng-disabled="!automate">
+            <input min=1 type="number"
+                   ng-model="batch_end_occurrence.value"
+                   ng-change="updateEnd('occurrence')"
+                   ng-disabled="!automate">
             occurrences
         </div>
         <div class="radio">
-
             <p class="input-group">
                 <label>
-                    <input type="radio" ng-model="batch_end" ng-value="batch_end_on" ng-disabled="!automate">
+                    <input type="radio"
+                           id="on"
+                           ng-model="batch.batch_end.type"
+                           value="on"
+                           ng-disabled="!automate">
                     On
                 </label> &nbsp;
                 <input type="text"
                        ng-disabled="!automate"
                        datepicker-popup="{{format}}"
-                       ng-model="end_on.date"
-                       ng-change="updateEndOnDate()"
+                       ng-model="batch_end_on_setting.value"
+                       ng-change="updateEnd('on')"
                        min="minDate"
                        datepicker-options="dateOptions"
                        date-disabled="disabled(date, mode)"
@@ -101,14 +118,29 @@
 </fieldset>
 
 <h4>Browser to run these on [help]</h4>
-<ng-include src="'templates/shared/settings_browser.html'"></ng-include>
+<div class="form-group">
+    <label>Default Browser</label></br>
+    <div class="checkbox"
+         ng-repeat="browser in browser_options">
+        <label>
+            <input type="checkbox"
+                   name="batch_browser"
+                   ng-model="starting_browsers_to_run[browser]"
+                   ng-true-value="true"
+                   ng-click="chosenBrowsersToRun(browser)">{{ browser }}
+        </label>
+    </div>
+</div>
 
 <div class="form-group">
     <h4>Choose environment(s)</h4>
     <ul class="list-inline">
         <li ng-repeat="t in settings.urls">
             <label>{{t.name}}
-                <input type="checkbox" ng-model="envToRun" ng-change="chosenEnvToRun(t)">
+                <input type="checkbox"
+                       ng-model="starting_env_to_run[t.name]"
+                       ng-true-value="true"
+                       ng-change="chosenEnvToRun(t)">
             </label>
         </li>
     </ul>

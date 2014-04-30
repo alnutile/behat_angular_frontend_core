@@ -725,13 +725,18 @@ app.run(function($httpBackend, editableOptions) {
                 '@batch',
                 '@scheduled'
             ],
-            "batch_run_range": "Weekly",
+            "batch_run_range":"Daily",
             "batch_run_days": ['M', 'T', 'W'],
-            "batch_start_time": "29-April-2014",
+            "batch_start_time": "29-May-2014",
             "batch_end": {
-                type: "never",
-                value: 0
-            }
+                type: "occurrence",
+                value: 4
+            },
+            "browsers": ['Firefox 26', 'iPad - 6.1'],
+            "environment": [
+                {"name":"Production","url":"http://google.com","default":"0"},
+                {"name":"Custom 1","url":"http://local.google.com","default":"0"}
+            ]
         }
 
     }
