@@ -9,7 +9,7 @@
             <ng-include src="tokens_to_use.url"></ng-include>
 
             <div class="form-group">
-                <select name="url-run" ng-model="settingsForm.url_to_run" ng-options="url.name + '-' + url.url for url in settings.urls" class="form-control"></select>
+                <select name="url-run" ng-model="settingsForm.url_to_run" ng-options="url.name + ' - ' + url.url for url in settings.urls" class="form-control"></select>
             </div>
             <button type="button" class="btn btn-danger" data-ng-click="runTest()">Run</button>
             <div class="help-block">

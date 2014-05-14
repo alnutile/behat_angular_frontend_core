@@ -453,7 +453,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                     Noty('Could not save the test.', 'error');
                 }
             });
-        }
+        };
     }]);
 testsController.controller('TestNewController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices',
     function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices){
