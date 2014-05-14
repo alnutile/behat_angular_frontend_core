@@ -8,13 +8,18 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
         $scope.tagsChosen = [];
         $scope.batchTagsToRun = [];
         $scope.chosenEnvToRunData = [];
-        $scope.starting_tests = [];
+        $scope.batchFilter = {};
+        $scope.batchFilter.starting_tests = [];
         $scope.starting_batch_tags_to_run = [];
         $scope.set_batch_run_days_data = [];
         $scope.starting_browsers_to_run = [];
         $scope.starting_env_to_run = [];
+        $scope.choose_all = false;
+        $scope.site = {};
+        $scope.site.testFiles = [];
+        $scope.filtered = {};
+        $scope.filtered.filteredTests = [];
 
-        $scope.chosen = [];
 
         /** HELPERS **/
         $scope.filtered             = {};
@@ -114,7 +119,6 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
             $scope.page_title = "Create new batch test";
             BatchServices.get({sid: $routeParams.sid, bid: $routeParams.bid}, function(data) {
                 $scope.site = data.data.site;
-
                 $scope.sourceTags  = $scope.tagsFilter($scope.site.testFiles);
                 $scope.breadcrumbs = [
                     {
@@ -135,7 +139,6 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
         } else if ($scope.action == 'view' || $scope.action == 'edit') {
             //@TODO set this to batch type reports
             $scope.batchReports                  = $scope.getReports($routeParams.sid, $routeParams.bid);
-            console.log($scope.batchReports);
             $scope.tagsChosen  = [];
             $scope.sourceTags = [];
             $scope.foo = [];
@@ -143,6 +146,7 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
             $scope.batch.tags = [];
             BatchServices.get({sid: $routeParams.sid, bid: $routeParams.bid}, function(data) {
                 $scope.site = data.data.site;
+                $scope.availFiles = data.data.site.testFiles;
                 $scope.batch = data.data.batch;
                 $scope.page_title = "Batch " + $scope.batch.name;
                 $scope.sourceTags  = $scope.tagsFilter($scope.site.testFiles);
@@ -161,7 +165,7 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
                         path: "#/sites/" + $scope.site.nid + '/batches/' + $routeParams.bid
                     }
                 ];
-                $scope.setStartingTests($scope.batch);
+                $scope.setStartingTests($scope.batch.tests);
                 $scope.setStartingTags($scope.batch.batch_tags);
                 $scope.setBatchRunDaysData($scope.batch.batch_run_days);
                 $scope.setBatchEndOn($scope.batch.batch_end);
@@ -203,16 +207,6 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
                     console.log("We have a space");
                 }
         }
-
-
-        $scope.chosenTests = function(test_name) {
-            console.log(test_name);
-            if($scope.chosen.indexOf(test_name) == -1) {
-                $scope.chosen.push(test_name);
-            } else {
-                $scope.chosen.splice(test_name, 1);
-            }
-        };
 
 
         /** Date picker **/
@@ -280,8 +274,13 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
         };
 
         $scope.setStartingTests = function(tests) {
-            angular.forEach(tests.tests, function(v, i){
-                $scope.starting_tests[v.name_dashed] = 'true';
+            angular.forEach($scope.site.testFiles, function(v, i){
+                $scope.site.testFiles[i].chosen = "false";
+                angular.forEach(tests, function(chosen, index){
+                    if(chosen.name_dashed == $scope.site.testFiles[i].name_dashed){
+                       $scope.site.testFiles[i].chosen = "true";
+                   }
+                });
             });
         };
 
@@ -372,7 +371,8 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
             // I could think of for now.
             // also $scope.chosenEnvToRunData might need some work to
             // fit back into the model
-
+            // also note $scope.site.testFiles[#].chosen will show if the user
+            //  was making a batch out of this.
         }
 
         $scope.getReport = function(report_id)
@@ -394,4 +394,17 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
             snapRemote.close();
         }
 
+        $scope.checkAll = function() {
+            if($scope.choose_all == false) {
+                $scope.choose_all = true;
+                angular.forEach($scope.filtered.filteredTests, function(v, k) {
+                    $scope.filtered.filteredTests[k].chosen = "true";
+                });
+            } else {
+                angular.forEach($scope.filtered.filteredTests, function(v, k) {
+                    $scope.filtered.filteredTests[k].chosen = "false";
+                });
+                $scope.choose_all = false;
+            }
+        }
     }]);

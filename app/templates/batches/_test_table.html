@@ -35,6 +35,16 @@
             <div class=" col-lg-6">&nbsp;
             </div>
         </div>
+        <div class="row misc">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"
+                           ng-model="choose_all"
+                           ng-true-value="true"
+                           ng-change="checkAll()"> All
+                </label>
+            </div>
+        </div>
         <div class="clearfix">
             <table class="table table-bordered table-hover">
                 <thead>
@@ -46,13 +56,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="test in $parent.site.testFiles | filter:{status:passFailShow} | tagged:this | filter:search | orderBy:sort:reverse" ng-class="{danger: test.status == 0}">
+                <tr ng-repeat="test in ( filtered.filteredTests = (  site.testFiles | filter:{status:passFailShow} | tagged:this | filter:search | orderBy:sort:reverse))" ng-class="{danger: test.status == 0}">
                     <td>
                         <input type="checkbox"
                                id="{{test.name_dashed}}"
-                               ng-model="starting_tests[test.name_dashed]"
+                               ng-model="test.chosen"
                                ng-true-value="true"
-                               ng-change="chosenTests(test.name_dashed)">
+                               ng-false-value="false">
                     </td>
                     <td ng-bind-html="test.status | passFailFilter">
                     </td>
