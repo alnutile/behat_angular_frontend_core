@@ -1,0 +1,46 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Batch Reports
+        </h3>
+    </div>
+    <div class="panel-body">
+
+        <div ng-if="action == 'create'">
+            <alert class="alert alert-info">
+                In create mode you can not Results.
+                Click Save then you will see Results.
+            </alert>
+        </div>
+        <table class="table table-bordered table-hover" ng-if="action != 'create'">
+            <thead>
+                <tr>
+                    <th>Result</th>
+                    <th>Date</th>
+                    <th>By</th>
+                    <th>Browser OS</th>
+                    <th>View Results</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="report in batchReports.data" ng-class="{danger: report.status == 0}">
+                    <td ng-bind-html="report.status | passFailFilter | orderBy:created"></td>
+                    <td>
+                        {{ report.created }}
+                    </td>
+                    <td>
+                        {{ report.user_name}}
+                    </td>
+                    <td>
+                        {{ report.browser }} {{ report.os }}
+                    </td>
+                    <td>
+                        <a href="" ng-click="getReport(report.rid)" id="report-view-{{ report.rid }}">
+                            view
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

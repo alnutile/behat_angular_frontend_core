@@ -3,6 +3,7 @@ var batchesController = angular.module('batchesController', ['ngSanitize']);
 batchesController.controller('BatchesController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent', 'TokensHelpers', 'BatchServices', 'snapRemote', 'SitesRepo', 'ReportHelpers', 'ReportsServices', 'TestHelpers', 'AppHelpers',
     function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers, tagsPresent, TokensHelpers, BatchServices, snapRemote, SitesRepo, ReportHelpers, ReportsServices, TestHelpers, AppHelpers){
 
+
         $scope.action = $routeParams.action || 'index';
         $scope.tagsChosen = [];
         $scope.batchTagsToRun = [];
@@ -16,12 +17,15 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
         $scope.chosen = [];
 
         /** HELPERS **/
-        $scope.filtered = {};
-        $scope.filtered.tagged = '';
-        $scope.tagsFilter = AppHelpers.tagsFilter;
-        $scope.setTag = AppHelpers.setTag;
-        $scope.clearTag = AppHelpers.clearTag;
-        $scope.showHideBlocks = AppHelpers.showHideBlocks;
+        $scope.filtered             = {};
+        $scope.filtered.tagged      = '';
+        $scope.tagsFilter           = AppHelpers.tagsFilter;
+        $scope.setTag               = AppHelpers.setTag;
+        $scope.clearTag             = AppHelpers.clearTag;
+        $scope.showHideBlocks       = AppHelpers.showHideBlocks;
+        $scope.getReports           = ReportHelpers.getBatchReports;
+        $scope.getBatchReport       = ReportHelpers.getBatchReport;
+
 
         /** PARTIALS **/
         $scope.settings_browser             = { name: 'settings_browser', url: 'templates/shared/settings_browser.html'}
@@ -33,6 +37,8 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
         $scope.batch_create_edit_partial    = { name: 'batch_create_edit_partial', url: 'templates/batches/_create_edit_partial.html'}
         $scope.tests_table_partial          = { name: 'tests_table_partial', url: 'templates/batches/_test_table.html'}
         $scope.batch_settings_partial       = { name: 'batch_settings_partial', url: 'templates/batches/_batch_settings_partial.html'}
+        $scope.batch_results_partial        = { name: 'batch_results_partial', url: 'templates/batches/_batch_results_partial.html'}
+        $scope.batch_result_partial         = { name: 'batch_result_partial', url: 'templates/batches/_batch_result_partial.html'}
         /** END PARTIALS **/
 
         /** PAGE SETUP **/
@@ -127,6 +133,9 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
                 ]
             });
         } else if ($scope.action == 'view' || $scope.action == 'edit') {
+            //@TODO set this to batch type reports
+            $scope.batchReports                  = $scope.getReports($routeParams.sid, $routeParams.bid);
+            console.log($scope.batchReports);
             $scope.tagsChosen  = [];
             $scope.sourceTags = [];
             $scope.foo = [];
@@ -136,8 +145,6 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
                 $scope.site = data.data.site;
                 $scope.batch = data.data.batch;
                 $scope.page_title = "Batch " + $scope.batch.name;
-
-
                 $scope.sourceTags  = $scope.tagsFilter($scope.site.testFiles);
                 $scope.breadcrumbs = [
                     {
@@ -302,7 +309,7 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
                 $scope.set_batch_run_days_data[v] = 'true';
             });
         };
-        
+
         /** Batch End Settings **/
         $scope.setBatchEndOn = function(end_on) {
             if(end_on != undefined && end_on.type != undefined) {
@@ -328,29 +335,37 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
             $scope.batch.batch_end.value = value;
         };
 
-        $scope.$watch('batch.batch_end.type', function(){
-            if($scope.batch.batch_end != undefined) {
-                if($scope.batch.batch_end.type == 'on') {
-                    //set to today
-                    $scope.batch.batch_end.value = new Date();
-                    $scope.batch_end_on_setting.value = new Date();
+        if($scope.action == 'edit' || $scope.action == 'create') {
+            $scope.$watch('batch.batch_end.type', function(){
+                if($scope.batch.batch_end != undefined) {
+                    if($scope.batch.batch_end.type == 'on') {
+                        //set to today
+                        $scope.batch.batch_end.value = new Date();
+                        $scope.batch_end_on_setting.value = new Date();
+                    }
+                    if($scope.batch.batch_end.type == 'occurrence') {
+                        //set better default
+                        $scope.batch.batch_end.value = $scope.batch_end_occurrence.value;
+                    }
+                    if($scope.batch.batch_end.type == 'never') {
+                        //set better default
+                        $scope.batch.batch_end.value = 0;
+                    }
                 }
-                if($scope.batch.batch_end.type == 'occurrence') {
-                    //set better default
-                    $scope.batch.batch_end.value = $scope.batch_end_occurrence.value;
-                }
-                if($scope.batch.batch_end.type == 'never') {
-                    //set better default
-                    $scope.batch.batch_end.value = 0;
-                }
-            }
-        });
+            });
+        }
+
         /** END Batch End Settings here **/
 
         $scope.saveBatch = function(test_content, saveAndExit) {
+
             if (saveAndExit == true) {
                 //redirect after save
+                $location.path("/sites/" + $routeParams.sid + "/batches/");
             }
+
+            Noty("Batch updated", 'success');
+
             //Parse the batch_end_on_setting_value data so that
             // I can put it back in the $scope.batch_end_on data
             // the form was a bit hard to mimic so this is the best
@@ -359,4 +374,24 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
             // fit back into the model
 
         }
+
+        $scope.getReport = function(report_id)
+        {
+            $scope.batch_result = {};
+            $scope.batch_result = $scope.getBatchReport($scope.site.nid, $scope.batch.bid, report_id);
+            $scope.batch_result_html = $scope.batch_result.data;
+            $scope.showResult();
+        };
+
+        //@TODO move this into a shared helper
+        $scope.showResult = function() {
+            $scope.side_show = 'batch_result';
+            snapRemote.open('right');
+            Noty("Batch Results", 'success');
+        };
+
+        $scope.closeRightSidebar = function() {
+            snapRemote.close();
+        }
+
     }]);

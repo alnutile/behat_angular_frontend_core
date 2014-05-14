@@ -21,5 +21,11 @@ Feature: Batch Create Interface
 		And the "M" checkbox should be checked
 		And the "F" checkbox should not be checked
 		And the "occurrence" checkbox should be checked
+		And I press the element "body > div > snap-content > div > div:nth-child(4) > ng-include > div.col-md-2.column.ng-scope > span > accordion > div > div:nth-child(3) > div.panel-heading > h4 > a"
+		Then I should see "Batch Reports"
+		Then I should see "Firefox Windows"
+		And I follow "report-view-105"
+		And I wait
+		Then I should see "Feature: Test WikiPedia"
 
 

@@ -56,7 +56,7 @@
                     </td>
                     <td ng-bind-html="test.status | passFailFilter">
                     </td>
-                    <td>{{ $parent.tests_existing }}
+                    <td>{{ test.name }}
                     </td>
                     <td><span ng-repeat="tag in test.tags"> {{tag}} </span></td>
                 </tr>

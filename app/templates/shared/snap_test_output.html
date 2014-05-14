@@ -7,6 +7,11 @@
         <div ng-if="side_show == 'results'">
             <ng-include src="one_report_partial.url"></ng-include>
         </div>
+
+        <div ng-if="side_show == 'batch_result'">
+            <ng-include src="batch_result_partial.url"></ng-include>
+        </div>
+
         <button class="btn btn-default" ng-click="closeRightSidebar()">Close Sidebar</button>
     </div>
 

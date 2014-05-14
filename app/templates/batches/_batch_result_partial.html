@@ -1,0 +1,22 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Batch Results</h3>
+    </div>
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt>Browser</dt>
+            <dd>{{batch_result.data.browser}}</dd>
+            <dt>User</dt>
+            <dd>{{batch_result.data.user_name}}</dd>
+            <dt>Tags</dt>
+            <dd>{{batch_result.data.tags}}</dd>
+            <dt>Url</dt>
+            <dd>{{batch_result.data.url}}</dd>
+            <dt>Pass/Fail</dt>
+            <dd>{{batch_result.data.status | passFailText}}</dd>
+        </dl>
+        <div class="test-results" ng-bind-html="batch_result.data.results | resultsFilter" class="ng-animate-block-transitions">
+
+        </div>
+    </div>
+</div>
