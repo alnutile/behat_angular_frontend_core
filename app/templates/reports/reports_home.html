@@ -8,11 +8,11 @@
             <accordion>
                 <accordion-group is-open="isopen">
                     <accordion-heading>
-                        <i class="glyphicon glyphicon-list-alt"></i> &nbsp;Sites
+                        <i class="glyphicon glyphicon-list-alt"></i> &nbsp;Charts
                         <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
                     </accordion-heading>
 
-                    <div class="row">
+                    <div class="row"  ng-if="!siteFilter">
                         <h4>Sites Passing/Failing Charts</h4>
                         <div ng-repeat="chart in chartsPassFail.charts" class="col-lg-4 col-sm-4">
                             <div  class="text-center">
@@ -59,18 +59,18 @@
                         <strong>{{ charts.failing }}</strong>
                     </div>
                     <div class="col-md-2 column column text-center">
+                        <h5>Tests Not Run</h5>
+                        <strong>{{ charts.total - (charts.passing + charts.failing) }}</strong>
+                    </div>
+                    <div class="col-md-2 column column text-center"  ng-if="!siteFilter">
                         <h5>Sites with Coverage</h5>
                         <strong>{{ charts.total - charts.not_running }}</strong>
                     </div>
-                    <div class="col-md-2 column column text-center">
+                    <div class="col-md-2 column column text-center"  ng-if="!siteFilter">
                         <h5>Sites without Coverage</h5>
                         <strong>{{ charts.not_running }}</strong>
                     </div>
-                    <div class="col-md-2 column column text-center">
-                        <h5>USD Saved to date</h5>
-                        <!-- numbers still not clear right now 1 test = 10 person hours saved at $125 an hour -->
-                        <strong>{{ charts.total - charts.not_running * 10 * 125 | currency }}</strong>
-                    </div>
+
                 </accordion-group>
             </accordion>
             <!-- end summary data -->
