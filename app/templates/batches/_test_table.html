@@ -49,18 +49,19 @@
                 <tr ng-repeat="test in $parent.site.testFiles | filter:{status:passFailShow} | tagged:this | filter:search | orderBy:sort:reverse" ng-class="{danger: test.status == 0}">
                     <td>
                         <input type="checkbox"
-                               ng-model="chosenOne"
+                               id="{{test.name_dashed}}"
+                               ng-model="starting_tests[test.name_dashed]"
+                               ng-true-value="true"
                                ng-change="chosenTests(test.name_dashed)">
                     </td>
                     <td ng-bind-html="test.status | passFailFilter">
                     </td>
-                    <td>{{ $parent.tests_existing }}
+                    <td>{{ test.name }}
                     </td>
                     <td><span ng-repeat="tag in test.tags"> {{tag}} </span></td>
                 </tr>
                 </tbody>
             </table>
-            {{$parent.tests_existing}}
         </div>
     </form>
     <div class="help-block">Showing latest test results: <i class="glyphicon glyphicon-exclamation-sign"></i>Never Run | <i class="glyphicon glyphicon-thumbs-down"></i>Fail | <i class="glyphicon glyphicon-thumbs-up"></i>Pass</div>

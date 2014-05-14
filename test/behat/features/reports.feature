@@ -19,6 +19,7 @@ Feature: Reports Testing
   Scenario: Main Reports Site Filter
     Given I am on "/"
     And I follow "reporting"
+    And I wait
     Then I should see "Filter by Site"
     And I should see "test763.feature"
     And I select "Site 3" from "site_filter"

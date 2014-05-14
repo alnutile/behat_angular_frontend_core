@@ -16,6 +16,8 @@ Feature: Test Edit
     Then I should see "Tag Added @tag.."
     And I press the element ".scenarios > div:nth-child(1) > h4:nth-child(1) > a:nth-child(1)"
     And I wait
+    And I wait
+    And I wait
     And I press the element "body > div > snap-content > div > div:nth-child(4) > div.col-md-2.column > span > accordion > div > div.scenarios.panel.panel-default.ng-isolate-scope > div.panel-collapse.collapse.in > div > ul > li:nth-child(2) > a"
     And I wait
     Then I fill in "cfpTarget" with "some different text"
@@ -52,6 +54,7 @@ Feature: Test Edit
       And I fill in "backGroundTarget" with "test"
       Then I should see "Background: test"
       And I press "backgroundsFormAdd"
+      And I wait
       And I wait
       And I wait
       Then I should see "Step Added Background: \"test\"..."

@@ -1,12 +1,20 @@
 var reportsServices = angular.module('reportsServices', ['ngResource']);
 
-reportsServices.factory('ReportsServices', ['$resource',
-    function($resource){
-        return $resource('/behat_editor_services_v2/sites/:sid/reports/:rid', {}, {
-            query: {method:'GET', params:{sid:'', rid:'', meta: true}, isArray:true},
-            get:   {method:'GET', params:{sid:'', rid:''}, isArray:false} //got object error if not defining get here
-        });
+reportsServices.
+    factory('ReportsServices', ['$resource',
+        function($resource){
+            return $resource('/behat_editor_services_v2/sites/:sid/reports/:rid', {}, {
+                query: {method:'GET', params:{sid:'', rid:'', meta: true}, isArray:true},
+                get:   {method:'GET', params:{sid:'', rid:''}, isArray:false} //got object error if not defining get here
+            });
     }]).
+    factory('ReportsBatchServices', ['$resource',
+        function($resource){
+            return $resource('/behat_editor_services_v2/sites/:sid/batches/:bid/reports/:rid', {}, {
+                query: {method:'GET', params:{sid:'', bid: '', rid:'', meta: true}, isArray:false},
+                get:   {method:'GET', params:{sid:'', bid: '', rid:''}, isArray:false} //got object error if not defining get here
+            });
+        }]).
     factory('ReportsDash', ['$resource',
         function($resource){
             return $resource('/behat_editor_services_v2/reports/:rid', {}, {

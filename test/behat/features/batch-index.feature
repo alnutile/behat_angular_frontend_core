@@ -22,6 +22,6 @@ Feature: Batch Interface
     Then I fill in "search" with ""
     Then I should see "103"
     And I select "passing" from "pass_fail_filter"
-    Then I should not see "102"
+    Then I should not see "Batch 100"
 
 

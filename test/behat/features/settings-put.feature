@@ -13,9 +13,12 @@ Feature: Test Settings Get and Put
     Then I should see "Github Username"
     And I press "Submit"
     And I wait
+    And I wait
+    And I wait
     Then I should see "Settings updated"
     And I select "Safari 6" from "browser"
     And I press "Submit"
+    And I wait
     And I wait
     And I wait
     Then I should see "Settings updated"

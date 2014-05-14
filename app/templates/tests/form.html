@@ -277,7 +277,7 @@
 
             </form>
 
-            <form role="form" name="selectForm" ng-submit="addStep(steps.selectForm)" ng-model="form_tags.select" ng-init="form_tags.select='Select'" ng-show="showForm(form_tags.select)" class="ng-hide animate-hide animate-show form-inline">
+            <form role="form" name="selectForm" ng-submit="addStep(steps.selectForm)" ng-model="form_tags.select" ng-init="form_tags.select='Select'" ng-show="showForm(form_tags.select)" class="ng-hide  form-inline">
                     <div ng-hide="true" ng-model="steps.selectForm.intro" ng-init="steps.selectForm.intro='And I select'"></div>
                     <h5>And I select:</h5>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
@@ -303,7 +303,7 @@
 
             </form>
 
-            <form role="form" name="inputForm" ng-submit="addStep(steps.inputForm)" ng-model="form_tags.inputForm" ng-init="form_tags.inputForm='Fill in Input enter'" ng-show="showForm(form_tags.inputForm)" class="ng-hide animate-hide animate-show form-inline">
+            <form role="form" name="inputForm" ng-submit="addStep(steps.inputForm)" ng-model="form_tags.inputForm" ng-init="form_tags.inputForm='Fill in Input enter'" ng-show="showForm(form_tags.inputForm)" class="ng-hide  form-inline">
                     <div ng-hide="true" ng-model="steps.inputForm.intro" ng-init="steps.inputForm.intro='And I fill in'"></div>
                     <h5>And I fill in:</h5>
                     <!--by add arg_1 or arg_2 etc to the model item name we will add quotes around it -->
@@ -327,7 +327,7 @@
             </form>
 
 
-            <form role="form" name="shouldContain" ng-submit="addStep(steps.shouldContain)" ng-model="form_tags.shouldContain" ng-init="form_tags.shouldContain='value should input'" ng-show="showForm(form_tags.shouldContain)" class="ng-hide animate-hide animate-show form-inline">
+            <form role="form" name="shouldContain" ng-submit="addStep(steps.shouldContain)" ng-model="form_tags.shouldContain" ng-init="form_tags.shouldContain='value should input'" ng-show="showForm(form_tags.shouldContain)" class="ng-hide  form-inline">
                     <div ng-hide="true" ng-model="steps.shouldContain.intro" ng-init="steps.shouldContain.intro='Then the'"></div>
                     <h5>Then the:</h5>
                     <div class="form-group">
@@ -484,7 +484,7 @@
         <div ng-model="groups.custom" ng-hide="groups.custom"  ng-init="groups.custom=true" >
             <h5>Custom</h5>
             
-            <form role="form" name="checkSizeForm" ng-submit="addStep(steps.checkSizeForm)" ng-model="form_tags.checkSizeForm" ng-init="form_tags.checkSizeForm='size'" ng-show="showForm(form_tags.checkSizeForm)" class="ng-hide animate-hide animate-show ng-inline">
+            <form role="form" name="checkSizeForm" ng-submit="addStep(steps.checkSizeForm)" ng-model="form_tags.checkSizeForm" ng-init="form_tags.checkSizeForm='size'" ng-show="showForm(form_tags.checkSizeForm)" class="ng-hide  ng-inline">
                 <div ng-hide="true" ng-model="steps.checkSizeForm.intro" ng-init="steps.checkSizeForm.intro='Then the element'"></div>
                 <h5>Then the element:</h5>
                 <div class="form-group">
@@ -562,7 +562,7 @@
 
             <form role="form" name="iWaitForSecondsForm" ng-submit="addStep(steps.iWaitForSecondsForm)"
                   ng-model="form_tags.iWaitForSecondsForm" ng-init="form_tags.iWaitForSecondsForm='Wait'"
-                  ng-show="showForm(form_tags.iWaitForSecondsForm)" class="ng-hide animate-hide animate-show form-inline">
+                  ng-show="showForm(form_tags.iWaitForSecondsForm)" class="ng-hide  form-inline">
                 <div ng-hide="true" ng-model="steps.iWaitForSecondsForm.intro" ng-init="steps.iWaitForSecondsForm.intro='And I wait for'"></div>
                 <h5>And I wait for:</h5>
                 <div class="form-group">
@@ -584,7 +584,7 @@
             </form>
 
             <form role="form" name="urlMatchForm" ng-submit="addStep(steps.urlMatchForm)" ng-model="form_tags.urlMatchForm"
-                  ng-init="form_tags.urlMatchForm='url'" ng-show="showForm(form_tags.urlMatchForm)" class="ng-hide animate-hide animate-show form-inline">
+                  ng-init="form_tags.urlMatchForm='url'" ng-show="showForm(form_tags.urlMatchForm)" class="ng-hide  form-inline">
                 <div ng-hide="true" ng-model="steps.urlMatchForm.intro" ng-init="steps.urlMatchForm.intro='Then the url should match'"></div>
                 <h5>Then the url should match:</h5>
                 <div class="form-group">
@@ -603,7 +603,7 @@
             </form>
 
             <form class="form-inline" role="form" name="iWaitForElementForm" ng-submit="addStep(steps.iWaitForElementForm)" ng-model="form_tags.iWaitForElementForm"
-                  ng-init="form_tags.iWaitForElementForm='Wait'" ng-show="showForm(form_tags.iWaitForElementForm)" class="ng-hide animate-hide animate-show">
+                  ng-init="form_tags.iWaitForElementForm='Wait'" ng-show="showForm(form_tags.iWaitForElementForm)" class="ng-hide ">
                 <div ng-hide="true" ng-model="steps.iWaitForElementForm.intro" ng-init="steps.iWaitForElementForm.intro='Then I wait for the element'"></div>
                 <h5>Then I wait for the element:</h5>
                 <div class="form-group">

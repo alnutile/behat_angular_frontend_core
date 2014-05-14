@@ -21,14 +21,12 @@
 </div>
 <div class="col-md-8 column">
     <div ng-model="blocks.chooseSitesBlock" ng-init="blocks.chooseSitesBlock=true" ng-show="blocks.chooseSitesBlock">
-
         <ng-include src="tests_table_partial.url"></ng-include>
-
     </div>
     <div ng-model="blocks.settingsBlock" ng-init="blocks.settingsBlock=false" ng-show="blocks.settingsBlock">
         <ng-include src="batch_settings_partial.url"></ng-include>
     </div>
     <div ng-model="blocks.testResultsBlock" ng-init="blocks.testResultsBlock=false" ng-show="blocks.testResultsBlock">
-        Results block here (IF NOT NEW)
+        <ng-include src="batch_results_partial.url"></ng-include>
     </div>
 </div>

@@ -6,7 +6,7 @@ then
 fi
 
 echo Running test test/behat/features/$TEST
-vendor/bin/behat --config behat.yml test/behat/features/$TEST
+vendor/bin/behat --stop-on-failure --config behat.yml test/behat/features/$TEST
 
 
 
