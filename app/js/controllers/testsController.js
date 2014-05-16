@@ -510,6 +510,12 @@ testsController.controller('TestNewController', ['$scope', '$http', '$location',
             // Options
             _editor.setReadOnly(true);
             _editor.setShowInvisibles(true);
+            _editor.setOptions({
+                    enableBasicAutocompletion: true,
+                    enableSnippets: true,
+                    enableLiveAutocompletion: false
+                }
+            );
             _editor.setDisplayIndentGuides(true);
             _session.setUndoManager(new ace.UndoManager());
             _renderer.setShowGutter(true);
