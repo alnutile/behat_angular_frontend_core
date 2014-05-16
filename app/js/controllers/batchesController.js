@@ -232,6 +232,8 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
         /** Batch Settings **/
 
         $scope.chosenBatchTagsToRunData = [];
+
+
         $scope.chosenBatchTagsToRun = function(tag_name) {
             if($scope.chosenBatchTagsToRunData.indexOf(tag_name) == -1) {
                 $scope.chosenBatchTagsToRunData.push(tag_name);
@@ -240,7 +242,11 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
             }
 
             if($scope.chosenBatchTagsToRunData.length >= 1 || $scope.starting_batch_tags_to_run >= 1) {
-                $scope.automate = true;
+                $scope.automate = false;
+                var lookFor = ['@scheduled', '@monitoring'];
+                angular.forEach($scope.chosenBatchTagsToRunData, function(v,k){
+                   if(lookFor.indexOf(v) > -1) { $scope.automate = true; }
+                });
             } else {
                 $scope.automate = false;
             }
@@ -248,7 +254,6 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
 
         $scope.chosenBrowsersToRunData = [];
         $scope.chosenBrowsersToRun = function(browser) {
-            console.log(browser);
             if($scope.chosenBrowsersToRunData.indexOf(browser) == -1) {
                 $scope.chosenBrowsersToRunData.push(browser);
             } else {
@@ -286,7 +291,7 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
 
         $scope.setStartingTags = function(tags) {
             angular.forEach(tags, function(v, i){
-                $scope.automate = true;
+                $scope.chosenBatchTagsToRun(v);
                 $scope.starting_batch_tags_to_run[v] = 'true';
             });
         };

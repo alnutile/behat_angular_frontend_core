@@ -759,6 +759,37 @@ app.run(function($httpBackend, editableOptions) {
             ]
         }
 
+    };
+
+    var batch_103 = {
+        "site": site,
+        "batch": {
+            "bid": 103,
+            "status": 0,
+            "name": "Some name here 103",
+            "tags": ['@example', '@javascript'],
+            "tests": [
+                test3_feature,
+                test2_feature
+            ],
+            "batch_tags": [
+                '@smoke',
+                '@batch'
+            ],
+            "batch_run_range":"Daily",
+            "batch_run_days": ['M', 'T', 'W'],
+            "batch_start_time": "29-May-2014",
+            "batch_end": {
+                type: "occurrence",
+                value: 4
+            },
+            "browsers": ['Firefox 26', 'iPad - 6.1'],
+            "environment": [
+                {"name":"Production","url":"http://google.com","default":"0"},
+                {"name":"Custom 1","url":"http://local.google.com","default":"0"}
+            ]
+        }
+
     }
 
     var batch_index_site_level = {
@@ -865,6 +896,10 @@ app.run(function($httpBackend, editableOptions) {
 
     $httpBackend.whenGET('/behat_editor_services_v2/sites/2/batches/102').respond(200,
         { status: 'success', message: "Batches 102", data: batch_102 }
+    );
+
+    $httpBackend.whenGET('/behat_editor_services_v2/sites/2/batches/103').respond(200,
+        { status: 'success', message: "Batches 103", data: batch_103 }
     );
 
     //Templates
