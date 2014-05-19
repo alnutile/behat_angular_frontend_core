@@ -1,7 +1,14 @@
 var batchesController = angular.module('batchesController', ['ngSanitize']);
 
 batchesController.controller('BatchesController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent', 'TokensHelpers', 'BatchServices', 'snapRemote', 'SitesRepo', 'ReportHelpers', 'ReportsServices', 'TestHelpers', 'AppHelpers',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers, tagsPresent, TokensHelpers, BatchServices, snapRemote, SitesRepo, ReportHelpers, ReportsServices, TestHelpers, AppHelpers){
+    function($scope, $http, $location, $route, $routeParams,
+             SitesServices, TestsServices, BehatServices,
+             addAlert, runTest, closeAlert, $modal, Noty,
+             $sanitize, sanitizerFilter, SitesSettings,
+             SiteHelpers, tagsPresent, TokensHelpers,
+             BatchServices, snapRemote, SitesRepo,
+             ReportHelpers, ReportsServices, TestHelpers,
+             AppHelpers){
 
 
         $scope.action = $routeParams.action || 'index';
@@ -44,6 +51,7 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
         $scope.batch_settings_partial       = { name: 'batch_settings_partial', url: 'templates/batches/_batch_settings_partial.html'}
         $scope.batch_results_partial        = { name: 'batch_results_partial', url: 'templates/batches/_batch_results_partial.html'}
         $scope.batch_result_partial         = { name: 'batch_result_partial', url: 'templates/batches/_batch_result_partial.html'}
+        $scope.tags_partial                 = { name: 'tags_partial',      url: 'templates/shared/_tags.html'};
         /** END PARTIALS **/
 
         /** PAGE SETUP **/
@@ -201,13 +209,10 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
         }
 
         $scope.setTagged = function() {
-                console.log($scope.batch.tagInput);
-                //$scope.tagged = $scope.batch.tagInput;
                 if($scope.batch.tagInput.indexOf(" ") >= 0) {
                     console.log("We have a space");
                 }
         }
-
 
         /** Date picker **/
         $scope.cal = {};

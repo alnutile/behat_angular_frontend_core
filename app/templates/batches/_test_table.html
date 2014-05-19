@@ -21,19 +21,8 @@
                 <input class="form-control" type="text" ng-model="search" id="batch-search" placeholder="search tests">
             </div>
         </div>
-        <div class="row tags">
-            <div class="tag-label col-lg-2">
-                <i class="glyphicon glyphicon-tags"></i>
-                &nbsp;Tags:
-            </div>
-            <div class="tagarea col-lg-4">
-                    <tags
-                        data-options="{addable: true, classes: {white: 'black', red: 'red'}}"
-                        data-src="s for s in sourceTags"
-                        data-model="tagsChosen" class="tag_wrapper" id="batch-tag-filter"></tags>
-            </div>
-            <div class=" col-lg-6">&nbsp;
-            </div>
+        <div class="row">
+            <ng-include src="tags_partial.url"></ng-include>
         </div>
         <div class="row misc">
             <div class="checkbox">
@@ -56,7 +45,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="test in ( filtered.filteredTests = (  site.testFiles | filter:{status:passFailShow} | tagged:this | filter:search | orderBy:sort:reverse))" ng-class="{danger: test.status == 0}">
+                <tr ng-repeat="test in (
+                  filtered.filteredTests = (
+                    site.testFiles |
+                    filter:{status:passFailShow} |
+                    tagged:this |
+                    filter:search |
+                    orderBy:sort:reverse))"
+                    ng-class="{danger: test.status == 0}"
+                >
                     <td>
                         <input type="checkbox"
                                id="{{test.name_dashed}}"
