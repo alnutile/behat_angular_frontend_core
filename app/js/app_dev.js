@@ -13,9 +13,6 @@ var app = angular.module('behatEditor', [
     'snap',
     'ui.ace',
     'ngSanitize',
-    'ui.bootstrap',
-    'decipher.tags',
-    'ui.bootstrap.typeahead',
     'sitesServices',
     'reportsServices',
     'testsServices',
@@ -44,7 +41,10 @@ var app = angular.module('behatEditor', [
     'xeditable',
     'dateRange',
     'siteName',
-    'googlechart'
+    'googlechart',
+    'ui.bootstrap',
+    'decipher.tags',
+    'ui.bootstrap.typeahead'
 ]);
 
 app.run(function($httpBackend, editableOptions) {

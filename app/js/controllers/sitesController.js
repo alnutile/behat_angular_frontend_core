@@ -5,10 +5,20 @@ sitesController.controller('SitesController', ['$scope', '$http', '$location', '
         $scope.sites = SitesServices.query();
     }]);
 
-sitesController.controller('SiteController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'ReportSiteNumbers', 'SiteHelpers', 'ChartsPassFail', 'AppHelpers',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, ReportSiteNumbers, SiteHelpers, ChartsPassFail, AppHelpers){
+sitesController.controller('SiteController', ['$scope', '$http', '$location',
+    '$route', '$routeParams', 'SitesServices', 'TestsServices', 'ReportSiteNumbers',
+    'SiteHelpers', 'ChartsPassFail', 'AppHelpers', 'tagsPresent',
+    function($scope, $http, $location, $route, $routeParams, SitesServices,
+             TestsServices, ReportSiteNumbers, SiteHelpers, ChartsPassFail,
+             AppHelpers, tagsPresent){
         $scope.selectedCls = AppHelpers.selectedCls;
         $scope.sortOrder = AppHelpers.sortOrder;
+
+        $scope.tagsChosen = [];
+        $scope.tagsFilter           = AppHelpers.tagsFilter;
+        $scope.tags_filter = [];
+        $scope.setTag               = AppHelpers.setTag;
+        $scope.clearTag             = AppHelpers.clearTag;
 
         $scope.nav                  = { name: 'nav', url: 'templates/shared/nav.html'}
         $scope.bc                   = { name: 'bc', url: 'templates/shared/bc.html'}
@@ -16,10 +26,12 @@ sitesController.controller('SiteController', ['$scope', '$http', '$location', '$
         $scope.reports_template     = { name: 'reports', url: 'templates/reports/reports.html'}
         $scope.report_numbers_site  = { name: 'numbers',    url: 'templates/reports/report_numbers_site.html'};
         $scope.report_chart         = { name: 'chart',      url: 'templates/reports/report_chart.html'};
+        $scope.tags_partial         = { name: 'tags_partial',      url: 'templates/shared/_tags.html'};
         $scope.reports_all = ReportSiteNumbers.get({sid: $routeParams.sid});
 
         $scope.sort = {};
         $scope.sort = '-name';
+
 
         $scope.nav_message = "Mocked data. You can click on <b>test2.feature view</b> or <b>edit</b> and <b>Create New Test</b></b>"
         $scope.sites = SitesServices.get({sid: $routeParams.sid}, function(data) {
@@ -34,14 +46,11 @@ sitesController.controller('SiteController', ['$scope', '$http', '$location', '$
             $scope.charts.coverage = $scope.charts.total - $scope.charts.not_running;
             $scope.charts.usd_save = $scope.charts.coverage * 10 * 125;
 
+            $scope.tagsChosen  = [];
+            $scope.sourceTags  = $scope.tagsFilter(data.testFiles);
+
             //@TODO this is being used by reportsController too so centralize it into a service
             angular.forEach(data.testFiles, function(v,i){
-                angular.forEach(v.tags, function(value, index){
-                    //set tags
-                    if($scope.tags_filter.indexOf(value) == -1) {
-                        $scope.tags_filter.push(value);
-                    };
-                });
                 //Setup Reports
                 //@TODO move this out into a shared Service
                 $scope.charts.total = $scope.charts.total + 1;
@@ -75,9 +84,8 @@ sitesController.controller('SiteController', ['$scope', '$http', '$location', '$
                 title: data.title,
                 path:  "#"
             }]
-
-
         });
+
 
         $scope.setTag = function(tag) {
             $scope.tagged = tag;
