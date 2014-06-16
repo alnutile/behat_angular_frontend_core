@@ -17,7 +17,22 @@ dash.controller('DashController', ['$scope', '$http', '$location', '$route', '$r
         $scope.nav_message = "Mocked data. You can click on <b>Site 2 [working mock].</b> and <b><i class='glyphicon glyphicon-record'></i> Reporting</b> has lots to offer";
         ReportsDashboard.query({}, function(data){
             $scope.reports_all = data;
-
+            $scope.chartsPassingFailing = {}
+            $scope.chartsPassingFailing =
+            {'chart':
+                [
+                    {
+                        value: data.tests_passing,
+                        color:"#F38630"
+                    },
+                    {
+                        value: data.tests_failing,
+                        color:"#E0E4CC"
+                    }
+                ],
+                'passing': data.tests_passing,
+                'failing': data.tests_failing
+            };
         });
         $scope.predicate = '-title';
 

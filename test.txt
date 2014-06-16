@@ -1,0 +1,5 @@
+Status ^v, Name ^v, Tags, View, Edit
+P,[Banner Should Rotate Every 4 seconds], @sprint1, [view], [edit]
+F,[Banner should not show unpublished image], @workflow @sprint1, [view], [edit]
+P,[Banner should be 30% of the page], @something_else @sprint1, [view], [edit]
+F,[Testing of sign up page], @another_tag @sprint1, [view], [edit]

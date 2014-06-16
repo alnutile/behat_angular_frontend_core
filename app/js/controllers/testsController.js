@@ -1,7 +1,14 @@
 var testsController = angular.module('testsController', ['ngSanitize']);
 
-testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent', 'TokensHelpers', 'BatchServices', 'snapRemote', 'SitesRepo', 'ReportHelpers', 'ReportsServices', 'TestHelpers',
-    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert, $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers, tagsPresent, TokensHelpers, BatchServices, snapRemote, SitesRepo, ReportHelpers, ReportsServices, TestHelpers){
+/**
+ * @TODO group dependencies so the list is not so long. This is getting out of hand really
+ */
+testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices',
+    'BehatServices', 'addAlert', 'runTest', 'closeAlert', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent',
+    'TokensHelpers', 'BatchServices', 'snapRemote', 'SitesRepo', 'ReportHelpers', 'ReportsServices', 'TestHelpers',
+    function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert,
+             $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers, tagsPresent, TokensHelpers, BatchServices, snapRemote,
+             SitesRepo, ReportHelpers, ReportsServices, TestHelpers){
 
         /** PULL IN GENERAL SETTINGS **/
         $scope.action = $routeParams.action;
@@ -86,6 +93,21 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
                 }
             );
         }
+
+        $scope.$watch('settingsForm.tokens_to_use', function(){
+           //console.log($scope.settingsForm.tokens_to_use);
+        });
+
+        $scope.$watch('settingsForm.url_to_run', function(){
+            $scope.settingsForm.tokens_to_use = null;
+            angular.forEach($scope.tokens, function(v,i){
+                angular.forEach(v, function(tokenEach, i2) {
+                   if(tokenEach.value == $scope.settingsForm.url_to_run.name + ' - ' + $scope.settingsForm.url_to_run.url) {
+                       $scope.settingsForm.tokens_to_use = v;
+                   }
+                });
+            });
+        })
         /** END SETUP PAGE **/
 
         $scope.tagsPresentInTest = [];
