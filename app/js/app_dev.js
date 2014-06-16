@@ -44,7 +44,7 @@ var app = angular.module('behatEditor', [
     'googlechart',
     'ui.bootstrap',
     'decipher.tags',
-    'ui.bootstrap.typeahead'
+    'ui.bootstrap.typeahead'    
 ]);
 
 app.run(function($httpBackend, editableOptions) {
@@ -165,7 +165,18 @@ app.run(function($httpBackend, editableOptions) {
         ],
         "full_path":"\/vagrant\/public\/b2.vbox.local\/private\/behat\/550cb394-2ec0-4ce9-9133-e68c2a232eb2","test_files_root_path":"\/vagrant\/public\/b2.vbox.local\/private\/behat\/550cb394-2ec0-4ce9-9133-e68c2a232eb2\/features"};
 
-    var test2_feature = {"name":"test2.feature","path":"\/vagrant\/public\/b2.vbox.local\/private\/behat\/550cb394-2ec0-4ce9-9133-e68c2a232eb2\/features\/test2.feature","content":"Feature: Test WikiPedia\n  Scenario: Hello World\n    Given I am on \u0022http:\/\/en.wikipedia.org\/wiki\/Main_Page\u0022\n    Then I should see \u0022Wiki\u0022","content_html":"Feature: Test WikiPedia\u003Cbr\u003E\u0026nbsp;\u0026nbsp;  Scenario: Hello World\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    Given I am on \u0022http:\/\/en.wikipedia.org\/wiki\/Main_Page\u0022\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    Then I should see \u0022Wiki\u0022\u003Cbr\u003E","name_dashed":"test2_feature","tokens":{'12345.tokens':[{ 'token': 'foo', 'value': 'bar' },{ 'token': 'foo2', 'value': 'bar2'}],'67890.tokens':[{ 'token': 'foo33', 'value': 'bar33' }, { 'token': 'foo44', 'value': 'bar44' }]}};
+    var test2_feature = {
+        "name":"test2.feature",
+        "path":"\/vagrant\/public\/b2.vbox.local\/private\/behat\/550cb394-2ec0-4ce9-9133-e68c2a232eb2\/features\/test2.feature",
+        "content":"Feature: Test WikiPedia\n  Scenario: Hello World\n    Given I am on \u0022http:\/\/en.wikipedia.org\/wiki\/Main_Page\u0022\n    Then I should see \u0022Wiki\u0022","content_html":"Feature: Test WikiPedia\u003Cbr\u003E\u0026nbsp;\u0026nbsp;  Scenario: Hello World\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    Given I am on \u0022http:\/\/en.wikipedia.org\/wiki\/Main_Page\u0022\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    Then I should see \u0022Wiki\u0022\u003Cbr\u003E","name_dashed":"test2_feature",
+        "tokens":
+            {'12345.tokens':[
+                { 'token': 'Default URL', 'value': 'Production - http://google.com' },
+                { 'token': 'foo2', 'value': 'bar2'}],
+            '67890.tokens':[
+                { 'token': 'Default URL', 'value': 'Custom 1 - http://local.google.com'},
+                { 'token': 'foo33', 'value': 'bar33' },
+                { 'token': 'foo44', 'value': 'bar44' }]}};
 
     var test3_feature = {"name":"test3.feature","path":"\/vagrant\/public\/b2.vbox.local\/private\/behat\/550cb394-2ec0-4ce9-9133-e68c2a232eb2\/features\/test3.feature","content":"Feature: Test WikiPedia\n  Scenario: Hello World\n    Given I am on \u0022http:\/\/en.wikipedia.org\/wiki\/Main_Page\u0022\n    Then I should see \u0022Wiki\u0022","content_html":"Feature: Test WikiPedia\u003Cbr\u003E\u0026nbsp;\u0026nbsp;  Scenario: Hello World\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    Given I am on \u0022http:\/\/en.wikipedia.org\/wiki\/Main_Page\u0022\u003Cbr\u003E\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;    Then I should see \u0022Wiki\u0022\u003Cbr\u003E","name_dashed":"test3_feature"};
 

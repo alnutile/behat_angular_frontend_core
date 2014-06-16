@@ -25,7 +25,10 @@
                                     <a href="#" ng-model="tokens[key].token" editable-text="row.token">{{ row.token|| "empty" }}</a>
                                 </td>
                                 <td>
-                                    <a href="#" ng-model="tokens[key].value" editable-text="row.value">{{ row.value|| "empty" }}</a>
+                                    <a ng-if="$index == 0" href="#" ng-model="tokens[key].value"
+                                       e-ng-options="(s.name + ' - ' + s.url) as (s.name + ' - ' + s.url) for s in settings.urls"
+                                       editable-select="row.value">{{ row.value|| "empty" }}</a>
+                                    <a ng-if="$index != 0" href="#" ng-model="tokens[key].value" editable-text="row.value">{{ row.value|| "empty" }}</a>
                                 </td>
                             </tr>
                         </tbody>

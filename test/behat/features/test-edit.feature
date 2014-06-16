@@ -38,6 +38,10 @@ Feature: Test Edit
     And I wait
     And I wait
     Then I should see "Step Added Then I should not see"
+    And I press the element "body > div > snap-content > div > div:nth-child(4) > div.col-md-2.column > span > accordion > div > div.run-test.panel.panel-default.ng-isolate-scope > div.panel-heading > h4 > a"
+    And I wait
+    And I select "Production - http://google.com" from "url-run"
+    Then the "token_set_to_use" field should contain "12345.tokens"
 
   Scenario: Test XSS
       Given I am on "/sites/2/tests/test2_feature/edit"

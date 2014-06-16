@@ -17,7 +17,12 @@ tokensService.
         function($rootScope, TokensResource, Noty){
                 var helpers = {};
                 helpers.tokensAppendRow = function(subSet) {
-                    var tokensDefault = {'token': "Foo1", 'value': "Bar1" };
+                    console.log(subSet);
+                    if(subSet.length > 0) {
+                        var tokensDefault = {'token': "Foo", 'value': "Bar" };
+                    } else {
+                        var tokensDefault = {'token': "Default URL", 'select': "--choose--" };
+                    }
                     subSet.push(tokensDefault);
                     return subSet;
                 };
