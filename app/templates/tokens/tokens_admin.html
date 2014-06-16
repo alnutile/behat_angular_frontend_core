@@ -22,7 +22,8 @@
                         <tbody>
                             <tr ng-repeat="row in value">
                                 <td>
-                                    <a href="#" ng-model="tokens[key].token" editable-text="row.token">{{ row.token|| "empty" }}</a>
+                                    <strong ng-if="$index == 0" ng-model="tokens[key].token">{{row.token}}</strong>
+                                    <a ng-if="$index != 0" href="#" ng-model="tokens[key].token" editable-text="row.token">{{ row.token|| "empty" }}</a>
                                 </td>
                                 <td>
                                     <a ng-if="$index == 0" href="#" ng-model="tokens[key].value"
@@ -45,3 +46,4 @@
         <button ng-if="action == 'edit'" id="add_new_token_set" ng-click="addTokenSet()" type="button" class="btn-default btn">Add New Set</button>
     </div>
 </div>
+{{ tokens }}
