@@ -35,7 +35,12 @@
                             <h5>Passing {{ chartsPassingFailing.passing }}</h5>
                             <h5>Failing {{ chartsPassingFailing.failing }}</h5>
                         </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            <h6>Key</h6>
+                            <ng-include src="'templates/shared/_tooltips_charts.html'"></ng-include>
+                        </div>
                     </div>
+
                 </accordion-group>
             </accordion>
             <!-- end sites charts -->

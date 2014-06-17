@@ -124,3 +124,20 @@ div.row.tags {
     border-bottom:none;
 }
 
+ul.charts-key {
+    margin-left: 10px;
+}
+
+li.passing {
+    background-color: #F38630;
+    padding: 3px;
+    width: 60px;
+    color: white;
+}
+
+li.failing {
+    background-color: #E0E4CC;
+    padding: 3px;
+    width: 60px;
+    color: white;
+}
