@@ -95,7 +95,13 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         }
 
         $scope.$watch('settingsForm.tokens_to_use', function(){
-           //console.log($scope.settingsForm.tokens_to_use);
+          console.log($scope.settingsForm.url_to_run);
+          if(!angular.isUndefined($scope.settingsForm.url_to_run)){
+              //Get the token_to_use url
+              console.log($scope.settingsForm.tokens_to_use);
+              var match_name_url = $scope.settingsForm.url_to_run.name + ' - ' + $scope.settingsForm.url_to_run.url;
+              console.log(match_name_url);
+          }
         });
 
         $scope.$watch('settingsForm.url_to_run', function(){
