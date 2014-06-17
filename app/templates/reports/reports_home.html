@@ -188,17 +188,17 @@
                         Date Range
                     </div>
                     <div class="panel-body">
-                        <strong>Start: {{startDate | date:'yyyy-MM-dd'}}</strong>
-                        <br>
-                        <strong>End: {{endDate | date:'yyyy-MM-dd'}}</strong>
-                        <br>
                         <div style="display:inline-block; min-height:290px;">
+                            <strong>Start Date: {{startDate | date:'yyyy-MM-dd'}}</strong>
+                            <br>
                             <div class="well well-sm" ng-model="startDate">
                                 <datepicker max="endDate" show-weeks="showWeeks" starting-day="1"
                                             ng-click="startDateCheck()"></datepicker>
                             </div>
                         </div>
                         <div style="display:inline-block; min-height:290px;">
+                            <strong>End Date: {{endDate | date:'yyyy-MM-dd'}}</strong>
+                            <br>
                             <div class="well well-sm" ng-model="endDate">
                                 <datepicker min="startDate" show-weeks="showWeeks" starting-day="1"></datepicker>
                             </div>
