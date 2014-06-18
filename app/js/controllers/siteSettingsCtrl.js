@@ -12,22 +12,54 @@ settings.controller('SiteSettingsCtrl', ['$scope', '$http', '$location', '$route
             { title: "Settings", path:  "#"}
         ];
 
-        SitesSettings.query({sid: $routeParams.sid}, function(data){
-            $scope.settings = data.data;
-            $scope.settingsForm = $scope.settings;
+        if(!angular.isUndefined($routeParams.sid)) {
+            SitesSettings.query({sid: $routeParams.sid}, function(data){
+                $scope.settings = data.data;
+                $scope.settingsForm = $scope.settings;
 
-            $scope.browsers = SiteHelpers.browsers();
-            $scope.browser_options = [];
-            $scope.settingsForm.browserChosen = false;
+                $scope.browsers = SiteHelpers.browsers();
+                $scope.browser_options = [];
+                $scope.settingsForm.browserChosen = false;
 
-            angular.forEach($scope.browsers, function(v, i){
-                if($scope.settings.saucelabs.browser.browser == v.browser && $scope.settings.saucelabs.browser.version == v.version) {
-                    $scope.settingsForm.browserChosen = i;
-                }
-                $scope.browser_options.push(i);
+                angular.forEach($scope.browsers, function(v, i){
+                    if($scope.settings.saucelabs.browser.browser == v.browser && $scope.settings.saucelabs.browser.version == v.version) {
+                        $scope.settingsForm.browserChosen = i;
+                    }
+                    $scope.browser_options.push(i);
+                });
+                $scope.settingsForm.chosenUrls = [];
             });
-            $scope.settingsForm.chosenUrls = [];
-        });
+        } else {
+            $scope.help_message = "<p>Choose a site to connect these settings to. The sites are pulled in from the DMP.</p>";
+            SitesSettings.get({sid: 'create'}, function(data){
+                $scope.settings = data.data;
+                console.log(data.data)
+                $scope.settingsForm = $scope.settings;
+
+                $scope.browsers = SiteHelpers.browsers();
+                $scope.browser_options = [];
+                $scope.settingsForm.browserChosen = false;
+
+                angular.forEach($scope.browsers, function(v, i){
+                    if($scope.settings.saucelabs.browser.browser == v.browser && $scope.settings.saucelabs.browser.version == v.version) {
+                        $scope.settingsForm.browserChosen = i;
+                    }
+                    $scope.browser_options.push(i);
+                });
+                $scope.settingsForm.chosenUrls = [];
+            });
+        }
+
+        $scope.getCssClasses = function(ngModelController) {
+            return {
+                danger: ngModelController.$invalid && ngModelController.$dirty
+            };
+        };
+        $scope.showError = function(ngModelController, error) {
+            if(!angular.isUndefined(error) && !angular.isUndefined(ngModelController)) {
+                return ngModelController.$error[error];
+            }
+        }
 
         $scope.unsetDefaults = function(index) {
             angular.forEach($scope.settingsForm.urls, function(v, i){
@@ -36,6 +68,18 @@ settings.controller('SiteSettingsCtrl', ['$scope', '$http', '$location', '$route
                }
             });
         };
+
+        $scope.submitReady = function() {
+            if(!$scope.settingsFormCtrl.$invalid && $scope.settingsFormCtrl.$dirty) {
+                return true;
+            }
+        };
+
+        $scope.showFormAlert = function(ngModelController) {
+            if(ngModelController.$invalid ) {
+               return true;
+            }
+        }
 
         $scope.urlRemove = function(index) {
           $scope.urlRemoved = $scope.settingsForm.urls[index];
@@ -61,6 +105,8 @@ settings.controller('SiteSettingsCtrl', ['$scope', '$http', '$location', '$route
             });
             Noty('<i class="glyphicon glyphicon-cog"></i>&nbsp;Settings updated', 'success');
             addAlert('success', 'Settings Updated', $scope);
+
         };
+
 
     }]);

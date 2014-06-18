@@ -141,3 +141,7 @@ li.failing {
     width: 60px;
     color: white;
 }
+
+.help-inline { margin-bottom: 9px; }
+div.danger { background-color: #f2dede; padding: 4px;}
+.success { border: dotted  green 1px }

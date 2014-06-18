@@ -49,9 +49,128 @@ var app = angular.module('behatEditor', [
 
 app.run(function($httpBackend, editableOptions) {
     editableOptions.theme = 'bs3';
+    var all_dmp_sites = [
+        { "name": "Site 1", "uuid": "12345-12345-12345-11111" },
+        { "name": "Site 2", "uuid": "12345-12345-12345-11112" },
+        { "name": "Site 3", "uuid": "12345-12345-12345-11113" },
+        { "name": "Site 4", "uuid": "12345-12345-12345-11114" },
+        { "name": "Site 5", "uuid": "12345-12345-12345-11115" },
+        { "name": "Site 6", "uuid": "12345-12345-12345-11116" },
+        { "name": "Site 7", "uuid": "12345-12345-12345-11117" },
+        { "name": "Site 8", "uuid": "12345-12345-12345-11118" },
+    ];
+    var site_settings_update  =
+    {
+        "status":"success",
+        "data":{
+            "related_site_uuid":"12345-12345-12345-11112",
+            "defaults":{
+                "default_tag":"@updated_default_tag",
+                "base_url":"http:\/\/google.com"
+            },
+            "github":{
+                "github_repo":"behat",
+                "github_account_name":"testuser",
+                "github_tests_folder":"tests/behat",
+                "github_branch":"master",
+                "urls":[
+                    {
+                        "name": "Production",
+                        "url": "http:\/\/google.com"
+                    },
+                    {
+                        "name":"Staging",
+                        "url":"http:\/\/staging.google.com"
+                    },
+                    {
+                        "name":"Custom 1",
+                        "url":"http:\/\/local.google.com"
+                    }
+                ],
+            },
+            "saucelabs":{
+                "browser":{
+                    "username":"testuser",
+                    "access_key":"accessskey",
+                    "browser":"chrome",
+                    "platform":"Windows 2012",
+                    "version":"30",
+                    "name":"Testing with Saucelabs"
+                },
+                "host":"ondemand.saucelabs.com",
+                "port":80
+            },
+            "dmp": { "sites": all_dmp_sites }
+        },
+        "message":"Success updating file"
+    };
+    var site_settings_default =
+    {
+        "status":"success",
+        "data":{
+            "related_site_uuid":"12345-12345-12345-11112",
+            "defaults":{
+                "default_tag":"@default_site_tag",
+                "base_url":"http:\/\/google.com"},
+            "urls":[
+                {"name": "Production", "url": "http:\/\/google.com", "default": "0"},
+                {"name":"Staging","url":"http:\/\/staging.google.com", "default": "1"},
+                {"name":"Custom 1", "url":"http:\/\/local.google.com", "default": "0"}
+            ],
+            "github":{
+                "github_repo":"behat",
+                "github_account_name":"testuser",
+                "github_tests_folder":"tests/behat",
+                "github_branch":"master",
+            },
+            "saucelabs":{
+                "browser":{
+                    "username":"testuser",
+                    "access_key":"accessskey",
+                    "browser":"chrome",
+                    "platform":"Windows 2012",
+                    "version":"30",
+                    "name":"Testing with Saucelabs"
+                },
+                "host":"ondemand.saucelabs.com","port":80
+            },
+            "dmp": { "sites": all_dmp_sites }
+        },
+        "message":"Success getting file"
+    };
 
-    var site_settings_update  = '{"status":"success","data":{"defaults":{"default_tag":"@updated_default_tag","base_url":"http:\/\/google.com"},"github":{"github_username":"test","github_password":"test","test_folder":"tests","urls":[{"name": "Production", "url": "http:\/\/google.com"},{"name":"Staging","url":"http:\/\/staging.google.com"},{"name":"Custom 1", "url":"http:\/\/local.google.com"}],"github_account":"testuser"},"saucelabs":{"browser":{"username":"testuser","access_key":"accessskey","browser":"chrome","platform":"Windows 2012","version":"30","name":"Testing with Saucelabs"},"host":"ondemand.saucelabs.com","port":80}},"message":"Success updating file"}';
-    var site_settings_default = '{"status":"success","data":{"defaults":{"default_tag":"@default_site_tag","base_url":"http:\/\/google.com"},"urls":[{"name": "Production", "url": "http:\/\/google.com", "default": "0"},{"name":"Staging","url":"http:\/\/staging.google.com", "default": "1"},{"name":"Custom 1", "url":"http:\/\/local.google.com", "default": "0"}],"github":{"github_username":"test","github_password":"test","test_folder":"tests","github_account":"testuser"},"saucelabs":{"browser":{"username":"testuser","access_key":"accessskey","browser":"chrome","platform":"Windows 2012","version":"30","name":"Testing with Saucelabs"},"host":"ondemand.saucelabs.com","port":80}},"message":"Success getting file"}';
+    var site_settings_new     =
+        {
+            "status":"success",
+            "data":{
+                "related_site_uuid":"",
+                "defaults":{
+                    "default_tag":null,
+                    "base_url":""},
+                    "urls":[
+                        {"name": null, "url": null, "default": "1"}
+                    ],
+                "github":{
+                    "github_tests_folder":null,
+                    "github_repo":null,
+                    "github_account_name":null,
+                    "github_branch":null
+                },
+                "saucelabs":{
+                    "browser":{
+                        "username":"testuser",
+                        "access_key":"accessskey",
+                        "browser":"chrome",
+                        "platform":"Windows 2012",
+                        "version":"30",
+                        "name":"Testing with Saucelabs"
+                    },
+                    "host":"ondemand.saucelabs.com","port":80
+                },
+                "dmp": { "sites": all_dmp_sites }
+            },
+            "message":"Success getting file"
+        };
 
     var sites =
         [
@@ -871,6 +990,11 @@ app.run(function($httpBackend, editableOptions) {
     $httpBackend.whenPUT('/behat_editor_services_v2/sites/2/settings').respond(site_settings_update);
     $httpBackend.whenGET(/\/behat_editor_services_v2\/sites\/[1-9][0-9]*\/settings/).respond(site_settings_default);
 
+    //Add Site
+    $httpBackend.whenPUT('/behat_editor_services_v2/sites/2').respond(site_settings_update);
+    //Get Site Object from API
+    $httpBackend.whenGET(/\/behat_editor_services_v2\/sites\/create/).respond(site_settings_new);
+
     //Tokens
     $httpBackend.whenGET('/services/session/token').respond('12345');
     $httpBackend.whenPUT('/behat_editor_services_v2/sites/2/tests/test2_feature/tokens/12345.tokens').respond(200,
@@ -934,6 +1058,10 @@ app.config(['$routeProvider',
             when('/sites', {
                 templateUrl:  path + 'templates/sites/sites.html',
                 controller:  'SitesController'
+            }).
+            when('/settings/create', {
+                templateUrl:  path + 'templates/settings/edit.html',
+                controller:  'SiteSettingsCtrl'
             }).
             when('/sites/:sid', {
                 templateUrl:  path + 'templates/sites/site-show.html',

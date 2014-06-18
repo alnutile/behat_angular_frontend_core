@@ -8,63 +8,148 @@
                     <div class="panel panel-default">
                         <div class="panel panel-heading">Settings</div>
                         <div class="panel panel-body">
-                            <form ng-model="settingsForm" ng-submit="putSettings()">
+
+                            <form name="settingsFormCtrl" ng-submit="putSettings()" novalidate="novalidate">
+                                <div class="alert alert-danger" ng-if="showFormAlert(settingsFormCtrl)">
+                                    You can click submit once all the required fields are filled in.
+                                    Or there are changes to the form
+                                </div>
                                 <div class="form-group">
                                     <h4>Defaults</h4>
-                                    <div class="form-group">
-                                        <label>Base URL</label>
-                                        <input class="form-control" type="text" ng-model="settingsForm.defaults.base_url" required/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Default Tag</label>
-                                        <input class="form-control"  ng-model="settingsForm.defaults.default_tag" required/>
-                                        <div class="help-block">This will connect all your tests under this site</div>
+                                    <div class="form-group" ng-class="getCssClasses(settingsFormCtrl.related_site_uuid)">
+                                        <label>Related DMP Site</label>
+                                        <select ng-model="settingsForm.related_site_uuid"
+                                                name="related_site_uuid"
+                                                ng-options="site.uuid as site.name for site in settingsForm.dmp.sites"
+                                                required>
+                                            <option value="">--choose--</option>
+                                        </select>
+                                        <div ng-show="showError(settingsFormCtrl.related_site_uuid, 'required')" class="help-block alert alert-info">
+                                            You need to relate these Settings to a Site from the DMP
+                                        </div>
                                     </div>
                                 </div>
 
-                                <ng-include src="settings_url.url"></ng-include>
+                                <div class="form-group">
+                                    <label>URLs</label></br>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Path</th>
+                                            <th>Url</th>
+                                            <th>Default</th>
+                                            <th>Remove</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="v in settingsForm.urls" ng-class="getCssClasses(settingsFormCtrl.related_site_uuid)">
+                                            <td>
+                                                <input name="urls_name"
+                                                       id="urls_name_{{$index}}"
+                                                       class="form-control"
+                                                       ng-model="settingsForm.urls[$index].name"
+                                                       placeholder="Staging Area"
+                                                       required="required">
+                                                <div ng-show="showError(settingsFormCtrl.urls_name, 'required')" class="help-block alert alert-info">
+                                                    You need to have one URL for this site
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <input name="urls_url"
+                                                       id="urls_id_{{$index}}"
+                                                       type="url"
+                                                       placeholder="http://google.com"
+                                                       class="form-control"
+                                                       ng-model="settingsForm.urls[$index].url"
+                                                       required>
+                                                <div ng-show="showError(settingsFormCtrl.urls_url, 'url')" class="help-block alert alert-info">
+                                                    It needs to be a valid url.
+                                                </div>
+                                                <div ng-show="showError(settingsFormCtrl.urls_url, 'required')" class="help-block alert alert-info">
+                                                    You need to set the url
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <input name="urls_default"
+                                                       ng-change="unsetDefaults($index)"
+                                                       class="form-control"
+                                                       type="checkbox"
+                                                       ng-model="settingsForm.urls[$index].default"
+                                                       checked="checked: settingsForm.urls[$index].default"
+                                                       ng-true-value="1" ng-false-value="0">
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-danger btn-xs"
+                                                        data-ng-click="urlRemove($index)">
+                                                    <i class="glyphicon glyphicon-remove"></i></button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <button type="button" class="btn btn-success" ng-click="addUrl()">add url</button>
+                                </div>
+
+
                                 <div class="form-group">
                                     <h4>Github</h4>
                                     <div class="form-group">
-                                        <label>Github Username</label>
-                                        <input class="form-control" name="github_user" type="text" ng-model="settingsForm.github.github_username">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Github Password</label>
-                                        <input class="form-control"  ng-model="settingsForm.github.github_username">
-                                    </div>
-                                    <div class="form-group">
                                         <label>Github Folder</label>
-                                        <input class="form-control" ng-model="settingsForm.github.test_folder">
-                                        <div class="help-block">This is the folder the tests will be in. Do not start with a / slash</div>
+                                        <input name="github_folder"
+                                               class="form-control"
+                                               placeholder="tests/behat"
+                                               ng-model="settingsForm.github.github_tests_folder"
+                                               required>
+                                        <div ng-show="showError(settingsFormCtrl.github_folder, 'required')"
+                                             class="help-block alert alert-info">
+                                            This is the folder the tests will be in. Do not start with a / slash
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Github Repo</label>
+                                        <input name="github_repo"
+                                               class="form-control"
+                                               ng-model="settingsForm.github.github_repo"
+                                               placeholder="repo_name"
+                                               required>
+                                        <div ng-show="showError(settingsFormCtrl.github_repo, 'required')"
+                                             class="help-block alert alert-info">
+                                            You need to set the account name so if the url is https://github.com/foo/bar then the repo name is bar
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Github Account Name</label>
+                                        <input name="github_account_name"
+                                               class="form-control"
+                                               ng-model="settingsForm.github.github_account_name"
+                                               placeholder="foo"
+                                               required>
+                                        <div ng-show="showError(settingsFormCtrl.github_account_name, 'required')"
+                                             class="help-block alert alert-info">
+                                            You need to set the account name so if the url is https://github.com/foo/bar then the account name is foo
+                                        </div>
+                                    </div>
+                                    <label>Github Branch</label>
+                                    <input name="github_branch"
+                                           class="form-control"
+                                           placeholder="master"
+                                           ng-model="settingsForm.github.github_branch"
+                                           required>
+                                    <div ng-show="showError(settingsFormCtrl.github_branch, 'required')"
+                                         class="help-block alert alert-info">
+                                        You need to choose the branch to get the files from you can change this later as needed. eg master or development
                                     </div>
                                 </div>
+                                <button type="submit" class="btn btn-primary" ng-disabled="!submitReady()">Submit</button>
 
-                                <div class="form-group">
-                                    <h4>Saucelabs</h4>
-                                    <div class="form-group">
-                                        <label>Username</label>
-                                        <input class="form-control" name="sauce_user" type="text" ng-model="settingsForm.saucelabs.browser.username">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Access Key</label>
-                                        <input class="form-control"  ng-model="settingsForm.saucelabs.browser.access_key">
-                                    </div>
-                                    <ng-include src="settings_browser.url"></ng-include>
-                                </div>
-                                <input type="submit" class="btn btn-success" value="Submit">
+
                             </form>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="well">
+                    <div class="well" ng-if="help_message">
                         <h3>Help!</h3>
-                        Lots of help here..
-
-                        At vero eos et accusam et justo duo dolores et ea rebum. Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.
+                        <p data-ng-bind-html="help_message"></p>
                     </div>
                     <div class="col-md-12 column">
                         <div ng-include="alerts_partial.url"></div>

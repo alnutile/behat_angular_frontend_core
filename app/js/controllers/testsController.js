@@ -415,6 +415,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
 
         $scope.showHideBlocks = function(block) {
             angular.forEach($scope.blocks, function(v, k){
+
                 if ( k == block ) {
                     $scope.blocks[k] = true;
                 } else {
