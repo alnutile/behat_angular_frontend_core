@@ -13,6 +13,7 @@ settings.controller('SiteSettingsCtrl', ['$scope', '$http', '$location', '$route
         ];
 
         if(!angular.isUndefined($routeParams.sid)) {
+            $scope.mode = 'edit';
             SitesSettings.query({sid: $routeParams.sid}, function(data){
                 $scope.settings = data.data;
                 $scope.settingsForm = $scope.settings;
@@ -30,6 +31,7 @@ settings.controller('SiteSettingsCtrl', ['$scope', '$http', '$location', '$route
                 $scope.settingsForm.chosenUrls = [];
             });
         } else {
+            $scope.mode = 'add';
             $scope.help_message = "<p>Choose a site to connect these settings to. The sites are pulled in from the DMP.</p>";
             SitesSettings.get({sid: 'create'}, function(data){
                 $scope.settings = data.data;
@@ -51,6 +53,7 @@ settings.controller('SiteSettingsCtrl', ['$scope', '$http', '$location', '$route
         }
 
         $scope.getCssClasses = function(ngModelController) {
+            ngModelController = ngModelController || {};
             return {
                 danger: ngModelController.$invalid && ngModelController.$dirty
             };

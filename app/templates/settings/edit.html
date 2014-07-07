@@ -16,7 +16,7 @@
                                 </div>
                                 <div class="form-group">
                                     <h4>Defaults</h4>
-                                    <div class="form-group" ng-class="getCssClasses(settingsFormCtrl.related_site_uuid)">
+                                    <div class="form-group" ng-class="getCssClasses(settingsFormCtrl.related_site_uuid)" ng-if="mode != 'edit'">
                                         <label>Related DMP Site</label>
                                         <select ng-model="settingsForm.related_site_uuid"
                                                 name="related_site_uuid"
@@ -116,13 +116,12 @@
                                             You need to set the account name so if the url is https://github.com/foo/bar then the repo name is bar
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" ng-if="false">
                                         <label>Github Account Name</label>
                                         <input name="github_account_name"
                                                class="form-control"
                                                ng-model="settingsForm.github.github_account_name"
-                                               placeholder="foo"
-                                               required>
+                                               placeholder="foo">
                                         <div ng-show="showError(settingsFormCtrl.github_account_name, 'required')"
                                              class="help-block alert alert-info">
                                             You need to set the account name so if the url is https://github.com/foo/bar then the account name is foo
