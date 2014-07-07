@@ -5,12 +5,14 @@ var testsController = angular.module('testsController', ['ngSanitize']);
  */
 testsController.controller('TestEditController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices',
     'BehatServices', 'addAlert', 'runTest', 'closeAlert', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent',
-    'TokensHelpers', 'BatchServices', 'snapRemote', 'SitesRepo', 'ReportHelpers', 'ReportsServices', 'TestHelpers',
+    'TokensHelpers', 'BatchServices', 'snapRemote', 'SitesRepo', 'ReportHelpers', 'ReportsServices', 'TestHelpers', 'HelpUi', 'AppHelpers',
     function($scope, $http, $location, $route, $routeParams, SitesServices, TestsServices, BehatServices, addAlert, runTest, closeAlert,
              $modal, Noty, $sanitize, sanitizerFilter, SitesSettings, SiteHelpers, tagsPresent, TokensHelpers, BatchServices, snapRemote,
-             SitesRepo, ReportHelpers, ReportsServices, TestHelpers){
+             SitesRepo, ReportHelpers, ReportsServices, TestHelpers, HelpUi, AppHelpers){
 
         /** PULL IN GENERAL SETTINGS **/
+        $scope.app_helpers = AppHelpers;
+        $scope.helpUi = HelpUi;
         $scope.action = $routeParams.action;
         $scope.settingsForm = {};
         $scope.settingsForm.browserChosenBatch = [];
@@ -69,7 +71,7 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         $scope.clone_block                  = { name: 'clone_block', url: 'templates/shared/clone_block.html'}
         $scope.tokens_admin                 = { name: 'tokens_admin', url: 'templates/tokens/tokens_admin.html'}
         $scope.bc                           = { name: 'bc', url: 'templates/shared/bc.html'}
-        $scope.snap                         = { name: 'snap', url: 'templates/shared/snap_test_output.html'}
+        $scope.snap                         = { name: 'snap', url: 'templates/shared/_snap_content.html'}
         $scope.batch_run                    = { name: 'batch_run', url: 'templates/batches/run.html'}
 
         if($scope.action == 'edit') {

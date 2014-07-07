@@ -12,7 +12,15 @@
             <ng-include src="batch_result_partial.url"></ng-include>
         </div>
 
-        <button class="btn btn-default" ng-click="closeRightSidebar()">Close Sidebar</button>
+        <div class="panel panel-default" ng-if="!angular.unDefined(snap_content)">
+            <div class="panel panel-heading">
+                {{snap_content.title}}
+            </div>
+            <div class="panel panel-body" ng-bind-html="snap_content.body">
+            </div>
+        </div>
+
+        <button class="btn btn-default" ng-click="app_helpers.closeRightSidebar()">Close Sidebar</button>
     </div>
 
 </snap-drawers>

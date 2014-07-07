@@ -1,5 +1,9 @@
 <div class="form-group">
-    <label>Choose your Browser</label></br>
+    <label>Choose your Browser
+        <a href="" ng-click="helpUi.helpOpen('choose_os_browser')">
+            <i class="glyphicon glyphicon-comment"></i>
+        </a>
+    </label></br>
     <select name="browser" ng-model="settingsForm.browserChosen"
             ng-options="browser for browser in browser_options" class="form-control" required/>
     <option value="">--choose browser--</option>

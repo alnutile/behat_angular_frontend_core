@@ -1,8 +1,11 @@
 var app_helpers = angular.module('app_helpers', []);
 
-app_helpers.factory('AppHelpers', ['$rootScope',
-    function($rootScope){
+app_helpers.factory('AppHelpers', ['$rootScope', 'snapRemote',
+    function($rootScope, snapRemote){
         return {
+            closeRightSidebar: function() {
+                snapRemote.close();
+            },
             sortOrder: function(column) {
                 if ($rootScope.reverse == true) {
                     $rootScope.reverse = false;

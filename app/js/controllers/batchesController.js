@@ -43,7 +43,7 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
         $scope.settings_browser             = { name: 'settings_browser', url: 'templates/shared/settings_browser.html'}
         $scope.nav                          = { name: 'nav', url: 'templates/shared/nav.html'}
         $scope.bc                           = { name: 'bc', url: 'templates/shared/bc.html'}
-        $scope.snap                         = { name: 'snap', url: 'templates/shared/snap_test_output.html'}
+        $scope.snap                         = { name: 'snap', url: 'templates/shared/_snap_content.html'}
         $scope.batch_run                    = { name: 'batch_run', url: 'templates/batches/run.html'}
         $scope.batch_index_partial          = { name: 'batch_index_partial', url: 'templates/batches/_index.html'}
         $scope.batch_create_edit_partial    = { name: 'batch_create_edit_partial', url: 'templates/batches/_create_edit_partial.html'}

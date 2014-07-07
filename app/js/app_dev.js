@@ -3,6 +3,7 @@
 var app = angular.module('behatEditor', [
     'ngRoute',
     'ngTable',
+    'help_ui',
     'tokensResource',
     'chartjs',
     'batchServices',
@@ -958,6 +959,14 @@ app.run(function($httpBackend, editableOptions) {
             },
         ]
     };
+
+    var help =
+        { 'data': '<h2>Name of Page</h2>' +
+            '<p>Content will show here related to the help page you are on</p>' +
+            '<button type="button" class="btn btn-small" ng-click="helpOpen()">Help Index</button>',
+          'message': "Help is loading",
+          'status': 200
+        };
     //Reports
     $httpBackend.whenGET('/behat_editor_services_v2/reports').respond(reports_home_page);
     $httpBackend.whenGET(/\/behat_editor_services_v2\/sites\/[1-9][0-9]*\/reports/).respond(
@@ -1035,6 +1044,15 @@ app.run(function($httpBackend, editableOptions) {
 
     $httpBackend.whenGET('/behat_editor_services_v2/sites/2/batches/103').respond(200,
         { status: 'success', message: "Batches 103", data: batch_103 }
+    );
+
+    //Help
+    $httpBackend.whenGET('/behat_editor_services_v2/help').respond(
+        200, { status: 'success', message: "Help is Loading", data: help }
+    );
+
+    $httpBackend.whenGET(/\/behat_editor_services_v2\/help\/[a-z][A-Z]*/).respond(
+        200, { status: 'success', message: "Help is Loading", data: help }
     );
 
     //Templates
