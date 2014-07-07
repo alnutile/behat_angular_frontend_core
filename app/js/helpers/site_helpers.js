@@ -7,9 +7,9 @@ sites_helpers.factory('SiteHelpers', [ function(){
             'IE 9': { browser: 'internet explorer', version: '9', platform: 'Windows 7' },
             'Firefox - 26': { browser: 'firefox', version: '25', platform: 'Linux' },
             'Google Chrome - 30': { browser: 'chrome', version: '30', platform: 'Linux' },
+            'Safari - 6': { browser: 'safari', version: '6', platform: 'Mac 10.8' },
             'iPad - 6.1': { browser: 'ipad', version: '6.1', platform: 'Mac 10.8' },
             'iPhone - 6.1': { browser: 'iphone', version: '6.1', platform: 'Mac 10.8' },
-            'Safari - 6': { browser: 'safari', version: '6', platform: 'Mac 10.8' },
             'Android - 4.3': { browser: 'android', version: '4.3', platform: 'Linux' }
         };
 
