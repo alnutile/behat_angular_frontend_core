@@ -1,5 +1,9 @@
 <div class="form-group">
-    <label>Limit by Tag</label></br>
+    <label>Limit by Tag
+        <a href="" ng-click="helpUi.helpOpen('tags_limit')">
+            <i class="glyphicon glyphicon-comment"></i>
+        </a>
+    </label></br>
     <select name="limit_by_tag" ng-model="settingsForm.limitByTag"
             ng-options="tag for tag in tagsPresentInTest" class="form-control">
         <option value="">--choose tag--</option>

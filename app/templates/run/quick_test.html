@@ -1,6 +1,10 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Quick Test</h3>
+        <h3 class="panel-title">Quick Test
+            <a href="" ng-click="helpUi.helpOpen('settings_all')">
+                <i class="glyphicon glyphicon-comment"></i>
+            </a>
+        </h3>
     </div>
     <div class="panel-body">
         <form name="quick_test_settings" class="form-horizontal col-lg-11">
@@ -10,6 +14,11 @@
 
             <div class="form-group">
                 <select name="url-run" ng-model="settingsForm.url_to_run" ng-options="url.name + ' - ' + url.url for url in settings.urls" class="form-control"></select>
+                <div class="help-block">Never have a URL in your test read more here
+                    <a href="" ng-click="helpUi.helpOpen('settings_groups')">
+                        <i class="glyphicon glyphicon-comment"></i>
+                    </a>
+                </div>
             </div>
             <button type="button" class="btn btn-danger" data-ng-click="runTest()">Run</button>
             <div class="help-block">

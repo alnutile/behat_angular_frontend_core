@@ -1,15 +1,11 @@
-<div class="container">
+<ng-include src="'templates/shared/_snap_content.html'"></ng-include>
+<snap-content snap-options="snapOpts">
+
+<div class="top container">
     <span ng-include="nav.url" class="slide-animate"></span>
     <div class="row clearfix">
         <div class="col-md-8 column">
-            <ul class="breadcrumb">
-                <li>
-                    <a href="#">Testing</a> <span class="divider">/</span>
-                </li>
-                <li class="active">
-                    Dashboard
-                </li>
-            </ul>
+            <ng-include src="'templates/shared/bc.html'"></ng-include>
             <h3>
                 Behat Testing
             </h3>

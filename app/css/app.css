@@ -2,7 +2,7 @@
 
 body {
     font-size: 13px !important; /* the first one :( */
-    margin: 150px 0px 0px 0px !important;
+    margin: 100px 0px 0px 0px !important;
 }
 
 div.top {
@@ -145,3 +145,7 @@ li.failing {
 .help-inline { margin-bottom: 9px; }
 div.danger { background-color: #f2dede; padding: 4px;}
 .success { border: dotted  green 1px }
+
+ul.breadcrumb li.last {
+    content: non;
+}

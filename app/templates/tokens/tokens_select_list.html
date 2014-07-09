@@ -1,5 +1,9 @@
 <div class="form-group">
-    <label>Use Token Set</label></br>
+    <label>Use Token Set
+        <a href="" ng-click="helpUi.helpOpen('tokens')">
+            <i class="glyphicon glyphicon-comment"></i>
+        </a>
+    </label></br>
     <select name="token_set_to_use" ng-model="settingsForm.tokens_to_use"
             ng-options="key for (key, value) in tokens" class="form-control">
         <option value="">--choose optional token--</option>

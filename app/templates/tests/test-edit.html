@@ -5,17 +5,7 @@
 
     <div class="row clearfix">
         <div class="col-md-6">
-            <ul class="breadcrumb">
-                <li>
-                    <a href="#">Dashboard</a> <span class="divider">/</span>
-                </li>
-                <li  ng-repeat="breadcrumb in breadcrumbs">
-                    <a href="{{ breadcrumb.path }}">{{ breadcrumb.title }} </a> <span class="divider">/</span>
-                </li>
-                <li>
-                    {{ feature_name }}
-                </li>
-            </ul>
+            <ng-include src="'templates/shared/bc.html'"></ng-include>
         </div>
         <div class="pull-right">
                 <button type="button" class="btn btn-danger" ng-click="saveTest(test_content)" ng-switch-when="edit">save test</button>
@@ -35,10 +25,18 @@
             <span ng-if="action == 'create' || action == 'edit'">
                 <accordion close-others="true">
                     <accordion-group heading="Test Details" is-open="true" ng-click="showHideBlocks('testDetailsBlock')">
-                        <p>Add tags, Backgrounds etc. [help]</p>
+                        <p>Add tags, Backgrounds etc.
+                            <a href="" ng-click="helpUi.helpOpen('index')">
+                                <i class="glyphicon glyphicon-comment"></i>
+                            </a>
+                        </p>
                     </accordion-group>
                     <accordion-group class="scenarios" heading="Scenarios and steps" ng-click="showHideBlocks('testStepsBlock')">
-                        <p>Add steps to your test. Search as needed [help]</p>
+                        <p>Add steps to your test. Search as needed
+                            <a href="" ng-click="helpUi.helpOpen('scenarios_and_steps')">
+                                <i class="glyphicon glyphicon-comment"></i>
+                            </a>
+                        </p>
                         <ul class="list-group">
                             <li class="list-group-item">
                                 <a href="" ng-href="" type="button" ng-click="showHideGroup('starting')">Starting Points</a>
@@ -70,19 +68,31 @@
                         <accordion-heading>
                             Tokens
                         </accordion-heading>
-                        <p>Add tokens so one test can work for many. [help]</p>
+                        <p>Add tokens so one test can work for many.
+                            <a href="" ng-click="helpUi.helpOpen('tokens')">
+                                <i class="glyphicon glyphicon-comment"></i>
+                            </a>
+                        </p>
                     </accordion-group>
                     <accordion-group ng-click="showHideBlocks('testResultsBlock')">
                         <accordion-heading>
                             Results
                         </accordion-heading>
-                        <p>Search and View Results</p>
+                        <p>Search and View Results
+                            <a href="" ng-click="helpUi.helpOpen('past_results')">
+                                <i class="glyphicon glyphicon-comment"></i>
+                            </a>
+                        </p>
                     </accordion-group>
                     <accordion-group ng-click="showHideBlocks('testRunBlock')" class="run-test">
                         <accordion-heading>
                             Run a test
                         </accordion-heading>
-                        <p>Run your test [help]</p>
+                        <p>Run your test
+                            <a href="" ng-click="helpUi.helpOpen('settings_all')">
+                                <i class="glyphicon glyphicon-comment"></i>
+                            </a>
+                        </p>
                     </accordion-group>
                     <accordion-group ng-click="showHideBlocks('cloneBlock')" class="clone-test"  ng-if="action != 'create'">
                         <accordion-heading>
@@ -95,19 +105,30 @@
             <span ng-switch-when="show">
                 <accordion close-others="true">
                     <accordion-group heading="Test Details" is-open="true" ng-click="showHideBlocks('testDetailsBlock')">
-                        <p>View of the file [help]</p>
+                        <p>View of the file
+                            <a href="" ng-click="helpUi.helpOpen('index')">
+                                <i class="glyphicon glyphicon-comment"></i>
+                            </a>
+                        </p>
                     </accordion-group>
                     <accordion-group ng-click="showHideBlocks('testTokensBlock')"  class="tokens-admin">
                         <accordion-heading>
                             Tokens
                         </accordion-heading>
-                        <p>Add tokens so one test can work for many. [help]</p>
+                        <p>Add tokens so one test can work for many.
+                            <a href="" ng-click="helpUi.helpOpen('tokens')">
+                                <i class="glyphicon glyphicon-comment"></i>
+                            </a>
+                        </p>
                     </accordion-group>
                     <accordion-group ng-click="showHideBlocks('testResultsBlock')">
                         <accordion-heading>
                             Results
                         </accordion-heading>
-                        <p>Search and View Results</p>
+                        <p>Search and View Results
+                            <a href="" ng-click="helpUi.helpOpen('past_results')">
+                                <i class="glyphicon glyphicon-comment"></i>
+                            </a></p>
                     </accordion-group>
                     <accordion-group ng-click="showHideBlocks('testRunBlock')" class="run-test">
                         <accordion-heading>
