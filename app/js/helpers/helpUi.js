@@ -19,7 +19,7 @@ help_ui.factory('HelpUi', ['$http', '$rootScope', 'snapRemote', 'Noty', '$sce',
             };
             $rootScope.snap_content.title = (title) ? title : '';
             page         = (page && page.length > 0) ? '/' + page : '';
-            console.log(page);
+            //Since it is a cross domain I let the server get it
             $http.get('/behat_editor_services_v2/help' + page).success(function(results){
                 $rootScope.snap_content.body = $sce.trustAsHtml(results.data.data);
                 snapRemote.open('right');

@@ -1058,6 +1058,7 @@ app.run(function($httpBackend, editableOptions) {
     //Templates
     $httpBackend.whenGET(/^templates\//).passThrough();
 
+
 });
 
 app.config(['$routeProvider',

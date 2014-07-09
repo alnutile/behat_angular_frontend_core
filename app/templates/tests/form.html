@@ -12,7 +12,11 @@
                 </div>
                 <div class="help-block" ng-model="steps.featureForm.final">
                     <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.featureForm.feature }} {{ steps.featureForm.arg_1 }}
+                    <a href="" ng-click="helpUi.helpOpen('index')">
+                        <i class="glyphicon glyphicon-comment"></i>
+                    </a>
                 </div>
+
             </div>
         </form>
 
@@ -27,7 +31,11 @@
                 <div class="form-group">
                     <input id="add-details" class="form-control btn btn-success" type="submit" value="Tag it"  ng-disabled="tagForm.$invalid || isUnchanged(steps.testDetails.tag)">
                 </div>
-                <div class="help-block">Your tag must have an @ symbol and if you are adding more than on separate with a space. @test @test1</div>
+                <div class="help-block">Your tag must have an @ symbol and if you are adding more than on separate with a space. @test @test1
+                    <a href="" ng-click="helpUi.helpOpen('tags')">
+                        <i class="glyphicon glyphicon-comment"></i>
+                    </a>
+                </div>
                 <br>
             </div>
         </form>
@@ -49,7 +57,10 @@
                         <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.backgroundsForm.background }} {{ steps.backgroundsForm.arg_1 }}
                     </div>
                     <div class="help-block" ng-model="steps.backgroundsForm.final">
-                        This will run before each Scenario [help]
+                        This will run before each Scenario
+                        <a href="" ng-click="helpUi.helpOpen('background')">
+                            <i class="glyphicon glyphicon-comment"></i>
+                        </a>
                     </div>
                     <div class="well">
                         <button type="button" class="btn btn-danger" ng-click="saveTest(test_content)">save test</button>
@@ -84,6 +95,9 @@
                     </div>
                     <div class="help-block" ng-model="steps.scenarioForm.final">
                         <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.scenarioForm.intro }} "{{ steps.scenarioForm.arg_1 }}"
+                        <a href="" ng-click="helpUi.helpOpen('scenario')">
+                            <i class="glyphicon glyphicon-comment"></i>
+                        </a>
                     </div>
                 </div>
                 <hr>
@@ -101,7 +115,11 @@
                         <input class="form-control btn btn-success" name="givenFormAdd" type="submit" value="Add"
                            ng-disabled="givenForm.$invalid || steps.givenForm.arg_1 == '/some/relative/path'">
                     </div>
-                    <div class="help-block" ng-model="steps.givenForm.final"><i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.givenForm.intro }} "{{ steps.givenForm.arg_1 }}" </div>
+                    <div class="help-block" ng-model="steps.givenForm.final"><i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.givenForm.intro }} "{{ steps.givenForm.arg_1 }}"
+                        <a href="" ng-click="helpUi.helpOpen('given')">
+                            <i class="glyphicon glyphicon-comment"></i>
+                        </a>
+                    </div>
                 </div>
                 <hr>
 
@@ -190,6 +208,9 @@
                     </div>
                     <div class="help-block" ng-model="steps.cfp.final">
                         <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.cfp.intro }} {{ steps.cfp.action }} {{ steps.cfp.type }} "{{ steps.cfp.arg_1 }}"
+                        <a href="" ng-click="helpUi.helpOpen('press_click')">
+                            <i class="glyphicon glyphicon-comment"></i>
+                        </a>
                     </div>
                 </div>
                 <hr>
@@ -225,7 +246,11 @@
 
         <!-- ##### Form fields and Elements ##### -->
         <div ng-model="groups.elements" ng-hide="groups.elements"  ng-init="groups.elements=true"  >
-            <h5>Form fields & elements</h5>
+            <h5>Form fields & elements
+                <a href="" ng-click="helpUi.helpOpen('checkbox')">
+                    <i class="glyphicon glyphicon-comment"></i>
+                </a>
+            </h5>
             <form role="form" name="checkUncheckForm" ng-submit="addStep(steps.checkUncheckForm)" ng-model="form_tags.checkUncheckForm" ng-init="form_tags.checkUncheckForm='Check Un UnCheck'" ng-show="showForm(form_tags.checkUncheckForm)" class="ng-hide animate-hide form-inline">
                     <div ng-hide="true" ng-model="steps.checkUncheckForm.intro" ng-init="steps.checkUncheckForm.intro='And I'"></div>
                     <h5>And I:</h5>
@@ -298,6 +323,9 @@
                     <div class="help-block" ng-model="steps.selectForm.final">
                         <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;
                         {{ steps.selectForm.intro }} "{{ steps.selectForm.arg_1 }}" {{ steps.selectForm.from }} "{{ steps.selectForm.arg_2 }}"
+                        <a href="" ng-click="helpUi.helpOpen('select')">
+                            <i class="glyphicon glyphicon-comment"></i>
+                        </a>
                     </div>
                 <hr>
 
@@ -323,6 +351,9 @@
                     </div>
                     <div class="help-block" ng-model="steps.inputForm.final">
                         <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.inputForm.intro }} "{{ steps.inputForm.arg_1 }}" {{ steps.inputForm.with }} "{{ steps.inputForm.arg_2 }}"
+                        <a href="" ng-click="helpUi.helpOpen('fill_in_field')">
+                            <i class="glyphicon glyphicon-comment"></i>
+                        </a>
                     </div>
             </form>
 
@@ -350,6 +381,9 @@
                     </div>
                     <div class="help-block" ng-model="steps.shouldContain.final">
                         {{ steps.shouldContain.intro }} "{{ steps.shouldContain.arg_1 }}" {{ steps.shouldContain.action }} "{{ steps.shouldContain.arg_2 }}"
+                        <a href="" ng-click="helpUi.helpOpen('check_element_style')">
+                            <i class="glyphicon glyphicon-comment"></i>
+                        </a>
                     </div>
                 <hr>
 
@@ -597,6 +631,9 @@
                 </div>
                 <div class="help-block" ng-model="steps.urlMatchForm.final">
                     <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.urlMatchForm.intro }} "{{ steps.urlMatchForm.arg_1 }}"
+                    <a href="" ng-click="helpUi.helpOpen('url_check')">
+                        <i class="glyphicon glyphicon-comment"></i>
+                    </a>
                 </div>
                 <hr>
 
@@ -642,6 +679,9 @@
                 </div>
                 <div class="help-block" ng-model="steps.responseCodeForm.final">
                     <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;{{ steps.responseCodeForm.intro }} "{{ steps.responseCodeForm.arg_1 }}"
+                    <a href="" ng-click="helpUi.helpOpen('status_code')">
+                        <i class="glyphicon glyphicon-comment"></i>
+                    </a>
                 </div>
                 <hr>
             </form>

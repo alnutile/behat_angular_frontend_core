@@ -1,6 +1,7 @@
 var batchesController = angular.module('batchesController', ['ngSanitize']);
 
-batchesController.controller('BatchesController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent', 'TokensHelpers', 'BatchServices', 'snapRemote', 'SitesRepo', 'ReportHelpers', 'ReportsServices', 'TestHelpers', 'AppHelpers',
+batchesController.controller('BatchesController', ['$scope', '$http', '$location', '$route', '$routeParams', 'SitesServices', 'TestsServices', 'BehatServices', 'addAlert', 'runTest', 'closeAlert', '$modal', 'Noty', '$sanitize', 'sanitizerFilter', 'SitesSettings', 'SiteHelpers', 'tagsPresent', 'TokensHelpers', 'BatchServices', 'snapRemote', 'SitesRepo', 'ReportHelpers',
+    'ReportsServices', 'TestHelpers', 'AppHelpers', 'HelpUi',
     function($scope, $http, $location, $route, $routeParams,
              SitesServices, TestsServices, BehatServices,
              addAlert, runTest, closeAlert, $modal, Noty,
@@ -8,9 +9,9 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
              SiteHelpers, tagsPresent, TokensHelpers,
              BatchServices, snapRemote, SitesRepo,
              ReportHelpers, ReportsServices, TestHelpers,
-             AppHelpers){
+             AppHelpers, HelpUi){
 
-
+        $scope.helpUi = HelpUi;
         $scope.action = $routeParams.action || 'index';
         $scope.tagsChosen = [];
         $scope.batchTagsToRun = [];
@@ -31,6 +32,9 @@ batchesController.controller('BatchesController', ['$scope', '$http', '$location
         /** HELPERS **/
         $scope.filtered             = {};
         $scope.filtered.tagged      = '';
+
+        $scope.app_helpers = AppHelpers;
+        //@TODO Remove these and set the top level above to be used
         $scope.tagsFilter           = AppHelpers.tagsFilter;
         $scope.setTag               = AppHelpers.setTag;
         $scope.clearTag             = AppHelpers.clearTag;
