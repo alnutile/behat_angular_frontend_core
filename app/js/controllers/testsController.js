@@ -97,12 +97,18 @@ testsController.controller('TestEditController', ['$scope', '$http', '$location'
         }
 
         $scope.$watch('settingsForm.tokens_to_use', function(){
-          console.log($scope.settingsForm.url_to_run);
-          if(!angular.isUndefined($scope.settingsForm.url_to_run)){
-              //Get the token_to_use url
-              console.log($scope.settingsForm.tokens_to_use);
-              var match_name_url = $scope.settingsForm.url_to_run.name + ' - ' + $scope.settingsForm.url_to_run.url;
-              console.log(match_name_url);
+          console.log($scope.settingsForm.tokens_to_use);
+          if(!angular.isUndefined($scope.settingsForm.url_to_run) && $scope.settingsForm.tokens_to_use != null && !angular.isUndefined($scope.settingsForm.tokens_to_use[0].value)){
+              console.log("Token must have url now to match")
+              var token_url = $scope.settingsForm.tokens_to_use[0].value;
+              angular.forEach($scope.settings.urls, function(k,i){
+                  var match_name_url = k.name + ' - ' + k.url;
+                  console.log(match_name_url);
+                  console.log(token_url);
+                  if(match_name_url == token_url) {
+                        $scope.settingsForm.url_to_run = k;
+                  }
+              });
           }
         });
 

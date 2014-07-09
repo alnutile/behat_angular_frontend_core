@@ -4,8 +4,10 @@
             <i class="glyphicon glyphicon-comment"></i>
         </a>
     </label></br>
-    <select name="token_set_to_use" ng-model="settingsForm.tokens_to_use"
-            ng-options="key for (key, value) in tokens" class="form-control">
+    <select name="token_set_to_use"
+            ng-model="settingsForm.tokens_to_use"
+            ng-options="key for (key, value) in tokens"
+            class="form-control">
         <option value="">--choose optional token--</option>
     </select>
     <div class="help-block">This will replace the tokens for this test</div>
