@@ -42,6 +42,7 @@
                                     <thead>
                                         <tr>
                                             <th><a href="" ng-click="sortOrder('title')">&nbsp;Name<i class="glyphicon" ng-class="selectedCls('title')"></i></a></th>
+                                            <th>Branch</th>
                                             <th><a href="" ng-click="sortOrder('status')">&nbsp;Default Tag<i class="glyphicon" ng-class="selectedCls('status')"></i></a></th>
                                             <th>View</th>
                                         </tr>
@@ -49,6 +50,7 @@
                                     <tbody>
                                         <tr ng-repeat="site in sites | filter:query | orderBy:sort:reverse" >
                                             <td data-title="'Name'" sortable="'title'">{{ site.title }}</td>
+                                            <td data-title="'Branch'">{{site.settings.github.github_branch}}</td>
                                             <td data-title="'Default Tag'" sortable="'default_tag'">{{ site.default_tag }}</td>
                                             <td data-title="'Site ID'" sortable="'nid'"><a id="site-{{ site.nid }}" href="#/sites/{{ site.nid }}">view</a></td>
                                         </tr>
